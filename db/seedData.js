@@ -34,7 +34,8 @@ const createTables = async () => {
         CREATE TABLE products (
           id SERIAL PRIMARY KEY,
           name VARCHAR(255) UNIQUE NOT NULL, 
-          price INTEGER NOT NULL  
+          price INTEGER NOT NULL,
+          'imageUrl' 
         );
 
         CREATE TABLE orders  (

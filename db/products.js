@@ -28,16 +28,16 @@ const getAllProducts = () => {
   }
 }
 
-async function createProduct({ name, price }) {
+async function createProduct({ name, price, imageUrl }) {
   try {
     const {
       rows: [product] } = await client.query(
       `
-       INSERT INTO products(name, price)
-       VALUES ($1, $2)
+       INSERT INTO products(name, price,'imageUrl')
+       VALUES ($1, $2, $3)
        RETURNING *;     
      `,
-      [name, price]
+      [name, price, imageUrl]
     );
 
     return product;
@@ -45,7 +45,7 @@ async function createProduct({ name, price }) {
     throw error;
   }
 }
-
+  
 module.exports = {
   client,
   getProductById,
