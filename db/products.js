@@ -28,16 +28,16 @@ const getAllProducts = () => {
   }
 }
 
-async function createProduct({ name, price, imageUrl }) {
+const createProduct = async ({ name, price, quantity, imageUrl }) => {
   try {
     const {
       rows: [product] } = await client.query(
       `
-       INSERT INTO products(name, price,'imageUrl')
-       VALUES ($1, $2, $3)
+       INSERT INTO products(name, price, quantity,'imageUrl')
+       VALUES ($1, $2, $3, $4)
        RETURNING *;     
      `,
-      [name, price, imageUrl]
+      [name, price, quantity, imageUrl]
     );
 
     return product;

@@ -13,12 +13,12 @@ const jwt = require("jsonwebtoken");
 const { requireUser } = require("./utils");
 
 usersRouter.use('/',(req, res, next) => {
-    //console.log("A request is being made to /users");
-    res.send('A request is being made to users.');
+  //console.log("A request is being made to /users");
+  res.send('A request is being made to users.');
 });
 
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
   try {
     const _user = await getUserByUsername(username);
 
@@ -30,6 +30,7 @@ usersRouter.post("/register", async (req, res, next) => {
       const newUser = await createUser({
         username,
         password,
+        email
       });
 
       const token = jwt.sign(
@@ -98,13 +99,13 @@ usersRouter.get("/:username", async (req, res, next) => {
 });
 
 usersRouter.get("/:userId", async (req, res, next) => {
-    const { userId } = req.params;
-    try {
-      const user = await getUserByUserId(userId);
-      res.send(user);
-    } catch (error) {
-      throw error;
-    }
+  const { userId } = req.params;
+  try {
+    const user = await getUserByUserId(userId);
+    res.send(user);
+  } catch (error) {
+    throw error;
+  }
   });
 
   
