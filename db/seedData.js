@@ -34,13 +34,15 @@ const createTables = async () => {
         CREATE TABLE products (
           id SERIAL PRIMARY KEY,
           name VARCHAR(255) UNIQUE NOT NULL, 
+          description TEXT NOT NULL,
           price INTEGER NOT NULL,
           'imageUrl' 
         );
 
         CREATE TABLE orders  (
             id SERIAL PRIMARY KEY,
-            name VARCHAR(255) UNIQUE NOT NULL, 
+            product VARCHAR(255) UNIQUE NOT NULL, 
+            quantity INTEGER NOT NULL,
             total INTEGER NOT NULL 
           );
         
@@ -79,10 +81,9 @@ const createTables = async () => {
     }
   }
 
-  async function createInitialProducts() {
+const createInitialProducts = async () => {
+    console.log("starting to create products...");
     try {
-      console.log("starting to create products...");
-  
       const productsToCreate = [
         {
           name: "productOne",
@@ -119,6 +120,44 @@ const createTables = async () => {
     }
   }
 
+  const createInitialOrders = async () => {
+    console.log('starting to create orders...');
+    try {
+      const ordersToCreate = [
+        {product: 'Butter Toffee Popcorn', quantity: 5, total: 40},
+        {product: 'Chocolate Drizzle Popcorn', quantity: 10, total: 80},
+        {product: 'Butter Praline Popcorn', quantity: 3, total: 24},
+        {product: 'Classic Cracker Jack Popcorn', quantity: 7, total: 56},
+      ]
+        const orders = await Promise.all(
+          ordersToCreate.map((order) => createOrder(order))
+        );
+        console.log('Orders Created: ', orders);
+        console.log('Finished creating products.');
+    } catch(error) {
+      throw error;
+    };
+  };
+
+  const createInitialReviews = async () => {
+    console.log('starting to create reviews...');
+    try {
+      const reviewsToCreate = [
+        {comment: 'Wow this stuff is delicious!'},
+        {comment: 'I just cannot stop eating it!'},
+        {comment: 'I love the Classic Cracker Jack flavor, but my dog loves it even more.'},
+        {comment: 'Pure popcorn perfection.'},
+      ]
+        const reviews = await Promise.all(
+          reviewsToCreate.map((review) => createReview(review))
+        );
+        console.log('Reviews Created: ', reviews);
+        console.log('Finished creating reviews.')
+    } catch (error) {
+      throw error;
+    };
+  };
+
   async function rebuildDB() {
     try {
       client.connect();
@@ -126,8 +165,8 @@ const createTables = async () => {
       await createTables();
       await createInitialUsers();
       await createInitialProducts();
-    //   await createInitialOrders();
-    //   await createInitialReviews();
+      await createInitialOrders();
+      await createInitialReviews();
     } catch (error) {
       console.log("Error during rebuildDB");
       throw error;
