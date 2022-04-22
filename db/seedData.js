@@ -28,7 +28,8 @@ const createTables = async () => {
         CREATE TABLE users (
           id SERIAL PRIMARY KEY, 
           username VARCHAR(255) UNIQUE NOT NULL,
-          password VARCHAR(255) NOT NULL
+          password VARCHAR(255) NOT NULL,
+          email VARCHAR(255) NOT NULL
         );
   
         CREATE TABLE products (
@@ -36,21 +37,25 @@ const createTables = async () => {
           name VARCHAR(255) UNIQUE NOT NULL, 
           description TEXT NOT NULL,
           price INTEGER NOT NULL,
-          'imageUrl' 
+          quantity INTEGER NOT NULL,
+          'imageUrl' TEXT
         );
 
         CREATE TABLE orders  (
             id SERIAL PRIMARY KEY,
-            product VARCHAR(255) UNIQUE NOT NULL, 
+            name VARCHAR(255) UNIQUE NOT NULL, 
+            total INTEGER NOT NULL,
+            'userId' INTEGER REFERENCES users(id),
+            products TEXT ARRAY
             quantity INTEGER NOT NULL,
-            total INTEGER NOT NULL 
+
           );
         
         CREATE TABLE reviews (
           id SERIAL PRIMARY KEY,
           'userId' INTEGER REFERENCES users(id),
           'productId' INTEGER REFERENCES products(id),
-          comment TEXT NOT NULL,
+          comments TEXT ARRAY
         );
   
       `);
@@ -69,6 +74,7 @@ const createTables = async () => {
         { username: "Nick", password: "nick12345" },
         { username: "Marisa", password: "marisa12345" },
         { username: "David", password: "david12345" },
+        { username: "admin", password: "admin12345"},
       ];
       const users = await Promise.all(usersToCreate.map(createUser));
   
@@ -88,26 +94,38 @@ const createInitialProducts = async () => {
         {
           name: "productOne",
           price: 5,
+          quantity: 5,
+          imageUrl: 'https://picsum.photos/id/1023/400/300'
         },
         {
           name: "productTwo",
           price: 10,
+          quantity: 5,
+          imageUrl: 'https://picsum.photos/id/1023/400/300'
         },
         {
           name: "productThree",
           price: 15,
+          quantity: 5,
+          imageUrl: 'https://picsum.photos/id/1023/400/300'
         },
         {
           name: "productFour",
           price: 20,
+          quantity: 5,
+          imageUrl: 'https://picsum.photos/id/1023/400/300'
         },
         {
           name: "productFive",
           price: 25,
+          quantity: 5,
+          imageUrl: 'https://picsum.photos/id/1023/400/300'
         },
         {
           name: "productSix",
           price: 50,
+          quantity: 5,
+          imageUrl: 'https://picsum.photos/id/1023/400/300'
         },
       ];
       const products = await Promise.all(
