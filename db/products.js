@@ -1,6 +1,6 @@
 const client = require("./client");
 
-const getProductById = (id) => {
+const getProductById = async (id) => {
   try {
     const { rows: [product] } = await client.query(`
        SELECT * FROM products
@@ -12,7 +12,7 @@ const getProductById = (id) => {
   }
 }
 
-const getAllProducts = () => {
+const getAllProducts = async () => {
   try {
     const { rows: productIds } = await client.query(`
            SELECT id FROM products;
