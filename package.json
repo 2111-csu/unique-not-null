@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "npm run client:build",
     "seed:dev": "nodemon -L ./db/seed.js",
-    "client:dev": "react-scripts start",
+    "client:dev": "CHOKIDAR_USEPOLLING=true react-scripts start",
     "client:build": "react-scripts build",
     "server:dev": "nodemon -L index.js",
     "db:build": "node ./db/seedData.js",
@@ -23,12 +23,11 @@
   "bugs": {
     "url": "https://github.com/Nmullen25/GraceShopperBackend/issues"
   },
-  "homepage": "https://github.com/Nmullen25/GraceShopperBackend#readme",
   "devDependencies": {
     "nodemon": "^2.0.15",
     "supertest": "^6.2.1"
   },
-  "proxy": "http://localhost:4000",
+  "proxy": "https://localhost:4000",
   "dependencies": {
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
