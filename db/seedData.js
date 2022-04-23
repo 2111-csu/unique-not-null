@@ -30,7 +30,7 @@ const createTables = async () => {
           "firstName" VARCHAR(255) NOT NULL,
           "lastName" VARCHAR(255) NOT NULL,
           email VARCHAR(255) UNIQUE NOT NULL,
-          "imageURL" TEXT,
+          "imageURL" TEXT DEFAULT 'https://picsum.photos/id/1080/400/300',
           username VARCHAR(255) UNIQUE NOT NULL,
           password VARCHAR(255) UNIQUE NOT NULL,
           "isAdmin" VARCHAR(255) NOT NULL DEFAULT false
@@ -41,7 +41,7 @@ const createTables = async () => {
           name VARCHAR(255) NOT NULL, 
           description TEXT NOT NULL,
           price NUMERIC NOT NULL,
-          "imageUrl" TEXT,
+          "imageUrl" TEXT DEFAULT 'https://picsum.photos/id/1080/400/300',
           "inStock" BOOLEAN DEFAULT false,
           category VARCHAR(255) NOT NULL
         );
@@ -104,38 +104,44 @@ const createInitialProducts = async () => {
         {
           name: "productOne",
           price: 5,
-          quantity: 5,
-          imageUrl: 'https://picsum.photos/id/1023/400/300'
+          description: 'desc 1',
+          imageUrl: 'https://picsum.photos/id/1023/400/300',
+          category: 'type 1'
         },
         {
           name: "productTwo",
           price: 10,
-          quantity: 5,
-          imageUrl: 'https://picsum.photos/id/1023/400/300'
+          description: 'desc 1',
+          imageUrl: 'https://picsum.photos/id/1028/400/300',
+          category: 'type 2'
         },
         {
           name: "productThree",
           price: 15,
-          quantity: 5,
-          imageUrl: 'https://picsum.photos/id/1023/400/300'
+          description: 'desc 1',
+          imageUrl: 'https://picsum.photos/id/1027/400/300',
+          category: 'type 3'
         },
         {
           name: "productFour",
           price: 20,
-          quantity: 5,
-          imageUrl: 'https://picsum.photos/id/1023/400/300'
+          description: 'desc 1',
+          imageUrl: 'https://picsum.photos/id/1026/400/300',
+          category: 'type 4'
         },
         {
           name: "productFive",
           price: 25,
-          quantity: 5,
-          imageUrl: 'https://picsum.photos/id/1023/400/300'
+          description: 'desc 1',
+          imageUrl: 'https://picsum.photos/id/1025/400/300',
+          category: 'type 5'
         },
         {
           name: "productSix",
           price: 50,
-          quantity: 5,
-          imageUrl: 'https://picsum.photos/id/1023/400/300'
+          description: 'desc 1',
+          imageUrl: 'https://picsum.photos/id/1024/400/300',
+          category: 'type 6'
         },
       ];
       const products = await Promise.all(
@@ -193,8 +199,8 @@ const createInitialProducts = async () => {
       await createTables();
       await createInitialUsers();
       await createInitialProducts();
-      await createInitialOrders();
-      await createInitialReviews();
+      // await createInitialOrders();
+      // await createInitialReviews();
     } catch (error) {
       console.log("Error during rebuildDB");
       throw error;
