@@ -18,7 +18,7 @@ const dropTables = async () => {
       console.error("Error dropping tables!");
       throw error;
     }
-  }
+}
 
 const createTables = async () => {
     try {
@@ -27,35 +27,45 @@ const createTables = async () => {
       await client.query(`
         CREATE TABLE users (
           id SERIAL PRIMARY KEY, 
+          "firstName" VARCHAR(255) NOT NULL,
+          "lastName" VARCHAR(255) NOT NULL,
+          email VARCHAR(255) UNIQUE NOT NULL,
+          "imageURL" TEXT,
           username VARCHAR(255) UNIQUE NOT NULL,
-          password VARCHAR(255) NOT NULL,
-          email VARCHAR(255) NOT NULL
+          password VARCHAR(255) UNIQUE NOT NULL,
+          "isAdmin" VARCHAR(255) NOT NULL DEFAULT false
         );
   
         CREATE TABLE products (
           id SERIAL PRIMARY KEY,
-          name VARCHAR(255) UNIQUE NOT NULL, 
+          name VARCHAR(255) NOT NULL, 
           description TEXT NOT NULL,
-          price INTEGER NOT NULL,
-          quantity INTEGER NOT NULL,
-          'imageUrl' TEXT
+          price NUMERIC NOT NULL,
+          "imageUrl" TEXT,
+          "inStock" BOOLEAN DEFAULT false,
+          category VARCHAR(255) NOT NULL
         );
 
         CREATE TABLE orders  (
             id SERIAL PRIMARY KEY,
-            name VARCHAR(255) UNIQUE NOT NULL, 
-            total INTEGER NOT NULL,
-            'userId' INTEGER REFERENCES users(id),
-            products TEXT ARRAY
-            quantity INTEGER NOT NULL,
-
+            status DEFAULT created,
+            "userId" INTEGER REFERENCES users(id),
+            "datePlaced" DATE
           );
         
         CREATE TABLE reviews (
           id SERIAL PRIMARY KEY,
-          'userId' INTEGER REFERENCES users(id),
-          'productId' INTEGER REFERENCES products(id),
+          "userId" INTEGER REFERENCES users(id),
+          "productId" INTEGER REFERENCES products(id),
           comments TEXT ARRAY
+        );
+
+        CREATE TABLE order_products (
+          id SERIAL PRIMARY KEY,
+          "productId" INTEGER REFERENCES products(id),
+          "orderId" INTEGER REFERENCES orders(id),
+          price NUMERIC NOT NULL,
+          quantity INTEGER NOT NULL DEFAULT 0
         );
   
       `);
