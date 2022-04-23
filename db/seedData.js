@@ -1,3 +1,4 @@
+const client = require('./client')
 const { createUser } = require("./users");
 const { createProduct, getAllProducts} = require("./products")
 const { createOrder, getAllOrders } = require('./orders');
@@ -7,6 +8,7 @@ const dropTables = async () => {
     try {
       console.log("Dropping All Tables...");
       await client.query(`
+      DROP TABLE IF EXISTS order_products;
       DROP TABLE IF EXISTS reviews;
       DROP TABLE IF EXISTS orders;
       DROP TABLE IF EXISTS users;
@@ -30,10 +32,10 @@ const createTables = async () => {
           "firstName" VARCHAR(255) NOT NULL,
           "lastName" VARCHAR(255) NOT NULL,
           email VARCHAR(255) UNIQUE NOT NULL,
-          "imageURL" TEXT DEFAULT 'https://picsum.photos/id/1080/400/300',
+          imageurl TEXT DEFAULT 'https://picsum.photos/id/1080/400/300',
           username VARCHAR(255) UNIQUE NOT NULL,
           password VARCHAR(255) UNIQUE NOT NULL,
-          "isAdmin" VARCHAR(255) NOT NULL DEFAULT false
+          "isAdmin" BOOLEAN DEFAULT false
         );
   
         CREATE TABLE products (
@@ -41,23 +43,21 @@ const createTables = async () => {
           name VARCHAR(255) NOT NULL, 
           description TEXT NOT NULL,
           price NUMERIC NOT NULL,
-          "imageUrl" TEXT DEFAULT 'https://picsum.photos/id/1080/400/300',
+          imageurl TEXT DEFAULT 'https://picsum.photos/id/1080/400/300',
           "inStock" BOOLEAN DEFAULT false,
           category VARCHAR(255) NOT NULL
         );
 
         CREATE TABLE orders  (
-            id SERIAL PRIMARY KEY,
-            status DEFAULT created,
-            "userId" INTEGER REFERENCES users(id),
-            "datePlaced" DATE
-          );
+          id SERIAL PRIMARY KEY,
+          status TEXT DEFAULT 'created',
+          "userId" INTEGER REFERENCES users(id)
+        );
         
         CREATE TABLE reviews (
           id SERIAL PRIMARY KEY,
           "userId" INTEGER REFERENCES users(id),
-          "productId" INTEGER REFERENCES products(id),
-          comments TEXT ARRAY
+          "productId" INTEGER REFERENCES products(id)
         );
 
         CREATE TABLE order_products (
@@ -105,42 +105,42 @@ const createInitialProducts = async () => {
           name: "productOne",
           price: 5,
           description: 'desc 1',
-          imageUrl: 'https://picsum.photos/id/1023/400/300',
+          imageurl: 'https://picsum.photos/id/1023/400/300',
           category: 'type 1'
         },
         {
           name: "productTwo",
           price: 10,
           description: 'desc 1',
-          imageUrl: 'https://picsum.photos/id/1028/400/300',
+          imageurl: 'https://picsum.photos/id/1028/400/300',
           category: 'type 2'
         },
         {
           name: "productThree",
           price: 15,
           description: 'desc 1',
-          imageUrl: 'https://picsum.photos/id/1027/400/300',
+          imageurl: 'https://picsum.photos/id/1027/400/300',
           category: 'type 3'
         },
         {
           name: "productFour",
           price: 20,
           description: 'desc 1',
-          imageUrl: 'https://picsum.photos/id/1026/400/300',
+          imageurl: 'https://picsum.photos/id/1026/400/300',
           category: 'type 4'
         },
         {
           name: "productFive",
           price: 25,
           description: 'desc 1',
-          imageUrl: 'https://picsum.photos/id/1025/400/300',
+          imageurl: 'https://picsum.photos/id/1025/400/300',
           category: 'type 5'
         },
         {
           name: "productSix",
           price: 50,
           description: 'desc 1',
-          imageUrl: 'https://picsum.photos/id/1024/400/300',
+          imageurl: 'https://picsum.photos/id/1024/400/300',
           category: 'type 6'
         },
       ];
@@ -197,7 +197,7 @@ const createInitialProducts = async () => {
       client.connect();
       await dropTables();
       await createTables();
-      await createInitialUsers();
+      // await createInitialUsers();
       await createInitialProducts();
       // await createInitialOrders();
       // await createInitialReviews();
