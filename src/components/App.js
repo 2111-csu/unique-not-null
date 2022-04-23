@@ -13,7 +13,7 @@ const App = () => {
     // first, create an async function that will wrap your axios service adapter
     // invoke the adapter, await the response, and set the data
     const getAPIStatus = async () => {
-      const { healthy } = await getAPIHealth();
+      const healthy = await getAPIHealth();
       setAPIHealth(healthy ? 'api is up! :D' : 'api is down :/');
     };
 
@@ -23,10 +23,10 @@ const App = () => {
   }, []);
 
   return (
-    <div className="app-container">
-      <h1>Hello, World!</h1>
-      <p>API Status: {APIHealth}</p>
-    </div>
+      <div className="app-container">
+        <h1>Hello, World!</h1>
+        <p>API Status: {APIHealth}</p>
+      </div>
   );
 };
 
