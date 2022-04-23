@@ -28,7 +28,7 @@ const App = () => {
     // invoke the adapter, await the response, and set the data
     
     const getAPIStatus = async () => {
-      const { healthy } = await getAPIHealth();
+      const healthy = await getAPIHealth();
       setAPIHealth(healthy ? 'api is up! :D' : 'api is down :/');
     };
 
@@ -38,6 +38,7 @@ const App = () => {
   }, []);
 
   return (
+
     <Router>
       <div className='App'>
         {/* <Header /> need state from 'const App' for loggedIn here */}
@@ -66,6 +67,11 @@ const App = () => {
             <Route exact path='/admin'>
               {/* <Admin /> need state for inventory here */}
             </Route>
+
+            <div className="app-container">
+              <h1>Hello, World!</h1>
+              <p>API Status: {APIHealth}</p>
+            </div>
 
             <Route exact path='/'>
               <Home />

@@ -15,6 +15,7 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox
 
 importScripts(
   "/Nmullen25/GraceShopperBackendprecache-manifest.eef3a977d328063bdf5d973d4b700ed8.js"
+
 );
 
 self.addEventListener('message', (event) => {
