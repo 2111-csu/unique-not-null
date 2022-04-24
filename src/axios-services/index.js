@@ -19,6 +19,30 @@ const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
   }
 */
 
+export const callApi = async ({ url, method = "GET", token, data }) => {
+  try {
+    const options = {
+      method: method.toUpperCase(),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data
+    };
+    if (token) {
+      options.headers["Authorization"] = `Bearer ${token}`;
+    }
+    const resp = await axios(API_URL + url, options);
+    console.log(resp);
+    
+    if (resp.error) {
+      throw resp.error;
+    }
+    return resp;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export async function getAPIHealth() {
   try {
     const { data } = await axios.get(`${API_URL}/api/health`);
