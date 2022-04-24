@@ -6,7 +6,7 @@ import {
   Header,
   Home,
   Payment,
-  Products,
+  AllProducts,
   SingleProduct,
   Login,
   User
@@ -21,6 +21,7 @@ import '../style/App.css';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -49,13 +50,13 @@ const App = () => {
               {/* <Payment /> need state from 'const App' for cart here */}
             </Route>
             <Route exact path='/products'>
-              {/* <Products /> need state from 'const App' for inventory here */}
+              <AllProducts products={products} setProducts={setProducts}/> {/*need state from 'const App' for inventory here*/}
             </Route>
             <Route exact path='/products/:id'>
-              {/* <SingleProduct
+             <SingleProduct
               //need inventory state
               //need cart state
-              /> */}
+              /> 
             </Route>
             <Route exact path='/user-info'>
               {/* <User /> need cart state here */}
