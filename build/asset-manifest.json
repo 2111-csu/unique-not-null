@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/Nmullen25/GraceShopperBackendstatic/css/main.71d41c80.chunk.css",
+    "main.js": "/Nmullen25/GraceShopperBackendstatic/js/main.51c0027c.chunk.js",
+    "main.js.map": "/Nmullen25/GraceShopperBackendstatic/js/main.51c0027c.chunk.js.map",
+    "runtime-main.js": "/Nmullen25/GraceShopperBackendstatic/js/runtime-main.2d3d5536.js",
+    "runtime-main.js.map": "/Nmullen25/GraceShopperBackendstatic/js/runtime-main.2d3d5536.js.map",
+    "static/js/2.95a51fee.chunk.js": "/Nmullen25/GraceShopperBackendstatic/js/2.95a51fee.chunk.js",
+    "static/js/2.95a51fee.chunk.js.map": "/Nmullen25/GraceShopperBackendstatic/js/2.95a51fee.chunk.js.map",
+    "index.html": "/Nmullen25/GraceShopperBackendindex.html",
+    "precache-manifest.eef3a977d328063bdf5d973d4b700ed8.js": "/Nmullen25/GraceShopperBackendprecache-manifest.eef3a977d328063bdf5d973d4b700ed8.js",
+    "service-worker.js": "/Nmullen25/GraceShopperBackendservice-worker.js",
+    "static/css/main.71d41c80.chunk.css.map": "/Nmullen25/GraceShopperBackendstatic/css/main.71d41c80.chunk.css.map",
+    "static/js/2.5178db80.chunk.js.LICENSE.txt": "/Nmullen25/GraceShopperBackendstatic/js/2.5178db80.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2d3d5536.js",
+    "static/js/2.5178db80.chunk.js",
+    "static/css/main.71d41c80.chunk.css",
+    "static/js/main.51c0027c.chunk.js"
+  ]
+}

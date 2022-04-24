@@ -4,6 +4,7 @@ const productsRouter = express.Router();
 const {
   getAllProducts,
   createProduct,
+  getProductById,
   //updateProduct, //do we need this, is this in db
   //deleteProduct  //do we need this? is this in db
 } = require("../db");
@@ -32,6 +33,16 @@ productsRouter.post("/", requireUser, async (req, res, next) => {
       price,
       imageUrl
     });
+  } catch (error) {
+    throw error;
+  }
+});
+
+productsRouter.get("/:productId", async (req, res, next) => {
+  const { productId } = req.params;
+  try {
+    const product = await getProductById(productId);
+    res.send(product);
   } catch (error) {
     throw error;
   }
