@@ -87,17 +87,18 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   }
 });
 
+/*Do we need this?*/
 usersRouter.get("/:username", async (req, res, next) => {
   const { username } = req.params;
   try {
     const user = await getUserByUsername(username);
-    const usersRoutines = await getPublicRoutinesByUser(user);
-    res.send(usersRoutines);
+    res.send(user);
   } catch (error) {
     throw error;
   }
 });
 
+/*Do we need this?*/
 usersRouter.get("/:userId", async (req, res, next) => {
   const { userId } = req.params;
   try {

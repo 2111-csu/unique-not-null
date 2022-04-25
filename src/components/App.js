@@ -6,12 +6,11 @@ import {
   Header,
   Home,
   Payment,
-  Products,
+  AllProducts,
   SingleProduct,
   Login,
   User
 } from './';
-
 
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
@@ -21,6 +20,13 @@ import '../style/App.css';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
+  
+  const userAuth = JSON.parse(localStorage.getItem('user'));
+  const userToken = JSON.parse(localStorage.getItem('token'));
+  const [token, setToken] = useState(userToken);
+  const [loggedIn, setLoggedIn] = useState(userAuth);
+  const [message, setMessage] = useState(null);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -49,7 +55,8 @@ const App = () => {
               {/* <Payment /> need state from 'const App' for cart here */}
             </Route>
             <Route exact path='/products'>
-              {/* <Products /> need state from 'const App' for inventory here */}
+              <AllProducts  products={products} setProducts={setProducts} />
+              {/* <Products /> need state from 'const App' for inventory here */ }
             </Route>
             <Route exact path='/products/:id'>
               {/* <SingleProduct
@@ -61,9 +68,11 @@ const App = () => {
               {/* <User /> need cart state here */}
             </Route>
             <Route exact path='/login'>
+              <Login setLoggedIn={setLoggedIn} setToken={setToken} setMessage={setMessage} token={token}/> 
               {/* <Login /> need loggedIn state (setLoggedIn?) */}
             </Route>
             <Route exact path='/register'>
+              <Register token={token} setToken={setToken} setMessage={setMessage}/>
               {/* <Register /> need loggedIn state (setLoggedIn?) */}
             </Route>
             <Route exact path='/admin'>
