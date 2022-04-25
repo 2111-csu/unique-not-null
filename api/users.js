@@ -18,7 +18,7 @@ usersRouter.use('/',(req, res, next) => {
 });
 
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, email } = req.body;
+  const { username, password, email, firstName, lastName } = req.config.data;
   try {
     const _user = await getUserByUsername(username);
 
@@ -30,9 +30,11 @@ usersRouter.post("/register", async (req, res, next) => {
       const newUser = await createUser({
         username,
         password,
-        email
+        email,
+        firstName,
+        lastName
       });
-
+      console.log('newuser', newUser);
       const token = jwt.sign(
         {
           id: newUser.id,
@@ -51,12 +53,13 @@ usersRouter.post("/register", async (req, res, next) => {
       });
     }
   } catch (error) {
+    console.log(error);
     next(error);
   }
 });
 
 usersRouter.post("/login", async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password } = req.config.data;
 
   if (!username || !password) {
     next({ message: "Please enter a username and password" });
@@ -75,6 +78,7 @@ usersRouter.post("/login", async (req, res, next) => {
       next({ message: "Username or password is incorrect." });
     }
   } catch (error) {
+    console.log(error);
     next(error);
   }
 });
