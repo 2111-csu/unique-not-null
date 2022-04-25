@@ -20,12 +20,12 @@ import '../style/App.css';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
-  
   const userAuth = JSON.parse(localStorage.getItem('user'));
   const userToken = JSON.parse(localStorage.getItem('token'));
   const [token, setToken] = useState(userToken);
   const [loggedIn, setLoggedIn] = useState(userAuth);
   const [message, setMessage] = useState(null);
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -55,14 +55,13 @@ const App = () => {
               {/* <Payment /> need state from 'const App' for cart here */}
             </Route>
             <Route exact path='/products'>
-              <AllProducts  products={products} setProducts={setProducts} />
-              {/* <Products /> need state from 'const App' for inventory here */ }
+              <AllProducts products={products} setProducts={setProducts}/> {/*need state from 'const App' for inventory here*/}
             </Route>
             <Route exact path='/products/:id'>
-              {/* <SingleProduct
+             <SingleProduct
               //need inventory state
               //need cart state
-              /> */}
+              /> 
             </Route>
             <Route exact path='/user-info'>
               {/* <User /> need cart state here */}
