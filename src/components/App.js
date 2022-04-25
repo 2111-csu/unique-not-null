@@ -9,6 +9,7 @@ import {
   AllProducts,
   SingleProduct,
   Login,
+  Register,
   User,
   Title
 } from './'; 
@@ -64,11 +65,11 @@ const App = () => {
         {/* <User /> need cart state here */}
       </Route>
       <Route exact path='/login'>
-        {/* <Login setLoggedIn={setLoggedIn} setToken={setToken} setMessage={setMessage} token={token}/>  */}
+        <Login setLoggedIn={setLoggedIn} setToken={setToken} setMessage={setMessage} /> 
         {/* <Login /> need loggedIn state (setLoggedIn?) */}
       </Route>
       <Route exact path='/register'>
-        {/* <Register token={token} setToken={setToken} setMessage={setMessage}/> */}
+        <Register setToken={setToken} setMessage={setMessage}/>
         {/* <Register /> need loggedIn state (setLoggedIn?) */}
       </Route>
       <Route exact path='/admin'>

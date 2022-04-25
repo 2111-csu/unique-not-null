@@ -1,0 +1,68 @@
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { callApi } from '../axios-services';
+import { Snackbar } from './Snackbar';
+
+const Register = ({setToken, setMessage}) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const history = useHistory();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const result = await callApi ({url: `/api/users/register`, 
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {
+        username,
+        password,
+        email,
+        firstName,
+        lastName
+      }
+    });
+
+    console.log('register result', result);
+    setToken(result.token);
+    if (result.token) {
+      setMessage(result.message);
+      Snackbar();
+      history.push('/login');
+    } else {
+      setMessage(result.message)
+      Snackbar();
+    }
+    
+  }
+  
+  return (
+    <div id='container'>
+      
+      <div id='register'>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor='firstname'>First Name: </label>
+          <input type='text' id='firstname-input' name='firstName' value={firstName} onChange={(event) => setFirstName(event.target.value)}/>
+          <label htmlFor='lastname'>Last Name: </label>
+          <input type='text' id='lastname-input' name='lastName' value={lastName} onChange={(event) => setLastName(event.target.value)}/>
+          <br />
+          <label htmlFor='email'>Email Address: </label>
+          <input type='text' id='email-input' name='email' value={email} onChange={(event) => setEmail(event.target.value)}/>
+          <br />
+          <label htmlFor='username'>UserName: </label>
+          <input type='text' id='username-input' name='username' placeholder='username' value={username} onChange={(event) => setUsername(event.target.value)}/>
+          <label htmlFor='password'>Password: </label>
+          <input type='password' id='password-input' min-length='8' name='password' placeholder='password' value={password} onChange={(event) => setPassword(event.target.value)}/>
+          <button type='submit'>Register</button>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+export default Register;
