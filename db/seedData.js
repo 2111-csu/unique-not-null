@@ -51,7 +51,8 @@ const createTables = async () => {
         CREATE TABLE orders  (
           id SERIAL PRIMARY KEY,
           status TEXT DEFAULT 'created',
-          "userId" INTEGER REFERENCES users(id)
+          "userId" INTEGER REFERENCES users(id),
+          "datePlaced"  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
         );
         
         CREATE TABLE reviews (

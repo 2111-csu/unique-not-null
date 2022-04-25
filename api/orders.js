@@ -31,3 +31,5 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
       throw error;
     }
   });
+
+module.exports = ordersRouter;

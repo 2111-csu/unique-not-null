@@ -1,6 +1,4 @@
 import axios from 'axios';
-const { SERVER_ADDRESS = 'http://localhost:', PORT = 4000 } = process.env;
-const API_URL = process.env.API_URL || SERVER_ADDRESS + PORT;
 // this file holds your frontend network request adapters
 // think about each function as a service that provides data
 // to your React UI through AJAX calls
@@ -31,7 +29,7 @@ export const callApi = async ({ url, method = "GET", token, data }) => {
     if (token) {
       options.headers["Authorization"] = `Bearer ${token}`;
     }
-    const resp = await axios(API_URL + url, options);
+    const resp = await axios(url, options);
     console.log(resp);
     
     if (resp.error) {
@@ -45,7 +43,7 @@ export const callApi = async ({ url, method = "GET", token, data }) => {
 
 export async function getAPIHealth() {
   try {
-    const { data } = await axios.get(`${API_URL}/api/health`);
+    const { data } = await axios.get(`/api/health`);
     console.log(data);
     return data;
   } catch (err) {
