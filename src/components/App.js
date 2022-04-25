@@ -12,7 +12,6 @@ import {
   User
 } from './';
 
-
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
@@ -21,6 +20,12 @@ import '../style/App.css';
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState('');
+  const userAuth = JSON.parse(localStorage.getItem('user'));
+  const userToken = JSON.parse(localStorage.getItem('token'));
+  const [token, setToken] = useState(userToken);
+  const [loggedIn, setLoggedIn] = useState(userAuth);
+  const [message, setMessage] = useState(null);
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -62,9 +67,11 @@ const App = () => {
               {/* <User /> need cart state here */}
             </Route>
             <Route exact path='/login'>
+              <Login setLoggedIn={setLoggedIn} setToken={setToken} setMessage={setMessage} token={token}/> 
               {/* <Login /> need loggedIn state (setLoggedIn?) */}
             </Route>
             <Route exact path='/register'>
+              <Register token={token} setToken={setToken} setMessage={setMessage}/>
               {/* <Register /> need loggedIn state (setLoggedIn?) */}
             </Route>
             <Route exact path='/admin'>

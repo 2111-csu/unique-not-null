@@ -62,8 +62,97 @@ const getOrdersByUser = async (user) => {
   }
 };
 
+const getOrderById = async (id) => {
+  try {
+    const { rows: [order] } = await client.query(`
+       SELECT * FROM orders
+       WHERE id=$1;
+      `,[id]);
+    return order;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getAllOrders = async () => {
+  try {
+    const { rows: orderIds } = await client.query(`
+           SELECT id FROM products;
+           `);
+
+    const orders = await Promise.all(
+      orderIds.map((order) => getOrderById(order.id))
+    );
+
+    return orders;
+  } catch (error) {
+    throw error;
+  }
+}
+
+/*Please check this function*/
+const getOrdersByProduct = async({id}) =>  {
+  try {
+    const { rows: orders } = await client.query(`
+        SELECT orders.*, users.username AS "creatorName"
+         FROM ORDERS
+        JOIN order_products ON orders.id=order_products."orderId"
+        WHERE "productId"=${id}  
+        `);
+
+    const { rows: products } = await client.query(`
+       SELECT * FROM products 
+       JOIN order_products ON products.id=order_products."productId"
+       `);
+
+    orders.forEach((order) => {
+      order.products = products.filter(
+        (product) => product.productId == product.id
+      );
+    });
+
+    return orders;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
 module.exports = {
   createOrder,
   updateOrder,
-  getOrdersByUser
+  getOrdersByUser,
+  getOrderById,
+  getAllOrders,
+  getOrdersByProduct
+  //getCartByUser
 };
+
+
+/* Need help with this code
+
+const getCartByUser = ({ username }) =>  {
+  try {
+    const { rows: order } = await client.query(
+      `
+        SELECT orders.*, users.username AS "creatorName"
+        FROM orders
+        JOIN users ON orders."userId"=users.id
+        WHERE username=$1 AND status = "isCreated";
+          `,
+      [username]
+    );
+
+    const { rows: products } = await client.query(`
+         SELECT * FROM products
+         JOIN order_products ON products.id=order_products."productId"
+         `);
+
+    order.products = products.filter(product => product.id == product.productId)
+         
+     return order;
+  } catch (error) {
+    throw error;
+  }
+} */
