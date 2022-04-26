@@ -11,7 +11,8 @@ const Login = ({setToken, setLoggedIn, setMessage}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const result = await callApi ({url: `/api/users/login`, 
+      const result = await callApi ({
+        url: `/api/users/login`, 
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
@@ -23,16 +24,17 @@ const Login = ({setToken, setLoggedIn, setMessage}) => {
       });
       
       
-      setToken(result.token);
-      if (result.token) {
-        localStorage.setItem('token', JSON.stringify(result.token));
-        localStorage.setItem('user', JSON.stringify(result.user.username));
-        setLoggedIn(username);
-        setMessage(result.message);
+      setToken(result.data.token);
+      console.log(result.data.token);
+      if (result.data.token) {
+        localStorage.setItem('token', JSON.stringify(result.data.token));
+        localStorage.setItem('user', JSON.stringify(result.data.user.username));
+        setLoggedIn(result.data.user.username);
+        setMessage(result.data.message);
         Snackbar();
         history.push('/');
       } else {
-        setMessage(result.message)
+        setMessage(result.data.message)
         Snackbar();
       }
       
