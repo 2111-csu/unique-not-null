@@ -50,7 +50,7 @@ const createTables = async () => {
 
         CREATE TABLE orders  (
           id SERIAL PRIMARY KEY,
-          status TEXT DEFAULT 'created',
+          status TEXT NOT NULL,
           "userId" INTEGER REFERENCES users(id),
           "datePlaced"  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
         );
@@ -82,10 +82,9 @@ const createTables = async () => {
     console.log("Starting to create users...");
     try {
       const usersToCreate = [
-        { username: "Nick", password: "nick12345" },
-        { username: "Marisa", password: "marisa12345" },
-        { username: "David", password: "david12345" },
-        { username: "admin", password: "admin12345"},
+        { firstName: 'Nick', lastName: 'Mullen', Username: 'Sprocket', password: '123456789', email: '25nmullen@gmail.com', isAdmin: true },
+        { firstName: 'Marisa', lastName: 'Fontana', Username: 'marisapf', password: 'marisa22', email:'marisaonthego@gmail.com' , isAdmin: true },
+        { firstName: 'David', lastName: 'Willis', Username: 'spinnerfall', password: 'Cruce$31', email: 'dafewillis@gmail.com', isAdmin: true },
       ];
       const users = await Promise.all(usersToCreate.map(createUser));
   
@@ -95,8 +94,8 @@ const createTables = async () => {
     } catch (error) {
       console.error("Error creating users!");
       throw error;
-    }
-  }
+    };
+  };
 
 const createInitialProducts = async () => {
     console.log("starting to create products...");
@@ -159,10 +158,10 @@ const createInitialProducts = async () => {
     console.log('starting to create orders...');
     try {
       const ordersToCreate = [
-        {product: 'Butter Toffee Popcorn', quantity: 5, total: 40},
-        {product: 'Chocolate Drizzle Popcorn', quantity: 10, total: 80},
-        {product: 'Butter Praline Popcorn', quantity: 3, total: 24},
-        {product: 'Classic Cracker Jack Popcorn', quantity: 7, total: 56},
+        {userId: 1, status: 'created'},
+        {userId: 2, status: 'canceled'},
+        {userId: 3, status: 'completed'},
+        {userId: 4, status: 'processing'},
       ]
         const orders = await Promise.all(
           ordersToCreate.map((order) => createOrder(order))
@@ -170,6 +169,27 @@ const createInitialProducts = async () => {
         console.log('Orders Created: ', orders);
         console.log('Finished creating products.');
     } catch(error) {
+      throw error;
+    };
+  };
+
+  const createInitialOrderProducts = async () => {
+    console.log('starting to create orderProducts...')
+    try {
+      const orderProductstoCreate = [
+        {orderId: 1, productId: 1, price: 5, quantity: 2},
+        {orderId: 2, productId: 2, price: 10, quantity: 3},
+        {orderId: 1, productId: 3, price: 15, quantity: 3},
+        {orderId: 2, productId: 4, price: 20, quantity: 1},
+        {orderId: 3, productId: 5, price: 25, quantity: 2},
+        {orderId: 4, productId: 6, price: 50, quantity: 1},
+      ]
+        const orderProducts = await Promise.all(
+          orderProductstoCreate.map((orderProduct) => createProduct(orderProduct))
+        );
+        console.log('OrderProducts Created: ', orderProducts);
+        console.log('Finished creating orderProducts.')
+    }catch(error) {
       throw error;
     };
   };
@@ -198,10 +218,11 @@ const createInitialProducts = async () => {
       client.connect();
       await dropTables();
       await createTables();
-      // await createInitialUsers();
+      await createInitialUsers();
       await createInitialProducts();
-      // await createInitialOrders();
-      // await createInitialReviews();
+      await createInitialOrders();
+      await createInitialOrderProducts();
+      await createInitialReviews();
     } catch (error) {
       console.log("Error during rebuildDB");
       throw error;

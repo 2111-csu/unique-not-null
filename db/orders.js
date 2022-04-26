@@ -2,14 +2,13 @@
 
 const client = require('./client');
 
-const createOrder = async ({ name, total, userId, productId }) => {
+const createOrder = async ({ status = 'created', userId }) => {
   try {
     const { rows: [order] } = await client.query(`
-      INSERT INTO orders (name, total, 'userId',  'productId')
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO orders (status, "userId")
+      VALUES ($1, $2)
       RETURNING *;
-    `, [name, total, userId, productId]);
-
+    `, [status, userId]);
     return order;
   } catch (error) {
     throw error
@@ -76,26 +75,22 @@ const getOrderById = async (id) => {
 
 const getAllOrders = async () => {
   try {
-    const { rows: orderIds } = await client.query(`
-           SELECT id FROM products;
-           `);
-
-    const orders = await Promise.all(
-      orderIds.map((order) => getOrderById(order.id))
-    );
-
-    return orders;
+    const { rows } = await client.query(`
+      SELECT * FROM orders;
+      `);
+      return rows;
   } catch (error) {
     throw error;
-  }
-}
+  };
+};
+
 
 /*Please check this function*/
 const getOrdersByProduct = async({id}) =>  {
   try {
     const { rows: orders } = await client.query(`
         SELECT orders.*, users.username AS "creatorName"
-         FROM ORDERS
+         FROM orders
         JOIN order_products ON orders.id=order_products."orderId"
         WHERE "productId"=${id}  
         `);
