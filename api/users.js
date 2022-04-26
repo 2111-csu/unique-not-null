@@ -1,5 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
+const { JWT_SECRET = 'neverTell' } = process.env;
 
 const {
   createUser,
@@ -12,13 +13,15 @@ const {
 const jwt = require("jsonwebtoken");
 const { requireUser } = require("./utils");
 
-usersRouter.use('/',(req, res, next) => {
-  //console.log("A request is being made to /users");
-  res.send('A request is being made to users.');
-});
+// usersRouter.use('/',(req, res, next) => {
+//   //console.log("A request is being made to /users");
+//   console.log(req.body);
+//   res.send('A request is being made to users.');
+// });
 
 usersRouter.post("/register", async (req, res, next) => {
-  const { username, password, email, firstName, lastName } = req.config.data;
+  const { username, password, email, firstName, lastName } = req.body;
+  console.log(req.body);
   try {
     const _user = await getUserByUsername(username);
 
@@ -40,7 +43,7 @@ usersRouter.post("/register", async (req, res, next) => {
           id: newUser.id,
           username: newUser.username,
         },
-        process.env.JWT_SECRET,
+        JWT_SECRET,
         {
           expiresIn: "1w",
         }
@@ -59,7 +62,7 @@ usersRouter.post("/register", async (req, res, next) => {
 });
 
 usersRouter.post("/login", async (req, res, next) => {
-  const { username, password } = req.config.data;
+  const { username, password } = req.body;
 
   if (!username || !password) {
     next({ message: "Please enter a username and password" });
@@ -70,7 +73,7 @@ usersRouter.post("/login", async (req, res, next) => {
     if (user) {
       const token = jwt.sign(
         { id: user.id, username: user.username },
-        process.env.JWT_SECRET
+        JWT_SECRET
       );
 
       res.send({ user, message: "You're logged in!", token });

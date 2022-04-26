@@ -13,32 +13,35 @@ const Register = ({setToken, setMessage}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const result = await callApi ({url: `/api/users/register`, 
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: {
-        username,
-        password,
-        email,
-        firstName,
-        lastName
+    try {
+      const result = await callApi ({
+        url: `/api/users/register`, 
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          username,
+          password,
+          email,
+          firstName,
+          lastName
+        }
+      });
+      
+      console.log('register result', result);
+      setToken(result.data.token);
+      if (result.data.token) {
+        setMessage(result.data.message);
+        Snackbar();
+        history.push('/login');
+      } else {
+        setMessage(result.data.message)
+        Snackbar();
       }
-    });
-
-    console.log('register result', result);
-    setToken(result.token);
-    if (result.token) {
-      setMessage(result.message);
-      Snackbar();
-      history.push('/login');
-    } else {
-      setMessage(result.message)
-      Snackbar();
+    } catch (error) {
+      throw error;
     }
-    
   }
   
   return (

@@ -20,6 +20,7 @@ import axios from 'axios';
 export const callApi = async ({ url, method = "GET", token, data }) => {
   try {
     const options = {
+      url,
       method: method.toUpperCase(),
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +30,7 @@ export const callApi = async ({ url, method = "GET", token, data }) => {
     if (token) {
       options.headers["Authorization"] = `Bearer ${token}`;
     }
-    const resp = await axios(url, options);
+  const resp = await axios(options);
     console.log(resp);
     
     if (resp.error) {
