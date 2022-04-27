@@ -222,7 +222,7 @@ const createInitialProducts = async () => {
       await createInitialProducts();
       await createInitialOrders();
       await createInitialOrderProducts();
-      await createInitialReviews();
+      // await createInitialReviews();
     } catch (error) {
       console.log("Error during rebuildDB");
       throw error;
