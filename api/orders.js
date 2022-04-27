@@ -2,13 +2,21 @@ const express = require("express");
 const ordersRouter = express.Router();
 
 const { getAllOrders, createOrder } = require("../db/orders");
-const { requireUser } = require("./utils");
+const { requireUser, checkAdmin } = require("./utils");
 
 /*GET return a list of orders in the database, need admin, how about requireAdmin function?*/
-ordersRouter.get("/", async (req, res, next) => {
+ordersRouter.get("/", requireUser, async (req, res, next) => {
     try {
-      const orders = await getAllOrders();
-      res.send(orders);
+      if (checkAdmin(req.user)) {
+        const orders = await getAllOrders();
+        res.send(orders);
+      } else {
+        res.send({
+          error: "AdminError",
+          message: "You must be an Admin to access that"
+        })
+      }
+      
     } catch (error) {
       throw error;
     }
@@ -16,16 +24,13 @@ ordersRouter.get("/", async (req, res, next) => {
 
 /*POST Create a new order*/
 ordersRouter.post("/", requireUser, async (req, res, next) => {
-    const { name, total, userId, productId} = req.body;
+    const { userId, status} = req.body;
     try {
       const order = await createOrder(req.body);
   
       res.send({
-        id:order.id,
-        name,
-        total,
         userId,
-        productId
+        status
       });
     } catch (error) {
       throw error;

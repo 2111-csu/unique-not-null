@@ -12,6 +12,7 @@ const {
 
 const jwt = require("jsonwebtoken");
 const { requireUser } = require("./utils");
+const { getOrdersByUser } = require("../db/orders");
 
 // usersRouter.use('/',(req, res, next) => {
 //   //console.log("A request is being made to /users");
@@ -114,9 +115,25 @@ usersRouter.get("/:userId", async (req, res, next) => {
   } catch (error) {
     throw error;
   }
-  });
+});
 
-  
+usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    if (checkAdmin(req.user)) {
+      const orders = await getOrdersByUser(userId);
+      res.send(orders);
+    } else {
+      res.send({
+        error: "AdminError",
+        message: "You must be an Admin to access that"
+      })
+    }
+    
+  } catch (error) {
+    throw error;
+  }
+});
 
 module.exports = usersRouter;
 
