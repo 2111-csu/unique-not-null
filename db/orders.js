@@ -38,22 +38,21 @@ const updateOrder = async ({id, ...fields}) => {
 const getOrdersByUser = async (user) => {
   try {
     const {rows: orders } = await client.query(`
-      SELECT orders.*, username
+      SELECT orders.*, users.username
       FROM users
       JOIN orders ON orders."userId"=users.id
       WHERE users.id=$1;
     `, [user.id]);
 
-      // I dont think we need below to get the products if we put them in an array in the table
-    // const {rows: products} = await client.query(`
-    //   SELECT * 
-    //   FROM products
-    //   JOIN routine_activities ON activities.id=routine_activities."activityId"
-    // `);
-     // wont need this either
-    // routines.forEach((routine) => {
-    //   routine.activities = activities.filter((activity) => activity.routineId == routine.id);
-    // });
+    const {rows: products} = await client.query(`
+      SELECT * FROM products
+      JOIN order_products ON products.id=order_products."productId"
+    `);
+
+    orders.forEach((order) => {
+      order.products = products.filter((product) => product.orderId == order.id);
+    })
+    console.log('order', orders);
     
     return orders;
   } catch (error) {
@@ -67,6 +66,14 @@ const getOrderById = async (id) => {
        SELECT * FROM orders
        WHERE id=$1;
       `,[id]);
+
+    const {rows: products} = await client.query(`
+      SELECT * FROM products
+      JOIN order_products ON products.id=order_products."productId"
+    `);
+
+    order.products = products.filter((product) => product.orderId == order.id);
+    console.log('order', order);
     return order;
   } catch (error) {
     throw error;
@@ -89,20 +96,19 @@ const getAllOrders = async () => {
 const getOrdersByProduct = async({id}) =>  {
   try {
     const { rows: orders } = await client.query(`
-        SELECT orders.*, users.username AS "creatorName"
-         FROM orders
-        JOIN order_products ON orders.id=order_products."orderId"
-        WHERE "productId"=${id}  
-        `);
-
+      SELECT * FROM orders
+      JOIN order_products ON orders.id=order_products."orderId"
+      WHERE "productId"=${id}  
+      `);
+    
     const { rows: products } = await client.query(`
-       SELECT * FROM products 
-       JOIN order_products ON products.id=order_products."productId"
-       `);
+      SELECT * FROM products 
+      JOIN order_products ON products.id=order_products."productId"
+      `);
 
     orders.forEach((order) => {
       order.products = products.filter(
-        (product) => product.productId == product.id
+        (product) => product.orderId == orderid
       );
     });
 
