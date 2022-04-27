@@ -161,7 +161,6 @@ const createInitialProducts = async () => {
         {userId: 1, status: 'created'},
         {userId: 2, status: 'canceled'},
         {userId: 3, status: 'completed'},
-        {userId: 4, status: 'processing'},
       ]
         const orders = await Promise.all(
           ordersToCreate.map((order) => createOrder(order))
@@ -182,10 +181,10 @@ const createInitialProducts = async () => {
         {orderId: 1, productId: 3, price: 15, quantity: 3},
         {orderId: 2, productId: 4, price: 20, quantity: 1},
         {orderId: 3, productId: 5, price: 25, quantity: 2},
-        {orderId: 4, productId: 6, price: 50, quantity: 1},
+        {orderId: 3, productId: 6, price: 50, quantity: 1},
       ]
         const orderProducts = await Promise.all(
-          orderProductstoCreate.map((orderProduct) => createProduct(orderProduct))
+          orderProductstoCreate.map((orderProduct) => addProductToOrder(orderProduct))
         );
         console.log('OrderProducts Created: ', orderProducts);
         console.log('Finished creating orderProducts.')
