@@ -9,4 +9,12 @@ const requireUser = (req, res, next) => {
   next();
 }
 
-module.exports = { requireUser };
+const checkAdmin = async (user) => {
+  if (user.isAdmin) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+module.exports = { requireUser, checkAdmin };
