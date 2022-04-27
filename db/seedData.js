@@ -12,8 +12,8 @@ const dropTables = async () => {
       DROP TABLE IF EXISTS order_products;
       DROP TABLE IF EXISTS reviews;
       DROP TABLE IF EXISTS orders;
-      DROP TABLE IF EXISTS users;
       DROP TABLE IF EXISTS products;
+      DROP TABLE IF EXISTS users;
     `);
   
       console.log("Finished dropping tables!");
@@ -36,7 +36,7 @@ const createTables = async () => {
           imageurl TEXT DEFAULT 'https://picsum.photos/id/1080/400/300',
           username VARCHAR(255) UNIQUE NOT NULL,
           password VARCHAR(255) UNIQUE NOT NULL,
-          "isAdmin" BOOLEAN DEFAULT VALUE false
+          "isAdmin" BOOLEAN DEFAULT false
         );
   
         CREATE TABLE products (
