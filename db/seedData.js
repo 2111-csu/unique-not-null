@@ -1,6 +1,7 @@
 const client = require('./client')
 const { createUser } = require("./users");
 const { createProduct, getAllProducts} = require("./products")
+const { addProductToOrder} = require('./orderProducts')
 const { createOrder, getAllOrders } = require('./orders');
 const { createReview } = require ('./reviews');
 
@@ -35,7 +36,7 @@ const createTables = async () => {
           imageurl TEXT DEFAULT 'https://picsum.photos/id/1080/400/300',
           username VARCHAR(255) UNIQUE NOT NULL,
           password VARCHAR(255) UNIQUE NOT NULL,
-          "isAdmin" BOOLEAN DEFAULT false
+          "isAdmin" BOOLEAN DEFAULT VALUE false
         );
   
         CREATE TABLE products (
