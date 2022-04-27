@@ -67,7 +67,8 @@ const createTables = async () => {
           "productId" INTEGER REFERENCES products(id),
           "orderId" INTEGER REFERENCES orders(id),
           price NUMERIC NOT NULL,
-          quantity INTEGER NOT NULL DEFAULT 0
+          quantity INTEGER NOT NULL DEFAULT 0,
+          UNIQUE ("orderId", "productId")
         );
   
       `);

@@ -18,6 +18,7 @@ const addProductToOrder = async ({orderId, productId, price, quantity}) => {
         const { rows: [orderProduct] } = await client.query(`
             INSERT INTO order_products ("orderId", "productId", price, quantity)
             VALUES($1, $2, $3, $4)
+            ON CONFLICT ("orderId", "productId") DO NOTHING
             RETURNING *
         `, [orderId, productId, price, quantity]);
         return orderProduct;
