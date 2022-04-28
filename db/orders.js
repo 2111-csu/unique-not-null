@@ -82,13 +82,24 @@ const getOrderById = async (id) => {
 
 const getAllOrders = async () => {
   try {
-    const { rows } = await client.query(`
+    const { rows: orders } = await client.query(`
       SELECT * FROM orders;
       `);
-      return rows;
+      
+    const {rows: products} = await client.query(`
+      SELECT * FROM products
+      JOIN order_products ON products.id=order_products."productId"
+    `);
+
+    orders.forEach((order) => {
+      order.products = products.filter((product) => product.orderId == order.id);
+    })
+    console.log('order', orders);
+    
+    return orders;
   } catch (error) {
     throw error;
-  };
+  }
 };
 
 /*Please check this function*/
@@ -107,7 +118,7 @@ const getOrdersByProduct = async({id}) =>  {
 
     orders.forEach((order) => {
       order.products = products.filter(
-        (product) => product.orderId == orderid
+        (product) => product.orderId == order.id
       );
     });
 
@@ -118,23 +129,23 @@ const getOrdersByProduct = async({id}) =>  {
 };
 
 
-const getCartByUser = async(userId) =>  {
+const getCartByUser = async (userId) =>  {
   try {
     const { rows: orders } = await client.query(
       `
-        SELECT orders * FROM orders
+        SELECT * FROM orders
         JOIN users ON orders."userId"=users.id
-        WHERE id=${userId} AND status="isCreated";
-          `,
+        WHERE users.id=$1 AND orders.status = 'created';
+        `, [userId]
     );
 
-    const { rows: products } = await client.query(`
-         SELECT * FROM products
-         JOIN order_products ON products.id=order_products."productId"
-         `);
+    const {rows: products} = await client.query(`
+      SELECT * FROM products
+      JOIN order_products ON products.id=order_products."productId"
+    `);
 
     orders.forEach((order) => {
-      order[products] = order.filter((product) =>
+      order.products = products.filter((product) =>
         product.productId == product.id
       )
     });

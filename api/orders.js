@@ -6,8 +6,9 @@ const { requireUser, checkAdmin } = require("./utils");
 
 /*GET return a list of orders in the database, need admin, how about requireAdmin function?*/
 ordersRouter.get("/", requireUser, async (req, res, next) => {
+    
     try {
-      if (checkAdmin(req.user)) {
+      if (checkAdmin) {
         const orders = await getAllOrders();
         res.send(orders);
       } else {
@@ -24,7 +25,7 @@ ordersRouter.get("/", requireUser, async (req, res, next) => {
 
 /*POST Create a new order*/
 ordersRouter.post("/", requireUser, async (req, res, next) => {
-    const { userId, status} = req.body;
+    const { userId, status } = req.body;
     try {
       const order = await createOrder(req.body);
   
@@ -38,11 +39,11 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
   });
 
   ordersRouter.get('/cart', requireUser, async (req, res, next) => {
-      const { userId } = req.params;
+      const { id } = req.user;
 
       try {
 
-        const userCart = await getCartByUser(userId)
+        const userCart = await getCartByUser(id)
         res.send(userCart)
       }
     
