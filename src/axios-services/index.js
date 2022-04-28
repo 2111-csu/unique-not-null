@@ -23,22 +23,25 @@ export const callApi = async ({ url, method = "GET", token, data }) => {
       url,
       method: method.toUpperCase(),
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json; charset=utf-8",
       },
       data: data
     };
     if (token) {
       options.headers["Authorization"] = `Bearer ${token}`;
     }
-  const resp = await axios(options);
+    console.log('options', options);
+    const resp = await axios(options);
+    
     console.log(resp);
     
     if (resp.error) {
+      console.log(resp.error);
       throw resp.error;
     }
     return resp;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 

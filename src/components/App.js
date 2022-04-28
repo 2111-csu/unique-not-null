@@ -11,6 +11,7 @@ import {
   Login,
   Register,
   User,
+  SingleUser,
   Title
 } from './'; 
 import '../style/App.css';
@@ -77,6 +78,9 @@ const App = () => {
       </Route>
       <Route exact path='/'>
         {/* <Home /> */}
+      </Route>
+      <Route exact path='/account'>
+        <SingleUser token={token} loggedIn={loggedIn}/>
       </Route>
     </div>
   </>;

@@ -21,7 +21,7 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage }) => {
     <div id='navbar'>
       <Link className='navlink' to="/">Home</Link>
       <Link className='navlink'to="/products">Products</Link>
-      {loggedIn? <Link className='navlink' to="/">My Orders</Link> : <Link className='navlink' to="/login">Login</Link>}
+      {loggedIn? <Link className='navlink' to="/account">My Orders</Link> : <Link className='navlink' to="/login">Login</Link>}
       {loggedIn? <Link className='navlink' to="/" onClick={Logout}>Logout</Link> : <Link className='navlink' to="/register">Register</Link>}
     </div>
     <div id='snackbar'>{message}</div>
