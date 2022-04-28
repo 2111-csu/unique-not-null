@@ -1,7 +1,7 @@
 const express = require("express");
 const ordersRouter = express.Router();
 
-const { getAllOrders, createOrder } = require("../db/orders");
+const { getAllOrders, createOrder, getCartByUser } = require("../db/orders");
 const { requireUser, checkAdmin } = require("./utils");
 
 /*GET return a list of orders in the database, need admin, how about requireAdmin function?*/
@@ -36,5 +36,19 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
       throw error;
     }
   });
+
+  ordersRouter.get('/cart', requireUser, async (req, res, next) => {
+      const { userId } = req.params;
+
+      try {
+
+        const userCart = await getCartByUser(userId)
+        res.send(userCart)
+      }
+    
+      catch (error) {
+        throw error;
+      }
+  })
 
 module.exports = ordersRouter;

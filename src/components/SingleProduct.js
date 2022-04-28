@@ -7,14 +7,11 @@ const SingleProduct = ({ products }) => {
   const [product] = products.filter(product => product.id === Number(productId));
 
   return (
-    <div
-      key={product.id}
-      id='single-product'
-      style={{ border: "1px solid black" }}>
+    <div key={product.id} id='single-product' >
       <h4><u>Name:</u>{product.name}</h4>
       <h4><u>Description:</u>{product.description}</h4>
       <h4><u>Price: </u>{product.price}</h4>
-      <img src={product.imageurl} alt={`photo of ${product.name} the ${product.name}`}/>
+      <img src={product.imageurl} alt={`the ${product.name}`}/>
       <h4><u>In stock?</u>{product.inStock}</h4>   
     </div>
   )
@@ -22,3 +19,5 @@ const SingleProduct = ({ products }) => {
 };
 
 export default SingleProduct;
+
+// from line 17, alt={`photo of ${product.name} the ${product.name}`}

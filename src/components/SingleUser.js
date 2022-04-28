@@ -16,7 +16,7 @@ const SingleUser = ({ token, loggedIn }) => {
        });
        setUser(apiResponse);
        console.log('api response, user:', apiResponse);
-     data
+     //data
     };
     getData();
   }, [setUser]);
@@ -29,7 +29,7 @@ const SingleUser = ({ token, loggedIn }) => {
           <h3>First Name: {user.firstName}</h3>
           <h3>Last Name: {user.lastName}</h3>
           <h3>email address: {user.email}</h3>
-          <img src="${user.imageurl}" alt="photo of ${user.username}"></img>
+          <img src="${user.imageurl}" alt="${user.username}"></img>
           <h3>username: {user.username}</h3>
 
           {myOrders.map((order) => {
