@@ -118,7 +118,19 @@ const getOrdersByProduct = async({id}) =>  {
   }
 };
 
-
+//please look at the code for this function (david, 4/27/22)
+const getCartByUser = async (userId) => {
+  try {
+    const cart = await client.query(`
+      SELECT * FROM orders
+      WHERE "userId" = $1
+    `, [userId]);
+    console.log(cart.rows, "userCart");
+    return cart.rows[0];
+  } catch (error) {
+    throw error;
+  };
+};
 
 module.exports = {
   createOrder,
@@ -126,8 +138,8 @@ module.exports = {
   getOrdersByUser,
   getOrderById,
   getAllOrders,
-  getOrdersByProduct
-  //getCartByUser
+  getOrdersByProduct,
+  getCartByUser
 };
 
 
