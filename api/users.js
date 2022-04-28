@@ -107,21 +107,22 @@ usersRouter.get("/:username", async (req, res, next) => {
   }
 });
 
-/*Do we need this?*/
-usersRouter.get("/:userId", async (req, res, next) => {
-  const { userId } = req.params;
-  try {
-    const user = await getUserById(userId);
-    res.send(user);
-  } catch (error) {
-    throw error;
-  }
-});
+// /*Do we need this?*/
+// usersRouter.get("/:userId", async (req, res, next) => {
+//   const { userId } = req.params;
+//   try {
+//     const user = await getUserById(userId);
+//     console.log('user', user);
+//     res.send(user);
+//   } catch (error) {
+//     throw error;
+//   }
+// });
 
-usersRouter.get('/:username/orders', requireUser, async (req, res, next) => {
+usersRouter.get('/:username/orders', async (req, res, next) => {
   const { username } = req.params;
   try {
-    const _user = getUserByUsername(username);
+    const _user = await getUserByUsername(username);
     console.log('user', _user);
     if (_user.isAdmin === true) {
       const orders = await getOrdersByUser(username);

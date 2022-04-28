@@ -5,6 +5,7 @@ const SingleUser = ({ token, loggedIn }) => {
   const [user, setUser] = useState({});
   const [myOrders, setMyOrders] = useState([]);
 
+  useEffect(() => {
     const getData = async () => {
       try {
         const apiResponse = await callApi({
@@ -18,9 +19,10 @@ const SingleUser = ({ token, loggedIn }) => {
         console.log(error);
       }
     };
-
     getData();
 
+  }, []);
+    
   return (
     <div>
       {token && loggedIn ? (
