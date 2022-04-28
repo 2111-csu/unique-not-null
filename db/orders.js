@@ -91,7 +91,6 @@ const getAllOrders = async () => {
   };
 };
 
-
 /*Please check this function*/
 const getOrdersByProduct = async({id}) =>  {
   try {
@@ -118,19 +117,34 @@ const getOrdersByProduct = async({id}) =>  {
   }
 };
 
-//please look at the code for this function (david, 4/27/22)
-const getCartByUser = async (userId) => {
+
+const getCartByUser = async(userId) =>  {
   try {
-    const cart = await client.query(`
-      SELECT * FROM orders
-      WHERE "userId" = $1
-    `, [userId]);
-    console.log(cart.rows, "userCart");
-    return cart.rows[0];
+    const { rows: orders } = await client.query(
+      `
+        SELECT orders * FROM orders
+        JOIN users ON orders."userId"=users.id
+        WHERE id=${userId} AND status="isCreated";
+          `,
+    );
+
+    const { rows: products } = await client.query(`
+         SELECT * FROM products
+         JOIN order_products ON products.id=order_products."productId"
+         `);
+
+    orders.forEach((order) => {
+      order[products] = order.filter((product) =>
+        product.productId == product.id
+      )
+    });
+         
+     return orders;
   } catch (error) {
     throw error;
-  };
-};
+  }
+}
+
 
 module.exports = {
   createOrder,
@@ -145,16 +159,14 @@ module.exports = {
 
 /* Need help with this code
 
-const getCartByUser = ({ username }) =>  {
+const getCartByUser = ({ userId}) =>  {
   try {
     const { rows: order } = await client.query(
       `
-        SELECT orders.*, users.username AS "creatorName"
-        FROM orders
+        SELECT orders * FROM orders
         JOIN users ON orders."userId"=users.id
-        WHERE username=$1 AND status = "isCreated";
+        WHERE id=${userId} AND status="isCreated";
           `,
-      [username]
     );
 
     const { rows: products } = await client.query(`
@@ -162,9 +174,13 @@ const getCartByUser = ({ username }) =>  {
          JOIN order_products ON products.id=order_products."productId"
          `);
 
-    order.products = products.filter(product => product.id == product.productId)
+    order.forEach((order) => {
+      order.products = order.filter((product) =>
+        product.productId == product.id
+      )
+    });
          
-     return order;
+     return orders;
   } catch (error) {
     throw error;
   }

@@ -7,17 +7,16 @@ const SingleUser = ({ token, loggedIn }) => {
 
   useEffect(() => {
     const getData = async () => {
-      try {
-        const apiResponse = await callApi({
-          url: `/api/users/${loggedIn.username}/orders`,
-          method: 'GET',
-          token
-        });
-        setUser(loggedIn);
-        console.log('api response, user:', apiResponse);
-      } catch (error) {
-        console.log(error);
-      }
+      const apiResponse = await callApi({
+        url: `/api/users/me`,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }, 
+       });
+       setUser(apiResponse);
+       console.log('api response, user:', apiResponse);
+
     };
     getData();
 
@@ -27,12 +26,12 @@ const SingleUser = ({ token, loggedIn }) => {
     <div>
       {token && loggedIn ? (
         <>
-          <h3>user id: {loggedIn.id}</h3>
-          <h3>First Name: {loggedIn.firstName}</h3>
-          <h3>Last Name: {loggedIn.lastName}</h3>
-          <h3>email address: {loggedIn.email}</h3>
-          {/* <img src="${user.imageurl}" alt="photo of ${user.username}"></img> */}
-          <h3>username: {loggedIn.username}</h3>
+          <h3>user id: {user.id}</h3>
+          <h3>First Name: {user.firstName}</h3>
+          <h3>Last Name: {user.lastName}</h3>
+          <h3>email address: {user.email}</h3>
+          <img src="${user.imageurl}" alt="${user.username}"></img>
+          <h3>username: {user.username}</h3>
 
           {myOrders && myOrders.map((order) => {
             return (
