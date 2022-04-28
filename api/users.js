@@ -6,9 +6,9 @@ const {
   createUser,
   getUser,
   getUserByUsername,
-  getUserByUserId,
+  getUserById,
   //getOrdersByUsername
-} = require("../db");
+} = require("../db/users");
 
 const jwt = require("jsonwebtoken");
 const { requireUser } = require("./utils");
@@ -89,8 +89,9 @@ usersRouter.post("/login", async (req, res, next) => {
 
 usersRouter.get("/me", requireUser, async (req, res, next) => {
   try {
-    res.send(req.user);
+    res.send(req.body);
   } catch (error) {
+    console.log('error', error);
     throw error;
   }
 });
@@ -106,22 +107,25 @@ usersRouter.get("/:username", async (req, res, next) => {
   }
 });
 
-/*Do we need this?*/
-usersRouter.get("/:userId", async (req, res, next) => {
-  const { userId } = req.params;
-  try {
-    const user = await getUserByUserId(userId);
-    res.send(user);
-  } catch (error) {
-    throw error;
-  }
-});
+// /*Do we need this?*/
+// usersRouter.get("/:userId", async (req, res, next) => {
+//   const { userId } = req.params;
+//   try {
+//     const user = await getUserById(userId);
+//     console.log('user', user);
+//     res.send(user);
+//   } catch (error) {
+//     throw error;
+//   }
+// });
 
-usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
-  const { userId } = req.params;
+usersRouter.get('/:username/orders', async (req, res, next) => {
+  const { username } = req.params;
   try {
-    if (checkAdmin(req.user)) {
-      const orders = await getOrdersByUser(userId);
+    const _user = await getUserByUsername(username);
+    console.log('user', _user);
+    if (_user.isAdmin === true) {
+      const orders = await getOrdersByUser(username);
       res.send(orders);
     } else {
       res.send({
@@ -131,6 +135,7 @@ usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
     }
     
   } catch (error) {
+    console.log(error);
     throw error;
   }
 });

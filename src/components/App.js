@@ -16,6 +16,7 @@ import {
   Title,
 } from "./";
 import "../style/App.css";
+
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
@@ -92,7 +93,7 @@ const App = () => {
         </Route>
 
         <Route exact path="/account">
-          <SingleUser token={token} logginIn={loggedIn} />
+          <SingleUser token={token} loggedIn={loggedIn} />
         </Route>
 
         <Route exact path="/orders/:orderId">

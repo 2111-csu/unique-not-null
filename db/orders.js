@@ -35,14 +35,14 @@ const updateOrder = async ({id, ...fields}) => {
   }
 };
 
-const getOrdersByUser = async (user) => {
+const getOrdersByUser = async (username) => {
   try {
     const {rows: orders } = await client.query(`
-      SELECT orders.*, users.username
+      SELECT orders.*, users.id, users.username
       FROM users
       JOIN orders ON orders."userId"=users.id
-      WHERE users.id=$1;
-    `, [user.id]);
+      WHERE users.username=$1;
+    `, [username]);
 
     const {rows: products} = await client.query(`
       SELECT * FROM products
@@ -117,7 +117,8 @@ const getOrdersByProduct = async({id}) =>  {
   }
 };
 
-const getCartByUser = async({ userId}) =>  {
+
+const getCartByUser = async(userId) =>  {
   try {
     const { rows: orders } = await client.query(
       `

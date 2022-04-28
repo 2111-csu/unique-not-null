@@ -16,11 +16,12 @@ const SingleUser = ({ token, loggedIn }) => {
        });
        setUser(apiResponse);
        console.log('api response, user:', apiResponse);
-     //data
+
     };
     getData();
-  }, [setUser]);
 
+  }, []);
+    
   return (
     <div>
       {token && loggedIn ? (
@@ -32,7 +33,7 @@ const SingleUser = ({ token, loggedIn }) => {
           <img src="${user.imageurl}" alt="${user.username}"></img>
           <h3>username: {user.username}</h3>
 
-          {myOrders.map((order) => {
+          {myOrders && myOrders.map((order) => {
             return (
               <>
                 <h4>order id: {order.id}</h4>
