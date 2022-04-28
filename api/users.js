@@ -11,7 +11,7 @@ const {
 } = require("../db/users");
 
 const jwt = require("jsonwebtoken");
-const { requireUser } = require("./utils");
+const { requireUser, isAdmin } = require("./utils");
 const { getOrdersByUser } = require("../db/orders");
 
 // usersRouter.use('/',(req, res, next) => {
@@ -89,7 +89,7 @@ usersRouter.post("/login", async (req, res, next) => {
 
 usersRouter.get("/me", requireUser, async (req, res, next) => {
   try {
-    res.send(req.body);
+    res.send(req.user);
   } catch (error) {
     console.log('error', error);
     throw error;
@@ -119,13 +119,14 @@ usersRouter.get("/:username", async (req, res, next) => {
 //   }
 // });
 
-usersRouter.get('/:username/orders', async (req, res, next) => {
-  const { username } = req.params;
+usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
+  const { userId } = req.params;
+  const _user = req.user
   try {
-    const _user = await getUserByUsername(username);
+    const user = await getUserById(userId);
     console.log('user', _user);
     if (_user.isAdmin === true) {
-      const orders = await getOrdersByUser(username);
+      const orders = await getOrdersByUser(user.username);
       res.send(orders);
     } else {
       res.send({

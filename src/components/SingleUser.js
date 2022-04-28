@@ -15,7 +15,7 @@ const SingleUser = ({ token, loggedIn }) => {
         },
         token 
        });
-       setUser(apiResponse);
+       setUser(apiResponse.data);
        console.log('api response, user:', apiResponse);
 
     };
