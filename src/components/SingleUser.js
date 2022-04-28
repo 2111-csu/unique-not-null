@@ -12,7 +12,8 @@ const SingleUser = ({ token, loggedIn }) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-        }, 
+        },
+        token 
        });
        setUser(apiResponse);
        console.log('api response, user:', apiResponse);
@@ -30,7 +31,7 @@ const SingleUser = ({ token, loggedIn }) => {
           <h3>First Name: {user.firstName}</h3>
           <h3>Last Name: {user.lastName}</h3>
           <h3>email address: {user.email}</h3>
-          <img src="${user.imageurl}" alt="${user.username}"></img>
+          <img src={`${user.imageurl}`} alt={`${user.username}`}></img>
           <h3>username: {user.username}</h3>
 
           {myOrders && myOrders.map((order) => {
