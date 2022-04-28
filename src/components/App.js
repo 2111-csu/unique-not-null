@@ -93,7 +93,7 @@ const App = () => {
         </Route>
 
         <Route exact path="/account">
-          <SingleUser token={token} logginIn={loggedIn} />
+          <SingleUser token={token} loggedIn={loggedIn} />
         </Route>
 
         <Route exact path="/orders/:orderId">
