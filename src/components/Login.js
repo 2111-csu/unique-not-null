@@ -29,7 +29,7 @@ const Login = ({setToken, setLoggedIn, setMessage}) => {
       if (result.data.token) {
         localStorage.setItem('token', JSON.stringify(result.data.token));
         localStorage.setItem('user', JSON.stringify(result.data.user.username));
-        setLoggedIn(result.data.user.username);
+        setLoggedIn(result.data.user);
         setMessage(result.data.message);
         Snackbar();
         history.push('/');
