@@ -25,13 +25,19 @@ ordersRouter.get("/", requireUser, async (req, res, next) => {
 
 /*POST Create a new order*/
 ordersRouter.post("/", requireUser, async (req, res, next) => {
-    const { userId, status } = req.body;
+    const { status } = req.body;
+    const { id } = req.user;
+
     try {
-      const order = await createOrder(req.body);
-  
+      const order = await createOrder({
+        status,
+        userId:id
+      });
+      
+      console.log('placed Order,', order);
       res.send({
         userId,
-        status
+        status,
       });
     } catch (error) {
       throw error;
