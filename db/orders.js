@@ -148,7 +148,7 @@ const getCartByUser = async (userId) =>  {
       order.products = products.filter((product) =>
         product.orderId == order.id
       )
-    });
+    });  
          
      return orders;
   } catch (error) {
