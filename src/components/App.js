@@ -14,6 +14,7 @@ import {
   Register,
   User,
   Title,
+  Cart
 } from "./";
 import "../style/App.css";
 
@@ -30,6 +31,7 @@ const App = () => {
   const [message, setMessage] = useState(null);
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [myCart, setMyCart] = useState([]);
 
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
@@ -38,7 +40,7 @@ const App = () => {
 
     const getAPIStatus = async () => {
       const healthy = await callApi({ url: "/api/health", method: "GET" });
-      setAPIHealth(healthy ? "api is up! :D" : "api is down :/");
+      setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
     };
 
     // second, after you've defined your getter above
@@ -64,8 +66,7 @@ const App = () => {
           {/* <Payment /> need state from 'const App' for cart here */}
         </Route>
         <Route exact path="/products">
-          <AllProducts products={products} setProducts={setProducts} />{" "}
-          {/*need state from 'const App' for inventory here*/}
+          <AllProducts products={products} setProducts={setProducts} />
         </Route>
         <Route exact path="/products/:productId">
           <SingleProduct products={products} />
@@ -79,11 +80,9 @@ const App = () => {
             setToken={setToken}
             setMessage={setMessage}
           />
-          {/* <Login /> need loggedIn state (setLoggedIn?) */}
         </Route>
         <Route exact path="/register">
           <Register setToken={setToken} setMessage={setMessage} />
-          {/* <Register /> need loggedIn state (setLoggedIn?) */}
         </Route>
         <Route exact path="/admin">
           {/* <Admin /> need state for inventory here */}
@@ -91,13 +90,14 @@ const App = () => {
         <Route exact path="/">
           {/* <Home /> */}
         </Route>
-
         <Route exact path="/account">
           <SingleUser token={token} loggedIn={loggedIn} />
         </Route>
-
         <Route exact path="/orders/:orderId">
-          <SingleOrder orders={orders} />
+          <SingleOrder orders={orders} token={token}/>
+        </Route>
+        <Route exact path="/cart">
+          <Cart token={token} myCart={myCart} setMyCart={setMyCart}/>
         </Route>
       </div>
     </>
