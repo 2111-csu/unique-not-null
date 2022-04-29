@@ -31,12 +31,12 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
     try {
       const order = await createOrder({
         status,
-        userId:id
+        userId: id
       });
       
       console.log('placed Order,', order);
       res.send({
-        userId,
+        userId: id,
         status,
       });
     } catch (error) {
