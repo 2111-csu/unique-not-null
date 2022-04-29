@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 
 const SingleOrder = ({ orders }) => {
   const { orderId } = useParams();
-
+  
   const [order] = orders.filter((order) => order.id === Number(orderId));
-
+  
   return (
     <>
       <div key={order.id} id="single-order" style={{ border: "1px solid black" }}>
