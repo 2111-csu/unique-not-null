@@ -33,11 +33,6 @@ const App = () => {
   const [orders, setOrders] = useState([]);
   const [myCart, setMyCart] = useState([]);
 
-  const getOrders = async () => {
-    
-  }
-
-
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
     // first, create an async function that will wrap your axios service adapter
@@ -51,7 +46,35 @@ const App = () => {
     // second, after you've defined your getter above
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
-  }, []);
+  }, []); 
+  
+
+  /*not sure what I was trying to do here
+
+  useEffect(() => {
+
+    const getAPIStatus = async () => {
+        const healthy = await callApi({ url: "/api/health", method: "GET" });
+        setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
+      };
+      getAPIStatus();
+       
+      const getOrders = async (id, status, userId) => {
+         const orders = await callApi({ 
+           url: "/api/orders", 
+           method: "GET",
+           token,
+           data:{
+             id,
+             status,
+             userId
+           }
+            });
+         setOrders(orders);
+       }
+       getOrders(); 
+     }, [setOrders]);
+    */
 
   return (
     <>
@@ -109,3 +132,25 @@ const App = () => {
   );
 };
 export default App;
+
+/*
+useEffect(() => {
+
+  const getAPIStatus = async () => {
+      const healthy = await callApi({ url: "/api/health", method: "GET" });
+      setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
+    };
+    getAPIStatus();
+     
+    const getOrders = async () => {
+       const orders = await callApi({ 
+         url: "/api/orders", 
+         method = "GET", 
+         token, 
+         data });
+       setOrders(orders);
+     }
+     getOrders(); 
+   }, [setOrders]);
+  }
+*/

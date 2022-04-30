@@ -20,7 +20,7 @@ body {
   padding: 0;
   height: 100vh;
   width: 100vw;
-  background: lightsteelblue;
+  background: cornflowerblue;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -35,6 +35,35 @@ body {
 #single-product {
   border: 3px solid black;
   margin: 20px;
-  background: beige;
+  background:bisque;
+}
 
+#username-input, #password-input,
+#firstname-input, #lastname-input,
+#email-input, #search-field {
+
+  font: bold 1em Tahoma;
+  border-radius: 4px 4px 4px;
+  height: 30px;
+  width: 200px;
+  margin-right: 20px;
+  border: 1px solid black;
+  margin: 15px;
+
+}
+
+#search-word {
+  font: bold 1em Tahoma;
+  color:deeppink;
+  margin-bottom: 3px;
+}
+
+#single-order {
+  display:flex;
+  flex-direction:column;
+  height:auto;
+  width:auto;
+  border: 2px solid black;
+  background: bisque;
+  margin: 10px
 }
