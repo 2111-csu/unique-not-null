@@ -64,12 +64,7 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
   /*add a single product to an order, if product already exists increment quantity, update price */
   ordersRouter.post('/:orderId/products', requireUser, async (req, res, next) => {
     const { productId, price, quantity } = req.body;
-    const { orderId } = req.params;
-
-    if(quantity) { 
-      quantity = quantity++
-    } 
-
+    const { orderId } = req.params.orderId;
     try {
       const orderProduct = await addProductToOrder({
         orderId,

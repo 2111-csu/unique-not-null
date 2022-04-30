@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom"
+//import { getOrderProductById } from "../../db/orderProducts";
+//import { getProductById } from "../../db/products";
+//import { addProductToOrder } from "../../db/orderProducts";
 import { callApi } from "../axios-services";
 
-const Cart = ({myCart, setMyCart, token}) => {
+const Cart = ({ myCart, setMyCart, token}) => {
   
+  const history = useHistory();
+  const { orderId } = useParams();
+
   useEffect(() => {
     const getCart = async () => {
       const userCart = await callApi({
@@ -16,7 +23,8 @@ const Cart = ({myCart, setMyCart, token}) => {
     }
     getCart();
   }, [])
-  
+
+
   return (
     <>
       <div key={myCart.id} id="single-order" style={{ border: "1px solid black", margin:"20px"}}>
@@ -26,7 +34,7 @@ const Cart = ({myCart, setMyCart, token}) => {
 
       {myCart.products && myCart.products.map((product) => {
         return (
-          <div key={myCart.id}>
+          <div key={product.id}>
             <h4>product id: {product.id}</h4>
             <h4>product name: {product.name}</h4>
             <h4>product description: {product.description}</h4>

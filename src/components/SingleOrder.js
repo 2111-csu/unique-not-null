@@ -4,8 +4,9 @@ import { useParams } from 'react-router-dom';
 const SingleOrder = ({ orders }) => {
   const { orderId } = useParams();
   
-  const [order] = orders.filter((order) => order.id === Number(orderId));
-  
+  const [order] = orders.filter((order) => order.id === (orderId));
+//const order = orders.find((order) => orderId === order.id);
+
   return (
     <>
       <div key={order.id} id="single-order" style={{ border: "1px solid black" }}>
@@ -17,8 +18,8 @@ const SingleOrder = ({ orders }) => {
 
       {order.products.map((product) => {
         return (
-          <div>
-            <h4>order id: {order.id}</h4>
+          <div key={product.id}>
+            {/* <h4>order id: {order.products.orderId}</h4> */}
             <h4>product id: {product.id}</h4>
             <h4>product name: {product.name}</h4>
             <h4>product description: {product.description}</h4>
