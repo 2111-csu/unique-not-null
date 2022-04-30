@@ -1,7 +1,10 @@
 const express = require("express");
 const ordersRouter = express.Router();
 
-const { getAllOrders, createOrder, getCartByUser, getOrderById } = require("../db/orders");
+
+
+const { getAllOrders, createOrder, getCartByUser, updateOrder, getOrderById } = require("../db/orders");
+const { addProductToOrder } = require('../db/orderProducts');
 const { requireUser, checkAdmin } = require("./utils");
 const { cancelOrder } = require('../db/orders.js');
 
@@ -82,5 +85,41 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
       return next(error);
     };
   });
+
+
+  ordersRouter.patch('/:orderId', requireUser, async (req, res, next) => {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    try {
+      const updatedOrder = await updateOrder(orderId, { status });
+      res.send({
+        updatedOrder: updatedOrder
+      });
+    } catch (error) {
+      throw (error);
+    };
+  });
+
+  /*add a single product to an order, if product already exists increment quantity, update price */
+  ordersRouter.post('/:orderId/products', requireUser, async (req, res, next) => {
+    const { productId, price, quantity } = req.body;
+    const { orderId } = req.params;
+
+    if(quantity) { 
+      quantity = quantity++
+    } 
+
+    try {
+      const orderProduct = await addProductToOrder({
+        orderId,
+        productId,
+        price,
+        quantity
+      });
+      res.send(orderProduct);
+    } catch (error) {
+        throw error;
+      }
+});
 
 module.exports = ordersRouter;

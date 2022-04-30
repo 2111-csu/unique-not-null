@@ -19,10 +19,8 @@ const Cart = ({myCart, setMyCart, token}) => {
   
   return (
     <>
-      <div key={myCart.id} id="single-order" style={{ border: "1px solid black" }}>
+      <div key={myCart.id} id="single-order" style={{ border: "1px solid black", margin:"20px"}}>
         <h4><u>Order id: </u>{myCart.id}</h4>
-        <h4><u>Order status: </u>{myCart.status}</h4>
-        <h4><u>User id: </u>{myCart.userId}</h4>
         <h4><u>Date placed: </u>{myCart.datePlaced}</h4>
       </div>
 
@@ -42,3 +40,12 @@ const Cart = ({myCart, setMyCart, token}) => {
 };
 
 export default Cart;
+
+/* 
+ <div key={myCart.id} id="single-order" style={{ border: "1px solid black", margin:"20px"}}>
+        <h4><u>Order id: </u>{myCart.id}</h4>
+        <h4><u>Order status: </u>{myCart.status}</h4>
+        <h4><u>User id: </u>{myCart.userId}</h4>
+        <h4><u>Date placed: </u>{myCart.datePlaced}</h4>
+      </div>
+*/
