@@ -8,7 +8,6 @@ import { callApi } from "../axios-services";
 const Cart = ({ myCart, setMyCart, token}) => {
   
   const history = useHistory();
-  const { orderId } = useParams();
 
   useEffect(() => {
     const getCart = async () => {
