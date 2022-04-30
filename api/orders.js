@@ -6,6 +6,7 @@ const { addProductToOrder } = require('../db/orderProducts');
 
 
 const { requireUser, checkAdmin } = require("./utils");
+const { cancelOrder } = require('../db/orders.js');
 
 /*GET return a list of orders in the database, need admin, how about requireAdmin function?*/
 ordersRouter.get("/", requireUser, async (req, res, next) => {
@@ -34,12 +35,12 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
     try {
       const order = await createOrder({
         status,
-        userId:id
+        userId: id
       });
       
       console.log('placed Order,', order);
       res.send({
-        userId,
+        userId: id,
         status,
       });
     } catch (error) {
@@ -58,8 +59,19 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
     
       catch (error) {
         throw error;
-      }
-  })
+      };
+  });
+
+  ordersRouter.delete('/:orderId', async (req, res, next) => {
+    try {
+      console.log(req.body)
+      const id = req.params.id;
+      const deletedOrder = await cancelOrder(id);
+      res.send(deletedOrder);
+    } catch (error) {
+      return next(error);
+    };
+  });
 
   /*add a single product to an order, if product already exists increment quantity, update price */
   ordersRouter.post('/:orderId/products', requireUser, async (req, res, next) => {

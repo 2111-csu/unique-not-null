@@ -33,7 +33,6 @@ const App = () => {
   const [orders, setOrders] = useState([]);
   const [myCart, setMyCart] = useState([]);
 
-/*original useEffect code*/
   useEffect(() => {
     // follow this pattern inside your useEffect calls:
     // first, create an async function that will wrap your axios service adapter

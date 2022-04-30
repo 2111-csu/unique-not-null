@@ -25,13 +25,16 @@ productsRouter.get("/", async (req, res, next) => {
 productsRouter.post("/", requireUser, async (req, res, next) => {
   const { name, price, imageUrl } = req.body;
   try {
-    const product = await createProduct({ name, price, imageUrl });
+    const product = await createProduct({ name, description, price, imageUrl, inStock, category });
 
     res.send({
       id: product.id,
       name,
+      description,
       price,
-      imageUrl
+      imageUrl,
+      inStock,
+      category
     });
   } catch (error) {
     throw error;
