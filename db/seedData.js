@@ -190,6 +190,8 @@ const createInitialProducts = async () => {
     try {
       const ordersToCreate = [
         {userId: 1, status: 'created'},
+        {userId: 2, status: 'created'},
+        {userId: 3, status: 'created'},
         {userId: 2, status: 'canceled'},
         {userId: 3, status: 'completed'},
       ]

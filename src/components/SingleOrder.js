@@ -1,23 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { callApi } from '../axios-services';
 
-const SingleOrder = ({ orders, setOrders, token }) => {
+const SingleOrder = ({ token }) => {
   const { orderId } = useParams();
-  const [order] = orders.filter(order => order.id === Number(orderId));
+  const [order, setOrder] = useState();
 
   useEffect(() => {
     const getOrder = async () => {
-      const allOrders = await callApi({
-        url: '/api/orders/',
+      const order = await callApi({
+        url: `/api/orders/${orderId}`,
         method: 'GET',
         token
       })
       
-      setOrders(allOrders.data); 
+      setOrder(order.data);
+       
     };
     getOrder();
-  }, [setOrders, token]);
+  }, [token]);
 
   return (
     <>
