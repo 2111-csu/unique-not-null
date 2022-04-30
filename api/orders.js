@@ -3,6 +3,7 @@ const ordersRouter = express.Router();
 
 const { getAllOrders, createOrder, getCartByUser } = require("../db/orders");
 const { requireUser, checkAdmin } = require("./utils");
+const { cancelOrder } = require('../db/orders.js');
 
 /*GET return a list of orders in the database, need admin, how about requireAdmin function?*/
 ordersRouter.get("/", requireUser, async (req, res, next) => {
@@ -55,7 +56,18 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
     
       catch (error) {
         throw error;
-      }
-  })
+      };
+  });
+
+  ordersRouter.delete('/:orderId', async (req, res, next) => {
+    try {
+      console.log(req.body)
+      const id = req.params.id;
+      const deletedOrder = await cancelOrder(id);
+      res.send(deletedOrder);
+    } catch (error) {
+      return next(error);
+    };
+  });
 
 module.exports = ordersRouter;
