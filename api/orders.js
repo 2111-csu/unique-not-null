@@ -2,6 +2,9 @@ const express = require("express");
 const ordersRouter = express.Router();
 
 const { getAllOrders, createOrder, getCartByUser } = require("../db/orders");
+const { addProductToOrder } = require('../db/orderProducts');
+
+
 const { requireUser, checkAdmin } = require("./utils");
 
 /*GET return a list of orders in the database, need admin, how about requireAdmin function?*/
@@ -57,5 +60,28 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
         throw error;
       }
   })
+
+  /*add a single product to an order, if product already exists increment quantity, update price */
+  ordersRouter.post('/:orderId/products', requireUser, async (req, res, next) => {
+    const { productId, price, quantity } = req.body;
+    const { orderId } = req.params;
+
+    if(quantity) { 
+      quantity = quantity++
+    } 
+
+    try {
+      const orderProduct = await addProductToOrder({
+        orderId,
+        productId,
+        price,
+        quantity
+      });
+      res.send(orderProduct);
+    } catch (error) {
+        throw error;
+      }
+
+});
 
 module.exports = ordersRouter;
