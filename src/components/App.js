@@ -26,11 +26,12 @@ const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
   const userAuth = JSON.parse(localStorage.getItem("user"));
   const userToken = JSON.parse(localStorage.getItem("token"));
+  const guestCart = JSON.parse(localStorage.getItem("guestCart"));
   const [token, setToken] = useState(userToken);
   const [loggedIn, setLoggedIn] = useState(userAuth);
   const [message, setMessage] = useState(null);
   const [products, setProducts] = useState([]);
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState(guestCart);
   const [myCart, setMyCart] = useState([]);
 
   useEffect(() => {
@@ -122,7 +123,7 @@ const App = () => {
           <SingleUser token={token} loggedIn={loggedIn} />
         </Route>
         <Route exact path="/orders/:orderId">
-          <SingleOrder orders={orders} token={token}/>
+          <SingleOrder orders={orders} setOrders={setOrders} token={token}/>
         </Route>
         <Route exact path="/cart">
           <Cart token={token} myCart={myCart} setMyCart={setMyCart}/>
