@@ -30,7 +30,7 @@ const updateOrder = async ({id, ...fields}) => {
       UPDATE orders
       SET ${ setString }
       WHERE id=${ id }
-      RETURNING *
+      RETURNING *;
     `, Object.values(fields));
     
     return order;
