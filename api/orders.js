@@ -3,7 +3,7 @@ const ordersRouter = express.Router();
 
 const { getAllOrders, createOrder, getCartByUser } = require("../db/orders");
 const { requireUser, checkAdmin } = require("./utils");
-const { destroyOrderProduct } = require('../db/orderProducts.js');
+const { cancelOrder } = require('../db/orders.js');
 
 /*GET return a list of orders in the database, need admin, how about requireAdmin function?*/
 ordersRouter.get("/", requireUser, async (req, res, next) => {
