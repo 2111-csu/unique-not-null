@@ -153,8 +153,21 @@ const getCartByUser = async (userId) =>  {
      return orders;
   } catch (error) {
     throw error;
-  }
-}
+  };
+};
+
+const cancelOrder = async ({ id, status }) => {
+  try {
+    const { rows: deletedOrder } = await client.query(`
+      UPDATE orders
+      WHERE id=$1
+      RETURNING ${status === 'canceled'}
+    `, [id]);
+    return deletedOrder;
+  } catch (error) {
+    throw error;
+  };
+};
 
 
 module.exports = {
@@ -164,7 +177,8 @@ module.exports = {
   getOrderById,
   getAllOrders,
   getOrdersByProduct,
-  getCartByUser
+  getCartByUser,
+  cancelOrder
 };
 
 
