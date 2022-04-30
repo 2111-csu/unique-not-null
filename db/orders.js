@@ -20,6 +20,10 @@ const updateOrder = async ({id, ...fields}) => {
   const setString = Object.keys(fields)
   .map((key, index) => `"${ key }"=$${ index + 1 }`
   ).join(', ');
+
+  if (setString.length === 0) {
+    return;
+  };
   
   try {
     const { rows: [order] } = await client.query(`
@@ -153,9 +157,35 @@ const getCartByUser = async (userId) =>  {
      return orders;
   } catch (error) {
     throw error;
-  }
-}
+  };
+};
 
+const cancelOrder = async ({ id, status }) => {
+  try {
+    const { rows: deletedOrder } = await client.query(`
+      UPDATE orders
+      WHERE id=$1
+      RETURNING ${status === 'canceled'}
+    `, [id]);
+    return deletedOrder;
+  } catch (error) {
+    throw error;
+  };
+};
+
+const completeOrder = async ({ id, status }) => {
+  try {
+    const { rows: completedOrder } = await client.query(`
+      UPDATE orders
+      WHERE id=$1
+      RETURNING ${status === 'complete'}
+    `, [id]);
+    return completedOrder;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  };
+};
 
 module.exports = {
   createOrder,
@@ -164,7 +194,10 @@ module.exports = {
   getOrderById,
   getAllOrders,
   getOrdersByProduct,
-  getCartByUser
+  getCartByUser,
+  cancelOrder,
+  updateOrder,
+  completeOrder
 };
 
 

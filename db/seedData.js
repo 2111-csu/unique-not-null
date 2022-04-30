@@ -84,10 +84,38 @@ const createTables = async () => {
     console.log("Starting to create users...");
     try {
       const usersToCreate = [
-        { firstName: 'Nick', lastName: 'Mullen', username: 'Sprocket', password: '123456789', email: '25nmullen@gmail.com', isAdmin: true },
-        { firstName: 'Marisa', lastName: 'Fontana', username: 'marisapf', password: 'marisa22', email:'marisaonthego@gmail.com' , isAdmin: true },
-        { firstName: 'David', lastName: 'Willis', username: 'spinnerfall', password: 'Cruce$31', email: 'dafewillis@gmail.com', isAdmin: true },
-        { firstName: 'Katie', lastName: 'Mullen', username: 'Lily', password: '123456789', email: 'tigergrl25@gmail.com', isAdmin: false }
+        { 
+          firstName: 'Nick', 
+          lastName: 'Mullen', 
+          username: 'Sprocket', 
+          password: '123456789', 
+          email: '25nmullen@gmail.com', 
+          isAdmin: true 
+        },
+        { 
+          firstName: 'Marisa', 
+          lastName: 'Fontana', 
+          username: 'marisapf', 
+          password: 'marisa22', 
+          email:'marisaonthego@gmail.com',
+          isAdmin: true 
+        },
+        { 
+          firstName: 'David', 
+          lastName: 'Willis', 
+          username: 'spinnerfall', 
+          password: 'Cruce$31', 
+          email: 'dafewillis@gmail.com', 
+          isAdmin: true 
+        },
+        { 
+          firstName: 'Katie', 
+          lastName: 'Mullen', 
+          username: 'Lily',
+          password: '123456789', 
+          email: 'tigergrl25@gmail.com', 
+          isAdmin: false 
+        }
       ];
       const users = await Promise.all(usersToCreate.map(createUser));
   
@@ -162,6 +190,8 @@ const createInitialProducts = async () => {
     try {
       const ordersToCreate = [
         {userId: 1, status: 'created'},
+        {userId: 2, status: 'created'},
+        {userId: 3, status: 'created'},
         {userId: 2, status: 'canceled'},
         {userId: 3, status: 'completed'},
       ]

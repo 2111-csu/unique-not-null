@@ -125,7 +125,7 @@ usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
   try {
     const user = await getUserById(userId);
     console.log('user', _user);
-    if (_user.isAdmin === true) {
+    if ((_user.isAdmin === true) || (_user.id === user.id)) {
       const orders = await getOrdersByUser(user.username);
       res.send(orders);
     } else {

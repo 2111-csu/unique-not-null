@@ -1,11 +1,12 @@
 const express = require("express");
 const ordersRouter = express.Router();
 
-const { getAllOrders, createOrder, getCartByUser } = require("../db/orders");
+
+
+const { getAllOrders, createOrder, getCartByUser, updateOrder, getOrderById } = require("../db/orders");
 const { addProductToOrder } = require('../db/orderProducts');
-
-
 const { requireUser, checkAdmin } = require("./utils");
+const { cancelOrder } = require('../db/orders.js');
 
 /*GET return a list of orders in the database, need admin, how about requireAdmin function?*/
 ordersRouter.get("/", requireUser, async (req, res, next) => {
@@ -26,6 +27,7 @@ ordersRouter.get("/", requireUser, async (req, res, next) => {
     }
   });
 
+
 /*POST Create a new order*/
 ordersRouter.post("/", requireUser, async (req, res, next) => {
     const { status } = req.body;
@@ -34,12 +36,12 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
     try {
       const order = await createOrder({
         status,
-        userId:id
+        userId: id
       });
       
       console.log('placed Order,', order);
       res.send({
-        userId,
+        userId: id,
         status,
       });
     } catch (error) {
@@ -47,19 +49,56 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
     }
   });
 
-  ordersRouter.get('/cart', requireUser, async (req, res, next) => {
-      const { id } = req.user;
+ordersRouter.get('/cart', requireUser, async (req, res, next) => {
+    const { id } = req.user;
 
-      try {
+    try {
 
-        const userCart = await getCartByUser(id)
-        res.send(userCart)
-      }
-    
-      catch (error) {
-        throw error;
-      }
-  })
+      const userCart = await getCartByUser(id)
+      res.send(userCart)
+    }
+  
+    catch (error) {
+      throw error;
+    };
+});
+
+ordersRouter.get("/:orderId", async (req, res, next) => {
+  const { orderId } = req.params;
+
+  try {
+    const order = await getOrderById(orderId);
+    console.log(order, "Order from ordersRouter.get");
+    res.send(order);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+  ordersRouter.delete('/:orderId', async (req, res, next) => {
+    try {
+      console.log(req.body)
+      const id = req.params.id;
+      const deletedOrder = await cancelOrder(id);
+      res.send(deletedOrder);
+    } catch (error) {
+      return next(error);
+    };
+  });
+
+
+  ordersRouter.patch('/:orderId', requireUser, async (req, res, next) => {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    try {
+      const updatedOrder = await updateOrder(orderId, { status });
+      res.send({
+        updatedOrder: updatedOrder
+      });
+    } catch (error) {
+      throw (error);
+    };
+  });
 
   /*add a single product to an order, if product already exists increment quantity, update price */
   ordersRouter.post('/:orderId/products', requireUser, async (req, res, next) => {
@@ -76,7 +115,6 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
     } catch (error) {
         throw error;
       }
-
 });
 
 module.exports = ordersRouter;
