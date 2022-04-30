@@ -9,7 +9,7 @@ const requireUser = (req, res, next) => {
   next();
 }
 
-const checkAdmin = async (user) => {
+const checkAdmin = async () => {
   if (req.user.isAdmin) {
     return true;
   } else {

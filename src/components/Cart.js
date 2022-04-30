@@ -28,7 +28,7 @@ const Cart = ({myCart, setMyCart, token}) => {
 
       {myCart.products && myCart.products.map((product) => {
         return (
-          <div key={myCart.id}>
+          <div key={product.id}>
             <h4>product id: {product.id}</h4>
             <h4>product name: {product.name}</h4>
             <h4>product description: {product.description}</h4>

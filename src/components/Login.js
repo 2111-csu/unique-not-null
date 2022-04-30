@@ -25,10 +25,10 @@ const Login = ({setToken, setLoggedIn, setMessage}) => {
       
       
       setToken(result.data.token);
-      console.log(result.data.token);
+      console.log(result.data);
       if (result.data.token) {
         localStorage.setItem('token', JSON.stringify(result.data.token));
-        localStorage.setItem('user', JSON.stringify(result.data.user.username));
+        localStorage.setItem('user', JSON.stringify(result.data.user));
         setLoggedIn(result.data.user);
         setMessage(result.data.message);
         Snackbar();
