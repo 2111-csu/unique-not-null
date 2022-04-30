@@ -4,7 +4,6 @@ import { useLocation, useHistory, useParams } from 'react-router';
 import { callApi } from '../axios-services'
 
 const AllProducts = ({ token, products, setProducts }) => {
-  const { orderId } = useParams();
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search);
