@@ -1,7 +1,7 @@
 const express = require("express");
 const ordersRouter = express.Router();
 
-const { getAllOrders, createOrder, getCartByUser } = require("../db/orders");
+const { getAllOrders, createOrder, getCartByUser, updateOrder } = require("../db/orders");
 const { requireUser, checkAdmin } = require("./utils");
 const { cancelOrder } = require('../db/orders.js');
 
@@ -67,6 +67,19 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
       res.send(deletedOrder);
     } catch (error) {
       return next(error);
+    };
+  });
+
+  ordersRouter.patch('/:orderId', requireUser, async (req, res, next) => {
+    const { orderId } = req.params;
+    const { status } = req.body;
+    try {
+      const updatedOrder = await updateOrder(orderId, { status });
+      res.send({
+        updatedOrder: updatedOrder
+      });
+    } catch (error) {
+      throw (error);
     };
   });
 
