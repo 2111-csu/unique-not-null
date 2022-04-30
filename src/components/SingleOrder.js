@@ -4,6 +4,7 @@ import { callApi } from '../axios-services';
 
 const SingleOrder = ({ token }) => {
   const { orderId } = useParams();
+
   const [order, setOrder] = useState();
 
   useEffect(() => {
@@ -13,9 +14,7 @@ const SingleOrder = ({ token }) => {
         method: 'GET',
         token
       })
-      
       setOrder(order.data);
-       
     };
     getOrder();
   }, [token]);
@@ -43,6 +42,7 @@ const SingleOrder = ({ token }) => {
           })}
         </div>
       </div> : <h1>Nothing To View</h1> }
+
     </>
   );
 };

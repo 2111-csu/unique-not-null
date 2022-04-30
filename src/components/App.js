@@ -125,7 +125,7 @@ const App = () => {
         <Route exact path="/orders/:orderId">
           <SingleOrder orders={orders} setOrders={setOrders} token={token}/>
         </Route>
-        <Route exact path="/cart">
+        <Route path="/cart">
           <Cart token={token} myCart={myCart} setMyCart={setMyCart}/>
         </Route>
       </div>

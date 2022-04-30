@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { useLocation, useHistory } from 'react-router';
+import { useLocation, useHistory, useParams } from 'react-router';
 import { callApi } from '../axios-services'
 
-const AllProducts = ({ products, setProducts }) => {
-
+const AllProducts = ({ token, products, setProducts }) => {
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search);
@@ -32,6 +31,24 @@ const AllProducts = ({ products, setProducts }) => {
 
   const sortedProducts = products.filter(product => productMatches(product, searchTerm));
 
+  const handleAddProductToCart = async (event, productId, orderId, price, quantity) => {
+    event.preventDefault();
+
+    await callApi({
+      url:`api/orders/${orderId}/products`,
+      method:"POST",
+      token,
+      data: {
+        productId,
+        orderId,
+        price,
+        quantity
+      }
+    })
+
+    history.push('/cart')
+}
+
   return (
     <div id="products-page">
 
@@ -53,6 +70,10 @@ const AllProducts = ({ products, setProducts }) => {
             <h4><u>Price:</u> {product.price}</h4>
             <img src={product.imageurl} alt={`the ${product.name}`} />
             <h4><u>In stock?</u> {product.inStock}</h4>   
+
+            <button className='button' type='submit' 
+            onClick={e => handleAddProductToCart(e, orderId)}>Add to Cart</button>
+            
           </div>
         )}
       )} 
