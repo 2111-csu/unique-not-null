@@ -14,7 +14,8 @@ import {
   Register,
   User,
   Title,
-  Cart
+  Cart,
+  Checkout
 } from "./";
 import "../style/App.css";
 
@@ -35,48 +36,13 @@ const App = () => {
   const [myCart, setMyCart] = useState([]);
 
   useEffect(() => {
-    // follow this pattern inside your useEffect calls:
-    // first, create an async function that will wrap your axios service adapter
-    // invoke the adapter, await the response, and set the data
-
     const getAPIStatus = async () => {
       const healthy = await callApi({ url: "/api/health", method: "GET" });
       setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
     };
-
-    // second, after you've defined your getter above
-    // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
   }, []); 
   
-
-  /*not sure what I was trying to do here
-
-  useEffect(() => {
-
-    const getAPIStatus = async () => {
-        const healthy = await callApi({ url: "/api/health", method: "GET" });
-        setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
-      };
-      getAPIStatus();
-       
-      const getOrders = async (id, status, userId) => {
-         const orders = await callApi({ 
-           url: "/api/orders", 
-           method: "GET",
-           token,
-           data:{
-             id,
-             status,
-             userId
-           }
-            });
-         setOrders(orders);
-       }
-       getOrders(); 
-     }, [setOrders]);
-    */
-
   return (
     <>
       <div className="app-container">
@@ -91,18 +57,33 @@ const App = () => {
           message={message}
           setMessage={setMessage}
         />
-        <Route exact path="/payment">
-          {/* <Payment /> need state from 'const App' for cart here */}
+        <Route exact path="/">
+          {/* <Home /> */}
         </Route>
-        <Route exact path="/products">
-          <AllProducts products={products} setProducts={setProducts} />
+
+        <Route exact path="/admin">
+          {/* <Admin /> need state for inventory here */}
         </Route>
-        <Route exact path="/products/:productId">
-          <SingleProduct products={products} />
+
+        <Route exact path="/account">
+          <SingleUser 
+            token={token} 
+            loggedIn={loggedIn} 
+          />
         </Route>
-        <Route exact path="/user-info">
-          {/* <User /> need cart state here */}
+
+        <Route exact path="/cart">
+          <Cart 
+            token={token} 
+            myCart={myCart} 
+            setMyCart={setMyCart}
+          />
         </Route>
+
+        <Route exact path="/cart/checkout">
+          <Checkout />
+        </Route>
+
         <Route exact path="/login">
           <Login
             setLoggedIn={setLoggedIn}
@@ -110,48 +91,38 @@ const App = () => {
             setMessage={setMessage}
           />
         </Route>
+
+        <Route exact path="/products">
+          <AllProducts 
+            products={products} 
+            setProducts={setProducts}
+            myCart={myCart} 
+          />
+        </Route>
+
+        <Route exact path="/products/:productId">
+          <SingleProduct 
+            products={products} 
+          />
+        </Route>
+
         <Route exact path="/register">
-          <Register setToken={setToken} setMessage={setMessage} />
+          <Register 
+            setToken={setToken} 
+            setMessage={setMessage}
+          />
         </Route>
-        <Route exact path="/admin">
-          {/* <Admin /> need state for inventory here */}
-        </Route>
-        <Route exact path="/">
-          {/* <Home /> */}
-        </Route>
-        <Route exact path="/account">
-          <SingleUser token={token} loggedIn={loggedIn} />
-        </Route>
+
         <Route exact path="/orders/:orderId">
-          <SingleOrder orders={orders} setOrders={setOrders} token={token}/>
-        </Route>
-        <Route path="/cart">
-          <Cart token={token} myCart={myCart} setMyCart={setMyCart}/>
+          <SingleOrder 
+            orders={orders} 
+            setOrders={setOrders} 
+            token={token}
+          />
         </Route>
       </div>
     </>
   );
 };
+
 export default App;
-
-/*
-useEffect(() => {
-
-  const getAPIStatus = async () => {
-      const healthy = await callApi({ url: "/api/health", method: "GET" });
-      setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
-    };
-    getAPIStatus();
-     
-    const getOrders = async () => {
-       const orders = await callApi({ 
-         url: "/api/orders", 
-         method = "GET", 
-         token, 
-         data });
-       setOrders(orders);
-     }
-     getOrders(); 
-   }, [setOrders]);
-  }
-*/

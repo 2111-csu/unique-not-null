@@ -23,6 +23,7 @@ const addProductToOrder = async ({orderId, productId, price, quantity}) => {
         `, [orderId, productId, price, quantity]);
         return orderProduct;
     } catch (error) {
+        console.log('error', error);
         throw error;
     };
 };
