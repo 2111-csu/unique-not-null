@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { useLocation, useHistory, useParams } from 'react-router';
+import { useLocation, useHistory } from 'react-router';
 import { callApi } from '../axios-services'
 
-const AllProducts = ({ token, products, setProducts }) => {
+const AllProducts = ({ token, products, setProducts, myCart }) => {
+  const [quantity, setQuantity] = useState();
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search);
@@ -28,25 +29,29 @@ const AllProducts = ({ token, products, setProducts }) => {
       }
     }
   }
-
+  console.log('mycart', myCart);
   const sortedProducts = products.filter(product => productMatches(product, searchTerm));
 
-  const handleAddProductToCart = async (event, productId, orderId, price, quantity) => {
+  const handleAddProductToCart = async (event, productId, price, myCart) => {
     event.preventDefault();
-
-    await callApi({
-      url:`api/orders/${orderId}/products`,
-      method:"POST",
-      token,
-      data: {
-        productId,
-        orderId,
-        price,
-        quantity
-      }
-    })
-
-    history.push('/cart')
+    try {
+      const addedProduct = await callApi({
+        url: `api/orders/${myCart.id}/products`,
+        method: "POST",
+        token,
+        data: {
+          productId,
+          price: Number(price),
+          quantity: Number(quantity)
+        }
+      });
+      setQuantity();
+      console.log('product', addedProduct);
+      history.push('/cart')
+    } catch (error) {
+      throw error;
+    }
+    
 }
 
   return (
@@ -69,10 +74,10 @@ const AllProducts = ({ token, products, setProducts }) => {
             <h4><u>Description:</u> {product.description}</h4>
             <h4><u>Price:</u> {product.price}</h4>
             <img src={product.imageurl} alt={`the ${product.name}`} />
-            <h4><u>In stock?</u> {product.inStock}</h4>   
-
+            <h4><u>In stock?</u> {product.inStock}</h4>
+            <input type='number' id='quantity-input' name='quantity' placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
             <button className='button' type='submit' 
-            onClick={e => handleAddProductToCart(e, orderId)}>Add to Cart</button>
+            onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart)}>Add to Cart</button>
             
           </div>
         )}

@@ -4,7 +4,7 @@ const ordersRouter = express.Router();
 
 
 const { getAllOrders, createOrder, getCartByUser, updateOrder, getOrderById } = require("../db/orders");
-const { addProductToOrder } = require('../db/orderProducts');
+const { addProductToOrder, updateOrderProduct } = require('../db/orderProducts');
 const { requireUser, checkAdmin } = require("./utils");
 const { cancelOrder } = require('../db/orders.js');
 
@@ -101,18 +101,32 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
   });
 
   /*add a single product to an order, if product already exists increment quantity, update price */
-  ordersRouter.post('/:orderId/products', requireUser, async (req, res, next) => {
+  ordersRouter.post('/:orderId/products', async (req, res, next) => {
     const { productId, price, quantity } = req.body;
     const { orderId } = req.params;
+    console.log('body', req.body);
     try {
-      const orderProduct = await addProductToOrder({
-        orderId,
-        productId,
-        price,
-        quantity
-      });
-      res.send(orderProduct);
+      const order = await getOrderById(orderId);
+      const [product] = order.products.filter(product => product.productId === Number(productId));
+      console.log('prodArr', product);
+      console.log('prodQuan', product.quantity);
+      console.log('quan', quantity);
+      if (product) {
+        const newQuan = product.quantity + quantity;
+        console.log('newQuan', newQuan);
+        const updateQuantity = await updateOrderProduct({id: product.id, quantity: newQuan});
+        res.send(updateQuantity)
+      } else {
+        const orderProduct = await addProductToOrder({
+          orderId,
+          productId,
+          price: Number(price),
+          quantity
+        });
+        res.send(orderProduct);
+      }
     } catch (error) {
+        console.log('error', error);
         throw error;
       }
 });
