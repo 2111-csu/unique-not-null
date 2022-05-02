@@ -133,46 +133,46 @@ const createInitialProducts = async () => {
     try {
       const productsToCreate = [
         {
-          name: "productOne",
+          name: "Cauldron Kettle Corn",
           price: 5,
-          description: 'desc 1',
-          imageurl: 'https://picsum.photos/id/1023/400/300',
-          category: 'type 1'
+          description: 'A perfect blend of savory and sweet, this kettle corn concoction will keep you munching until it disappears.',
+          imageurl: 'https://www.foodlovinfamily.com/wp-content/uploads/2020/07/Kettle-corn-main-square.jpg',
+          category: 'Sweet & Savory'
         },
         {
-          name: "productTwo",
+          name: "Chocolate Peanut Butter Popcorn",
           price: 10,
-          description: 'desc 1',
-          imageurl: 'https://picsum.photos/id/1028/400/300',
-          category: 'type 2'
+          description: 'What else can you say about chocolate and peanut butter together? A stone cold classic.',
+          imageurl: 'https://thelemonbowl.com/wp-content/uploads/2018/03/Peanut-Butter-Chocolate-Drizzled-Popcorn-1-500x375.jpg',
+          category: 'Sweet'
         },
         {
-          name: "productThree",
+          name: "Windy City Chicago Style",
           price: 15,
-          description: 'desc 1',
-          imageurl: 'https://picsum.photos/id/1027/400/300',
-          category: 'type 3'
+          description: 'Cheddar popcorn and caramel corn together? What?!? Yes, this Chicago combo is delicious.',
+          imageurl: 'https://boodlesofpopcorn.com/wp-content/uploads/sites/4/2018/01/chicago-style600.jpg',
+          category: 'Sweet & Savory'
         },
         {
-          name: "productFour",
+          name: "Elote Street Corn",
           price: 20,
-          description: 'desc 1',
-          imageurl: 'https://picsum.photos/id/1026/400/300',
-          category: 'type 4'
+          description: 'The perfect salty snack after you knock a few cervezas back.',
+          imageurl: 'https://lacooquette.com/wp-content/uploads/2016/02/flavored-popcorn-5-ways-elote-la-cooquette.jpg',
+          category: 'Savory'
         },
         {
-          name: "productFive",
+          name: "Japopcorn",
           price: 25,
-          description: 'desc 1',
-          imageurl: 'https://picsum.photos/id/1025/400/300',
-          category: 'type 5'
+          description: 'A delicious swirl of soy sauce, sesame, rice vinegar, roasted nori and wasabe. Unbelievable umami in every bite.',
+          imageurl: 'https://www.lacrema.com/wp-content/uploads/2014/08/sushipopcorn-1024x683.jpg',
+          category: 'Savory'
         },
         {
-          name: "productSix",
+          name: "Popmallowcorn",
           price: 50,
-          description: 'desc 1',
-          imageurl: 'https://picsum.photos/id/1024/400/300',
-          category: 'type 6'
+          description: 'The favorite of co-owner Nick, this is kind of like the Lucky Charms of gourmet popcorn.',
+          imageurl: 'https://www.dessertnowdinnerlater.com/wp-content/uploads/2020/08/Marshmallow-Popcorn-4.jpg',
+          category: 'Sweet'
         },
       ];
       const products = await Promise.all(
