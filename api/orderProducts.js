@@ -6,7 +6,7 @@ const { getOrderById } = require("../db/orders");
 const { requireUser } = require("./utils");
 //checkAdmin
 
-orderProductsRouter.patch('/:orderProductId', requireUser, async (req, res, next) => {
+orderProductsRouter.patch('/:orderProductId', async (req, res, next) => {
 
     const { orderProductId } = req.params;
     const { price, quantity } = req.body;
@@ -24,15 +24,15 @@ orderProductsRouter.patch('/:orderProductId', requireUser, async (req, res, next
      const order = await getOrderById(orderProduct.orderId);
      const updatedOrderProduct = await updateOrderProduct({
         id:orderProductId,
-        price,
         quantity
-     })
+     });
+     console.log('updatedOrderProduct,',updatedOrderProduct);
 
-     if(order.userId === req.user.id) {
-     res.send(updatedOrderProduct)
-     } else {
-         next({message:"You cannot update this order."})
-     }
+    //  if(order.userId === req.user.id) {
+    //  res.send(updatedOrderProduct)
+    //  } else {
+    //      next({message:"You cannot update this order."})
+    //  }
 
     } catch (error) {
     throw error;

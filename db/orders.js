@@ -76,7 +76,7 @@ const getOrderById = async (id) => {
       JOIN order_products ON products.id=order_products."productId"
     `);
 
-    order.products = products.filter((product) => product.orderId == order.id);
+    order.products = products.filter((product) => product.orderId === order.id);
     console.log('order', order);
     return order;
   } catch (error) {
