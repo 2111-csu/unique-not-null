@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom" 
-//, useParams
-//import { getOrderProductById } from "../../db/orderProducts";
-//import { getProductById } from "../../db/products";
-//import { addProductToOrder } from "../../db/orderProducts";
+import React, { useState, useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { callApi } from "../axios-services";
 
 const Cart = ({ myCart, setMyCart, token }) => {
 
   const history = useHistory();
   const [quantity, setQuantity] = useState();
+
 
   const getCart = async () => {
     const userCart = await callApi({
@@ -20,14 +17,11 @@ const Cart = ({ myCart, setMyCart, token }) => {
     console.log('userCart', userCart.data);
     setMyCart(userCart.data[0]);
   }
-  
-  useEffect(() => {
-     getCart();  
-  },[]); 
+
+  useEffect(() => getCart(), []); 
 
   /* new stuff */
-  const handleEditQuantity = async (event, productId) => {
-    event.preventDefault();
+  const handleEditQuantity = async (productId) => {
     try {
       const editedQuantity = await callApi ({
         url:`api/orderProducts/${productId}`,
@@ -36,14 +30,13 @@ const Cart = ({ myCart, setMyCart, token }) => {
         data: {
           quantity: Number(quantity)
         }
-      })
-      setQuantity();
-      console.log('edited quantity', editedQuantity)
-      getCart()
+      }).then(setMyCart(getCart))
+      
     } catch(error) {
+      console.log(error);
       throw error
     };
-
+    
   };
 
   const handleRemoveProduct = async (event, productId) => {
@@ -80,6 +73,7 @@ const Cart = ({ myCart, setMyCart, token }) => {
 
           {/*new buttons*/}
             <button type="submit"className="button"
+
             onClick={(e) => handleEditQuantity(e, product.id)}>Change Quantity</button>
 
             <button type="submit"className="button"
