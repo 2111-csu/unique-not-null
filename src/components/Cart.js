@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom"
 //import { addProductToOrder } from "../../db/orderProducts";
 import { callApi } from "../axios-services";
 
-const Cart = ({ myCart, setMyCart, token}) => {
+const Cart = ({ myCart, setMyCart, token }) => {
 
   const history = useHistory();
   const [quantity, setQuantity] = useState();
@@ -46,12 +46,19 @@ const Cart = ({ myCart, setMyCart, token}) => {
 
   };
 
-  const handleRemoveProduct = async (event, orderProductId) => {
+  const handleRemoveProduct = async (event, productId) => {
     event.preventDefault();
-    await callApi ( { url: `/orderProducts/${orderProductId}`, method: "DELETE", token });
-    //getCart();
-  };
-
+      try {
+      await callApi ({ 
+        url: `api/orderProducts/${productId}`, 
+        method: 'DELETE', 
+        token });
+        getCart();
+      } catch(error) {
+        throw error
+      }
+    };
+   
   return (
     <>
       <div key={myCart.id} id="single-order" style={{ border: "1px solid black", margin:"20px"}}>
@@ -73,7 +80,7 @@ const Cart = ({ myCart, setMyCart, token}) => {
 
           {/*new buttons*/}
             <button type="submit"className="button"
-            onClick={(e) => handleEditQuantity(e, product.id)}>Edit Quantity</button>
+            onClick={(e) => handleEditQuantity(e, product.id)}>Change Quantity</button>
 
             <button type="submit"className="button"
             onClick={(e) => handleRemoveProduct(e, product.id)}>Remove Product</button>  
