@@ -9,17 +9,19 @@ const Cart = ({ myCart, setMyCart, token}) => {
   
   const history = useHistory();
 
-  useEffect(() => {
-    const getCart = async () => {
-      const userCart = await callApi({
-        url: '/api/orders/cart',
-        token,
-        method: 'GET'
-      });
+  
+  const getCart = async () => {
+    const userCart = await callApi({
+      url: '/api/orders/cart',
+      token,
+      method: 'GET'
+    });
 
-      console.log('userCart', userCart.data);
-      setMyCart(userCart.data[0]);
-    }
+    console.log('userCart', userCart.data);
+    setMyCart(userCart.data[0]);
+  }
+
+  useEffect(() => {  
     getCart();
   }, [])
 
