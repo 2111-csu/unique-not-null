@@ -21,7 +21,8 @@ const Cart = ({ myCart, setMyCart, token }) => {
   useEffect(() => getCart(), []); 
 
   /* new stuff */
-  const handleEditQuantity = async (productId) => {
+  const handleEditQuantity = async (event, productId) => {
+    event.preventDefault();
     try {
       const editedQuantity = await callApi ({
         url:`api/orderProducts/${productId}`,
@@ -42,11 +43,11 @@ const Cart = ({ myCart, setMyCart, token }) => {
   const handleRemoveProduct = async (event, productId) => {
     event.preventDefault();
       try {
-      await callApi ({ 
+      const deletedProduct = await callApi ({ 
         url: `api/orderProducts/${productId}`, 
         method: 'DELETE', 
-        token });
-        getCart();
+        token })
+        .then(setMyCart(getCart))
       } catch(error) {
         throw error
       }
