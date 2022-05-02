@@ -76,6 +76,7 @@ const AllProducts = ({ token, products, setProducts, myCart }) => {
             <h4><u>Price:</u> {product.price}</h4>
             <img src={product.imageurl} alt={`the ${product.name}`} />
             <h4><u>In stock?</u> {product.inStock}</h4>
+            
             <input type='number' id='quantity-input' name='quantity' placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
             <button className='button' type='submit' 
             onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart)}>Add to Cart</button>

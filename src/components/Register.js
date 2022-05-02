@@ -61,7 +61,7 @@ const Register = ({setToken, setMessage}) => {
           <input type='text' id='username-input' name='username' placeholder='username' value={username} onChange={(event) => setUsername(event.target.value)}/>
           <label htmlFor='password'>Password: </label>
           <input type='password' id='password-input' min-length='8' name='password' placeholder='password' value={password} onChange={(event) => setPassword(event.target.value)}/>
-          <button type='submit'>Register</button>
+          <button type='submit' className='button'>Register</button>
         </form>
       </div>
     </div>
