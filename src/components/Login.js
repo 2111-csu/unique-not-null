@@ -51,7 +51,7 @@ const Login = ({setToken, setLoggedIn, setMessage}) => {
           <input type='text' id='username-input' name='username' placeholder='username' value={username} onChange={(event) => setUsername(event.target.value)}/>
           <label htmlFor='password'>Password: </label>
           <input type='password' id='password-input' name='password' placeholder='password' value={password} onChange={(event) => setPassword(event.target.value)}/>
-          <button type='submit'>Login</button>
+          <button type='submit' className='button'>Login</button>
         </form>
       </div>
     </div>
