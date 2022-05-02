@@ -11,7 +11,7 @@ const Cart = ({ myCart, setMyCart, token}) => {
   const history = useHistory();
   const [quantity, setQuantity] = useState();
 
- const getCart = async () => {
+  const getCart = async () => {
     const userCart = await callApi({
       url: '/api/orders/cart',
       token,
@@ -20,24 +20,10 @@ const Cart = ({ myCart, setMyCart, token}) => {
     console.log('userCart', userCart.data);
     setMyCart(userCart.data[0]);
   }
+  
   useEffect(() => {
-   getCart();  
-},[]); 
-
-  /*useEffect(() => {
-    const getCart = async () => {
-      const userCart = await callApi({
-        url: '/api/orders/cart',
-        token,
-        method: 'GET'
-      });
-
-      console.log('userCart', userCart.data);
-      setMyCart(userCart.data[0]);
-    }
-    getCart();
-  }, []) 
-*/
+     getCart();  
+  },[]); 
 
   /* new stuff */
   const handleEditQuantity = async (event, productId) => {

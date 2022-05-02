@@ -49,6 +49,7 @@ const AllProducts = ({ token, products, setProducts, myCart }) => {
       console.log('product', addedProduct);
       history.push('/cart')
     } catch (error) {
+      console.log('error', error);
       throw error;
     }
     

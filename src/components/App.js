@@ -40,8 +40,22 @@ const App = () => {
       const healthy = await callApi({ url: "/api/health", method: "GET" });
       setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
     };
+
+    const getCart = async () => {
+      const userCart = await callApi({
+        url: '/api/orders/cart',
+        token,
+        method: 'GET'
+      });
+
+      console.log('userCart', userCart.data);
+      setMyCart(userCart.data[0]);
+    }
     getAPIStatus();
+    getCart();
+
   }, []); 
+
   
   return (
     <>
