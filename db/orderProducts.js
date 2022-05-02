@@ -1,6 +1,6 @@
 const client = require('./client');
 
-const getOrderProductById = async () => {
+const getOrderProductById = async (id) => {
     try {
         const { rows: orderProduct } = await client.query(`
             SELECT *
