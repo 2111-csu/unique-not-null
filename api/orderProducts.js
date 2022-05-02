@@ -7,7 +7,6 @@ const { requireUser } = require("./utils");
 //checkAdmin
 
 orderProductsRouter.patch('/:orderProductId', async (req, res, next) => {
-
     const { orderProductId } = req.params;
     const { price, quantity } = req.body;
     const updateFields = {};
@@ -20,41 +19,34 @@ orderProductsRouter.patch('/:orderProductId', async (req, res, next) => {
     }
 
     try {
-     const orderProduct = await getOrderProductById(orderProductId);
-     const order = await getOrderById(orderProduct.orderId);
-     const updatedOrderProduct = await updateOrderProduct({
-        id:orderProductId,
+      const updatedOrderProduct = await updateOrderProduct({
+        id: orderProductId,
         quantity
-     });
-     console.log('updatedOrderProduct,',updatedOrderProduct);
-
-    //  if(order.userId === req.user.id) {
-    //  res.send(updatedOrderProduct)
-    //  } else {
-    //      next({message:"You cannot update this order."})
-    //  }
-
+      });
+      console.log('updatedOrderProduct,',updatedOrderProduct);
+      return {message: "Product Quantity Updated"}
     } catch (error) {
-    throw error;
-      }
+      throw error;
+    }
 
 })
 
 
-orderProductsRouter.delete('/:orderProductId', requireUser, async (req, res, next) => {
-    const { orderProductId } = req.params;
+orderProductsRouter.delete('/:orderProductId', async (req, res, next) => {
+  const { orderProductId } = req.params;
     try {
-    const orderProduct = await getOrderProductById(orderProductId);
-    const order = await getOrderById(orderProduct.orderId);
-    const orderProductToDelete = await destroyOrderProduct();
-    if(order.userId === req.user.id) {
-        res.send(orderProductToDelete)
-    } else {
-        ({message:"You cannot delete this order."})
-    }
+    //   const orderProduct = await getOrderProductById(orderProductId);
+    //   const order = await getOrderById(orderProduct.orderId);
+      const orderProductToDelete = await destroyOrderProduct(orderProductId);
+      console.log('orderProductToDelete', orderProductToDelete);
+    //   if(order.userId === req.user.id) {
+    //     res.send(orderProductToDelete)
+    //   } else {
+    //     ({message:"You cannot delete this order."})
+    //   }
     } catch (error) {
-        throw error;
-      }
+      throw error;
+    }
 
 })
 
