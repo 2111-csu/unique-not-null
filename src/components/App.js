@@ -41,7 +41,7 @@ const App = () => {
       setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
     };
 
-    const getCart = async () => {
+   const getCart = async () => {
       const userCart = await callApi({
         url: '/api/orders/cart',
         token,
@@ -50,7 +50,7 @@ const App = () => {
 
       console.log('userCart', userCart.data);
       setMyCart(userCart.data[0]);
-    }
+    } 
     getAPIStatus();
     getCart();
 
