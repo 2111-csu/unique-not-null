@@ -108,10 +108,11 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
     try {
       const order = await getOrderById(orderId);
       const [product] = order.products.filter(product => product.productId === Number(productId));
-      console.log('prodArr', product);
-      console.log('prodQuan', product.quantity);
-      console.log('quan', quantity);
+      
       if (product) {
+        console.log('prodArr', product);
+        console.log('prodQuan', product.quantity);
+        console.log('quan', quantity);
         const newQuan = product.quantity + quantity;
         console.log('newQuan', newQuan);
         const updateQuantity = await updateOrderProduct({id: product.id, quantity: newQuan});
