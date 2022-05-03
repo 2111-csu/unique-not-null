@@ -68,7 +68,8 @@ const Cart = ({ myCart, setMyCart, token }) => {
             <h4>product description: {product.description}</h4>
             <h4>price: {product.price}</h4>
 
-            <input type='number' id='quantity-input' name='quantity' placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
+            <input type='number' id='quantity-input' name='quantity' min='0'max='10'
+            placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
 
             <h4>quantity: {product.quantity}</h4>
 
