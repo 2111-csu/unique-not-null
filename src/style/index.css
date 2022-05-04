@@ -32,12 +32,13 @@ body {
 
 }
 
-#single-product {
+#single-product, .product-container {
   border: 3px solid black;
   margin: 20px;
-  background:bisque;
+  background-color:honeydew;
   width: 50%;
   margin: 50px;
+  padding: 20px;
 
 }
 
@@ -57,7 +58,7 @@ body {
 
 #search-word {
   font: bold 1em Tahoma;
-  color:deeppink;
+  color:darkmagenta;
   margin-bottom: 3px;
 }
 
@@ -67,7 +68,7 @@ body {
   height:auto;
   width:auto;
   border: 2px solid black;
-  background: bisque;
+  background:honeydew;
   margin: 10px
 }
 
@@ -89,4 +90,8 @@ body {
 img.medium {
   width:40%;
   
+}
+
+img.small{
+  width: 30%;
 }

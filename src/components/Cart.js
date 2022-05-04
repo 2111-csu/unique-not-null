@@ -61,6 +61,11 @@ const Cart = ({ myCart, setMyCart, token }) => {
       }
     };
   
+  const clickCheckout = (event) => {
+    event.preventDefault();
+    history.push('/cart/checkout');
+  }
+  
   return (
     <>
       {myCart? 
@@ -93,6 +98,10 @@ const Cart = ({ myCart, setMyCart, token }) => {
           );
         })}
       </> : <h1>Nothing to show here</h1> }
+
+      <button type="submit" className="button"
+      onClick={clickCheckout} >Checkout</button>  
+
     </>
   );
 };
