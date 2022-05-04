@@ -86,6 +86,25 @@ const getUserByUsername = async(username) => {
   }
 }
 
+const updateUser = async ({id, ...fields}) => {
+  const setString = Object.keys(fields).map(
+      (key, index) => `"${ key }"=$${ index + 1 }`
+  ).join(', ');
+
+  try {
+      const { rows: [user] } = await client.query(`
+          UPDATE users
+          SET ${ setString }
+          WHERE id=${ id }
+          RETURNING *;
+      `, Object.values(fields));
+      return {message: "User Updated"};
+  } catch (error) {
+      throw error;
+  };
+};
+
+
 /*
 
 
@@ -97,4 +116,5 @@ module.exports = {
   getAllUsers,
   getUserById,
   getUserByUsername,
+  updateUser
 }
