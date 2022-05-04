@@ -95,7 +95,7 @@ const App = () => {
         </Route>
 
         <Route exact path="/cart/checkout">
-          <Checkout />
+          <Checkout token={token} myCart={myCart} message={message} />
         </Route>
 
         <Route exact path="/login">

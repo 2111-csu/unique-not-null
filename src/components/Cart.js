@@ -52,6 +52,11 @@ const Cart = ({ myCart, setMyCart, token }) => {
         throw error
       }
     };
+
+  const clickCheckout = (event) => {
+    event.preventDefault();
+    history.push('/cart/checkout');
+  }
    
   return (
     <>
@@ -62,11 +67,12 @@ const Cart = ({ myCart, setMyCart, token }) => {
 
       {myCart.products && myCart.products.map((product) => {
         return (
-          <div key={product.id}>
+          <div key={product.id} className='product-container'>
             <h4>product id: {product.id}</h4>
             <h4>product name: {product.name}</h4>
             <h4>product description: {product.description}</h4>
             <h4>price: {product.price}</h4>
+            <img src={product.imageurl} alt={`the ${product.name}`} className='small'/>
 
             <input type='number' id='quantity-input' name='quantity' min='0'max='10'
             placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
@@ -84,6 +90,9 @@ const Cart = ({ myCart, setMyCart, token }) => {
           </div>
         );
       })}
+
+      <button type="submit" className="button"
+      onClick={clickCheckout} >Checkout</button>  
     </>
   );
 };
