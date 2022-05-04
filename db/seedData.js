@@ -163,7 +163,7 @@ const createInitialProducts = async () => {
         {
           name: "Japopcorn",
           price: 25,
-          description: 'A delicious swirl of soy sauce, sesame, rice vinegar, roasted nori and wasabe. Unbelievable umami in every bite.',
+          description: 'A delicious swirl of soy sauce, sesame, rice vinegar, roasted nori and wasabi. Unbelievable umami in every bite.',
           imageurl: 'https://www.lacrema.com/wp-content/uploads/2014/08/sushipopcorn-1024x683.jpg',
           category: 'Savory'
         },

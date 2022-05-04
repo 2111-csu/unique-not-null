@@ -43,6 +43,8 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
       res.send({
         userId: id,
         status,
+        success: true,
+        message: 'Order Created'
       });
     } catch (error) {
       throw error;
@@ -55,7 +57,11 @@ ordersRouter.get('/cart', requireUser, async (req, res, next) => {
     try {
 
       const userCart = await getCartByUser(id)
-      res.send(userCart)
+      console.log('cart', userCart);
+      res.send({
+        userCart,
+        success: true,
+        message: 'Cart Retrieved'})
     }
   
     catch (error) {
@@ -80,7 +86,7 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
       console.log(req.body)
       const id = req.params.id;
       const deletedOrder = await cancelOrder(id);
-      res.send(deletedOrder);
+      res.send({deletedOrder, message: 'Order has been deleted.'});
     } catch (error) {
       return next(error);
     };
@@ -93,7 +99,8 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
     try {
       const updatedOrder = await updateOrder(orderId, { status });
       res.send({
-        updatedOrder: updatedOrder
+        updatedOrder: updatedOrder,
+        message: 'Order has been updated.'
       });
     } catch (error) {
       throw (error);
@@ -108,10 +115,11 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
     try {
       const order = await getOrderById(orderId);
       const [product] = order.products.filter(product => product.productId === Number(productId));
-      console.log('prodArr', product);
-      console.log('prodQuan', product.quantity);
-      console.log('quan', quantity);
+      
       if (product) {
+        console.log('prodArr', product);
+        console.log('prodQuan', product.quantity);
+        console.log('quan', quantity);
         const newQuan = product.quantity + quantity;
         console.log('newQuan', newQuan);
         const updateQuantity = await updateOrderProduct({id: product.id, quantity: newQuan});

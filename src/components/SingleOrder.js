@@ -30,7 +30,7 @@ const SingleOrder = ({ token }) => {
         <div>
           {order.products && order.products.map((product) => {
             return (
-              <div key={product.id} style={{ border: "1px solid black" }}>
+              <div key={product.id} className='product-container'style={{ border: "1px solid black" }}>
                 <h4>product id: {product.id}</h4>
                 <h4>product name: {product.name}</h4>
                 <h4>product description: {product.description}</h4>

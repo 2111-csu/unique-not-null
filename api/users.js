@@ -9,6 +9,8 @@ const {
   getUserById,
   updateUser,
   //getOrdersByUsername
+  getAllUsers,
+  //updateUser
 } = require("../db/users");
 
 const jwt = require("jsonwebtoken");
@@ -108,18 +110,6 @@ usersRouter.get("/:username", async (req, res, next) => {
   }
 });
 
-// /*Do we need this?*/
-// usersRouter.get("/:userId", async (req, res, next) => {
-//   const { userId } = req.params;
-//   try {
-//     const user = await getUserById(userId);
-//     console.log('user', user);
-//     res.send(user);
-//   } catch (error) {
-//     throw error;
-//   }
-// });
-
 usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
   const { userId } = req.params;
   const _user = req.user
@@ -141,6 +131,7 @@ usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
     throw error;
   }
 });
+
 
 usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
   try {
@@ -191,6 +182,7 @@ usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
     }
 });
 
+
 module.exports = usersRouter;
 
 /*
@@ -206,5 +198,17 @@ usersRouter.get("/:username/orders", async (req, res, next) => {
       throw error;
     }
   });
+
+  // Do we need this?
+ usersRouter.get("/:userId", async (req, res, next) => {
+   const { userId } = req.params;
+   try {
+     const user = await getUserById(userId);
+     console.log('user', user);
+     res.send(user);
+   } catch (error) {
+     throw error;
+   }
+ });
 
   */

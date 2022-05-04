@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLocation, useHistory } from 'react-router';
 import { callApi } from '../axios-services'
 
-const AllProducts = ({ token, products, setProducts, myCart }) => {
+const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart, setGuestCart }) => {
   const [quantity, setQuantity] = useState();
   const { search } = useLocation();
   const history = useHistory();
@@ -34,24 +34,40 @@ const AllProducts = ({ token, products, setProducts, myCart }) => {
 
   const handleAddProductToCart = async (event, productId, price, myCart) => {
     event.preventDefault();
-    try {
-      const addedProduct = await callApi({
-        url: `api/orders/${myCart.id}/products`,
-        method: "POST",
-        token,
-        data: {
-          productId,
-          price: Number(price),
-          quantity: Number(quantity)
-        }
-      });
-      setQuantity();
-      console.log('product', addedProduct);
-      history.push('/cart')
-    } catch (error) {
-      console.log('error', error);
-      throw error;
+    if (!loggedIn) {
+      const cart = guestCart.products;
+      console.log('cart', cart);
+      const newProd = {
+        productId: productId,
+        price: Number(price),
+        quantity: Number(quantity)
+      }
+      const newCart = [...cart, newProd]
+      console.log('newCart', newCart);
+      setGuestCart({products: newCart})
+      localStorage.setItem('guestCart', JSON.stringify({products: newCart}));
+      
+    } else {
+      try {
+        const addedProduct = await callApi({
+          url: `api/orders/${myCart.id}/products`,
+          method: "POST",
+          token,
+          data: {
+            productId,
+            price: Number(price),
+            quantity: Number(quantity)
+          }
+        });
+        setQuantity();
+        console.log('product', addedProduct);
+        history.push('/cart')
+      } catch (error) {
+        console.log('error', error);
+        throw error;
+      }
     }
+    
     
 }
 
@@ -74,10 +90,11 @@ const AllProducts = ({ token, products, setProducts, myCart }) => {
             </Link></h4>
             <h4><u>Description:</u> {product.description}</h4>
             <h4><u>Price:</u> {product.price}</h4>
-            <img src={product.imageurl} alt={`the ${product.name}`} />
+            <img src={product.imageurl} alt={`the ${product.name}`} className='medium'/>
             <h4><u>In stock?</u> {product.inStock}</h4>
             
-            <input type='number' id='quantity-input' name='quantity' placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
+            <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
+            min='0'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
             <button className='button' type='submit' 
             onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart)}>Add to Cart</button>
             
