@@ -54,20 +54,27 @@ const App = () => {
             token,
             method: 'GET'
           });
-
-          if (!userCart) {
+          console.log('userCart57', userCart);
+          if (!userCart.data.userCart.length) {
             const newCart = await callApi({
               url: 'api/orders',
               method: 'POST',
               token
             });
 
-            console.log('userCart', newCart.data);
-            setMyCart(newCart.data[0])
+            console.log('newCart65', newCart);
+            const newUserCart = await callApi({
+              url: '/api/orders/cart',
+              token,
+              method: 'GET'
+            });
+
+            console.log('userCart72', newUserCart.data);
+            setMyCart(newUserCart.data.userCart[0])
 
           } else {
-            console.log('userCart', userCart.data);
-            setMyCart(userCart.data[0]);
+            console.log('userCart76', userCart.data);
+            setMyCart(userCart.data.userCart[0]);
           }
 
         } catch (error) {

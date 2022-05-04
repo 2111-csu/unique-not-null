@@ -17,7 +17,7 @@ const Cart = ({ myCart, setMyCart, token }) => {
       });
       if (userCart) {
         console.log('userCart', userCart.data);
-        setMyCart(userCart.data[0]);
+        setMyCart(userCart.data.userCart[0]);
       }
       
     } catch (error) {
@@ -27,7 +27,7 @@ const Cart = ({ myCart, setMyCart, token }) => {
     
   }
 
-  // useEffect(() => getCart(), []); 
+  useEffect(() => getCart(), []); 
 
   const handleEditQuantity = async (event, productId) => {
     event.preventDefault();
