@@ -86,7 +86,7 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
       console.log(req.body)
       const id = req.params.id;
       const deletedOrder = await cancelOrder(id);
-      res.send(deletedOrder, { message: 'Order has been deleted.'} );
+      res.send({deletedOrder, message: 'Order has been deleted.'});
     } catch (error) {
       return next(error);
     };
