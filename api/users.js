@@ -8,10 +8,12 @@ const {
   getUserByUsername,
   getUserById,
   //getOrdersByUsername
+  getAllUsers,
+  //updateUser
 } = require("../db/users");
 
 const jwt = require("jsonwebtoken");
-const { requireUser, isAdmin } = require("./utils");
+const { requireUser, checkAdmin } = require("./utils");
 const { getOrdersByUser } = require("../db/orders");
 
 // usersRouter.use('/',(req, res, next) => {
@@ -107,18 +109,6 @@ usersRouter.get("/:username", async (req, res, next) => {
   }
 });
 
-// /*Do we need this?*/
-// usersRouter.get("/:userId", async (req, res, next) => {
-//   const { userId } = req.params;
-//   try {
-//     const user = await getUserById(userId);
-//     console.log('user', user);
-//     res.send(user);
-//   } catch (error) {
-//     throw error;
-//   }
-// });
-
 usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
   const { userId } = req.params;
   const _user = req.user
@@ -141,6 +131,23 @@ usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
   }
 });
 
+usersRouter.get('/users', requireUser, async (req, res, next) => {
+  try {
+    if (checkAdmin) {
+      const users = await getAllUsers();
+      res.send(users);
+    } else {
+      res.send({
+        error:"AdminError",
+        message: "You must be an Admin to access all users."
+      })
+    }
+  
+  } catch (error) {
+    throw error;
+  }
+})
+
 module.exports = usersRouter;
 
 /*
@@ -156,5 +163,17 @@ usersRouter.get("/:username/orders", async (req, res, next) => {
       throw error;
     }
   });
+
+  // Do we need this?
+ usersRouter.get("/:userId", async (req, res, next) => {
+   const { userId } = req.params;
+   try {
+     const user = await getUserById(userId);
+     console.log('user', user);
+     res.send(user);
+   } catch (error) {
+     throw error;
+   }
+ });
 
   */

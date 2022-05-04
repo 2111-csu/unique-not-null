@@ -5,9 +5,10 @@ const {
   getAllProducts,
   createProduct,
   getProductById,
-  //updateProduct, //do we need this, is this in db
-  //deleteProduct  //do we need this? is this in db
+  updateProduct, //do we need this, is this in db, yes check
+  destroyProduct  //do we need this? is this in db, yes check
 } = require("../db");
+const { getAllOrders, getOrdersByProduct } = require("../db/orders");
 
 const { requireUser } = require("./utils");
 
@@ -25,6 +26,8 @@ productsRouter.get("/", async (req, res, next) => {
 productsRouter.post("/", requireUser, async (req, res, next) => {
   const { name, price, imageUrl } = req.body;
   try {
+
+    if(checkAdmin) {
     const product = await createProduct({ name, description, price, imageUrl, inStock, category });
 
     res.send({
@@ -36,6 +39,12 @@ productsRouter.post("/", requireUser, async (req, res, next) => {
       inStock,
       category
     });
+  } else {
+    res.send({
+      error:"AdminError",
+      message: "You must be an Admin to create a product."
+    })
+  }
   } catch (error) {
     throw error;
   }
@@ -51,13 +60,15 @@ productsRouter.get("/:productId", async (req, res, next) => {
   }
 });
 
-/*UPDATE Do we need this? only to update the price or name? this function not in db
+
+/*UPDATE, only admins can update */
 
 productsRouter.patch("/:productId", requireUser, async (req, res, next) => {
   const { productId } = req.params;
   const { name, price } = req.body;
 
   try {
+    if(checkAdmin) {
     const updatedProduct = await updateProduct({
       id: productId,
       name,
@@ -65,23 +76,56 @@ productsRouter.patch("/:productId", requireUser, async (req, res, next) => {
     });
 
     res.send(updatedProduct);
+  } else {
+    res.send({
+      error:'AdminError',
+      message: 'You must be an admin to update a product.'
+    })
+  }
   } catch (error) {
     throw error;
   }
 });
 
-Do we need this? this function does not exist in db
+/*DELETE, only admins can delete a product */
 
 productsRouter.delete("/:productId", requireUser, async (req, res, next) => {
   const { productId } = req.params;
 
   try {
-    const product = await deleteProduct(productId);
+
+    if(checkAdmin) {
+    const product = await destroyProduct(productId);
     res.send(product);
+    } else {
+      res.send ({
+        error:'AdminError',
+        message: 'You must be an admin to delete a product.'
+      })
+    }
   } catch (error) {
     next(error);
   }
-}); */
+}); 
+
+productsRouter.get("/:productId/orders", requireUser, async (req, res, next) => {
+    const { productId } = req.params;
+  try {
+
+    if(checkAdmin) {
+      const orders = await getOrdersByProduct(productId);
+      res.send(orders);
+    } else {
+      res.send({
+        error: 'AdminError',
+        message: 'You must be an admin to get orders.'
+      })
+    }
+  }
+      catch (error) {
+      next(error);
+    }
+});
 
 
 module.exports = productsRouter;
