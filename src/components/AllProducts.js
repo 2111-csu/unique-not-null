@@ -74,7 +74,7 @@ const AllProducts = ({ token, products, setProducts, myCart }) => {
             </Link></h4>
             <h4><u>Description:</u> {product.description}</h4>
             <h4><u>Price:</u> {product.price}</h4>
-            <img src={product.imageurl} alt={`the ${product.name}`} class='medium'/>
+            <img src={product.imageurl} alt={`the ${product.name}`} className='medium'/>
             <h4><u>In stock?</u> {product.inStock}</h4>
             
             <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
