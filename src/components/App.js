@@ -27,13 +27,14 @@ const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
   const userAuth = JSON.parse(localStorage.getItem("user"));
   const userToken = JSON.parse(localStorage.getItem("token"));
-  const guestCart = JSON.parse(localStorage.getItem("guestCart"));
+  const guest = JSON.parse(localStorage.getItem("guestCart"));
   const [token, setToken] = useState(userToken);
   const [loggedIn, setLoggedIn] = useState(userAuth);
+  const [guestCart, setGuestCart] = useState(guest);
   const [message, setMessage] = useState(null);
   const [products, setProducts] = useState([]);
-  const [orders, setOrders] = useState(guestCart);
-  const [myCart, setMyCart] = useState([]);
+  const [orders, setOrders] = useState();
+  const [myCart, setMyCart] = useState();
 
   useEffect(() => {
     const getAPIStatus = async () => {
@@ -41,20 +42,45 @@ const App = () => {
       setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
     };
 
-   const getCart = async () => {
-      const userCart = await callApi({
-        url: '/api/orders/cart',
-        token,
-        method: 'GET'
-      });
+    const getCart = async () => {
+      if (!loggedIn && !guestCart) {
+        localStorage.setItem('guestCart', JSON.stringify({products: []}));
+      } else if (!loggedIn && guestCart) {
+        return;
+      } else {
+        try {
+          const userCart = await callApi({
+            url: '/api/orders/cart',
+            token,
+            method: 'GET'
+          });
 
-      console.log('userCart', userCart.data);
-      setMyCart(userCart.data[0]);
+          if (!userCart) {
+            const newCart = await callApi({
+              url: 'api/orders',
+              method: 'POST',
+              token
+            });
+
+            console.log('userCart', newCart.data);
+            setMyCart(newCart.data[0])
+
+          } else {
+            console.log('userCart', userCart.data);
+            setMyCart(userCart.data[0]);
+          }
+
+        } catch (error) {
+          console.log(error);
+          throw error;
+        }
+      }
+        
     } 
     getAPIStatus();
     getCart();
 
-  }, []); 
+  }, [loggedIn]); 
 
   
   return (
@@ -70,6 +96,9 @@ const App = () => {
           setLoggedIn={setLoggedIn}
           message={message}
           setMessage={setMessage}
+          setMyCart={setMyCart}
+          setToken={setToken}
+          setGuestCart={setGuestCart}
         />
         <Route exact path="/">
           {/* <Home /> */}
@@ -110,7 +139,10 @@ const App = () => {
           <AllProducts 
             products={products} 
             setProducts={setProducts}
-            myCart={myCart} 
+            myCart={myCart}
+            loggedIn={loggedIn}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
           />
         </Route>
 

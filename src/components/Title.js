@@ -2,15 +2,19 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Snackbar } from "./Snackbar";
 
-const Title = ({ loggedIn, setLoggedIn, message, setMessage }) => {
+const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken, setGuestCart }) => {
 
   const history = useHistory();
 
     const Logout = () => {
     setLoggedIn(null);
+    setMyCart(null);
+    setToken(null);
     setMessage("You have successfully logged out")
     Snackbar()
-    localStorage.clear();
+    
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     history.push('/');
   }
 
