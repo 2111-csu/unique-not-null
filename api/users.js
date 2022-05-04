@@ -7,6 +7,7 @@ const {
   getUser,
   getUserByUsername,
   getUserById,
+  updateUser,
   //getOrdersByUsername
   getAllUsers,
   //updateUser
@@ -131,22 +132,56 @@ usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
   }
 });
 
-usersRouter.get('/users', requireUser, async (req, res, next) => {
+
+usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
   try {
-    if (checkAdmin) {
-      const users = await getAllUsers();
-      res.send(users);
-    } else {
-      res.send({
-        error:"AdminError",
-        message: "You must be an Admin to access all users."
-      })
+    const { id, username, password, email } = req.body;
+    const _user = await getUserByUsername(username);
+    const _userEmail = await User.getUserByEmail(email);
+    const updateUser = { id: id };
+    if (username) {
+      if (_user) {
+        throw {
+          name: 'AlreadyExistsError',
+          message: 'Username taken, try again',
+        };
+      } else {
+        updateUser().username = username;
+      }
     }
-  
-  } catch (error) {
-    throw error;
-  }
-})
+    if (password) {
+      if (password.length < 8) {
+        throw {
+          name: 'PasswordTooShortError',
+          message: 'Password is too short, try again',
+        };
+      } else {
+        updateUser().password = password;
+        }
+      }
+        if (email) {
+          if (!email.includes("@")) {
+            throw {
+              name: "InvalidEmailError",
+              message: "Invalid email provided",
+            };
+          } else if (_userEmail) {
+            throw {
+              name: "EmailAlreadyExistsError",
+              message: "That email is already in use",
+            };
+          } else {
+            updateUser().email = email;
+          }
+      }
+      const updatedUser = await User.updateUser(updateUser);
+      delete updatedUser.password;
+      res.send({ updatedUser, message: "User updated successfully"});
+    } catch (error) {
+      next (error);
+    }
+});
+
 
 module.exports = usersRouter;
 
