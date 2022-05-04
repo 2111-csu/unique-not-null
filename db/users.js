@@ -86,6 +86,47 @@ const getUserByUsername = async(username) => {
   }
 }
 
+const updateUser = async (fields = {}) => {
+  const { id } = fields;
+  delete fields.id;
+
+  if (fields.password) {
+    const hashedPassword = await bcrypt.hash(fields.password, SALT_COUNT);
+    fields.password = hashedPassword;
+  }
+
+  const setString = Object.keys(fields).map((key, index) => `"{key}"=$${index + 2}`).join(", ");
+  if (setString.length === 0) {
+    return;
+  }
+  try {
+    if (setString.length > 0) {
+      const { rows: [user] } = await client.query (`
+        UPDATE users
+        SET ${setString}
+        WHERE id=$1
+        RETURNING *;
+      `, [ID, ...Object.values(fields)]);
+      return user;
+      }
+    } catch (error) {
+      console.error ("Problem updating user info", error);
+    };
+  };
+
+  //SQL checking if an email provided when creating new account already exists
+
+  const getUserByEmail = async (email) => {
+    try {
+      const { rows: [user] } = await client.query(`
+        WHERE email=$1
+      `, [email]);
+      return user;
+    } catch (error) {
+      console.error("Cannot get user by email", error)
+    };
+  } ;
+
 /*
 
 
@@ -97,4 +138,6 @@ module.exports = {
   getAllUsers,
   getUserById,
   getUserByUsername,
+  updateUser,
+  getUserByEmail
 }
