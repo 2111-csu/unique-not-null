@@ -43,6 +43,8 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
       res.send({
         userId: id,
         status,
+        success: true,
+        message: 'Order Created'
       });
     } catch (error) {
       throw error;
@@ -55,7 +57,11 @@ ordersRouter.get('/cart', requireUser, async (req, res, next) => {
     try {
 
       const userCart = await getCartByUser(id)
-      res.send(userCart)
+      console.log('cart', userCart);
+      res.send({
+        userCart,
+        success: true,
+        message: 'Cart Retrieved'})
     }
   
     catch (error) {
