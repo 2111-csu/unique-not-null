@@ -15,6 +15,7 @@ const {
 const jwt = require("jsonwebtoken");
 const { requireUser, checkAdmin } = require("./utils");
 const { getOrdersByUser } = require("../db/orders");
+const { user } = require("pg/lib/defaults");
 
 // usersRouter.use('/',(req, res, next) => {
 //   //console.log("A request is being made to /users");
@@ -145,8 +146,17 @@ usersRouter.get('/users', requireUser, async (req, res, next) => {
   
   } catch (error) {
     throw error;
-  }
-})
+  };
+});
+
+// usersRouter.get('/', checkAdmin, async (req, res, next) => {
+//   try {
+//     const users = await getAllUsers();
+//     res.send(users);
+//   } catch (error) {
+//     throw (error);
+//   };
+// });
 
 module.exports = usersRouter;
 
