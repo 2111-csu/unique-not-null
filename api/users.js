@@ -7,11 +7,14 @@ const {
   getUser,
   getUserByUsername,
   getUserById,
+  updateUser,
   //getOrdersByUsername
+  getAllUsers,
+  //updateUser
 } = require("../db/users");
 
 const jwt = require("jsonwebtoken");
-const { requireUser, isAdmin } = require("./utils");
+const { requireUser, checkAdmin } = require("./utils");
 const { getOrdersByUser } = require("../db/orders");
 
 // usersRouter.use('/',(req, res, next) => {
@@ -107,18 +110,6 @@ usersRouter.get("/:username", async (req, res, next) => {
   }
 });
 
-// /*Do we need this?*/
-// usersRouter.get("/:userId", async (req, res, next) => {
-//   const { userId } = req.params;
-//   try {
-//     const user = await getUserById(userId);
-//     console.log('user', user);
-//     res.send(user);
-//   } catch (error) {
-//     throw error;
-//   }
-// });
-
 usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
   const { userId } = req.params;
   const _user = req.user
@@ -141,6 +132,57 @@ usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
   }
 });
 
+
+usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
+  try {
+    const { id, username, password, email } = req.body;
+    const _user = await getUserByUsername(username);
+    const _userEmail = await User.getUserByEmail(email);
+    const updateUser = { id: id };
+    if (username) {
+      if (_user) {
+        throw {
+          name: 'AlreadyExistsError',
+          message: 'Username taken, try again',
+        };
+      } else {
+        updateUser().username = username;
+      }
+    }
+    if (password) {
+      if (password.length < 8) {
+        throw {
+          name: 'PasswordTooShortError',
+          message: 'Password is too short, try again',
+        };
+      } else {
+        updateUser().password = password;
+        }
+      }
+        if (email) {
+          if (!email.includes("@")) {
+            throw {
+              name: "InvalidEmailError",
+              message: "Invalid email provided",
+            };
+          } else if (_userEmail) {
+            throw {
+              name: "EmailAlreadyExistsError",
+              message: "That email is already in use",
+            };
+          } else {
+            updateUser().email = email;
+          }
+      }
+      const updatedUser = await User.updateUser(updateUser);
+      delete updatedUser.password;
+      res.send({ updatedUser, message: "User updated successfully"});
+    } catch (error) {
+      next (error);
+    }
+});
+
+
 module.exports = usersRouter;
 
 /*
@@ -156,5 +198,17 @@ usersRouter.get("/:username/orders", async (req, res, next) => {
       throw error;
     }
   });
+
+  // Do we need this?
+ usersRouter.get("/:userId", async (req, res, next) => {
+   const { userId } = req.params;
+   try {
+     const user = await getUserById(userId);
+     console.log('user', user);
+     res.send(user);
+   } catch (error) {
+     throw error;
+   }
+ });
 
   */

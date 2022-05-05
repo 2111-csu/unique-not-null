@@ -79,12 +79,13 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
   }
 });
 
+
 ordersRouter.delete('/:orderId', async (req, res, next) => {
   try {
     console.log(req.body)
     const { id } = req.params;
     const deletedOrder = await cancelOrder(id);
-    res.send(deletedOrder);
+    res.send({deletedOrder, message: 'Order has been deleted.'});
   } catch (error) {
     return next(error);
   };

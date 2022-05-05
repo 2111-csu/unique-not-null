@@ -43,10 +43,43 @@ const createProduct = async ({ name, description, price, imageurl, inStock, cate
     throw error;
   }
 }
+
+const updateProduct = async ({id, ...fields}) => {
+  const setString = Object.keys(fields).map(
+      (key, index) => `"${ key }"=$${ index + 1 }`
+  ).join(', ');
+
+  try {
+      const { rows: [product] } = await client.query(`
+          UPDATE products
+          SET ${ setString }
+          WHERE id=${ id }
+          RETURNING *;
+      `, Object.values(fields));
+      return {message: "Product Updated"};
+  } catch (error) {
+      throw error;
+  };
+};
+
+
+const destroyProduct = async (id) => {
+  try {
+    const { rows: [deletedProduct] } = await client.query(`
+      DELETE FROM products 
+      WHERE id=${id}
+    `);
+    return deletedProduct;
+    } catch (error){
+      throw error;
+    };
+};
   
 module.exports = {
   client,
   getProductById,
   getAllProducts,
   createProduct,
+  updateProduct,
+  destroyProduct
 };
