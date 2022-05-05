@@ -133,13 +133,12 @@ const getOrdersByProduct = async({id}) =>  {
 };
 
 
-const getCartByUser = async (userId) =>  {
+const getCartByUser = async (userId) => {
   try {
     const { rows: orders } = await client.query(
       `
         SELECT * FROM orders
-        JOIN users ON orders."userId"=users.id
-        WHERE users.id=$1 AND orders.status = 'created';
+        WHERE "userId"=$1 AND status='created';
         `, [userId]
     );
 
@@ -160,12 +159,13 @@ const getCartByUser = async (userId) =>  {
   };
 };
 
-const cancelOrder = async ({ id, status }) => {
+const cancelOrder = async (id) => {
   try {
-    const { rows: deletedOrder } = await client.query(`
+    const { rows: [deletedOrder] } = await client.query(`
       UPDATE orders
+      SET status='canceled'
       WHERE id=$1
-      RETURNING ${status === 'canceled'}
+      RETURNING *;
     `, [id]);
     return deletedOrder;
   } catch (error) {
@@ -173,12 +173,13 @@ const cancelOrder = async ({ id, status }) => {
   };
 };
 
-const completeOrder = async ({ id, status }) => {
+const completeOrder = async (id) => {
   try {
-    const { rows: completedOrder } = await client.query(`
+    const { rows: [completedOrder] } = await client.query(`
       UPDATE orders
+      SET status='completed'
       WHERE id=$1
-      RETURNING ${status === 'complete'}
+      RETURNING *}
     `, [id]);
     return completedOrder;
   } catch (error) {
@@ -199,33 +200,3 @@ module.exports = {
   updateOrder,
   completeOrder
 };
-
-
-/* Need help with this code
-
-const getCartByUser = ({ userId}) =>  {
-  try {
-    const { rows: order } = await client.query(
-      `
-        SELECT orders * FROM orders
-        JOIN users ON orders."userId"=users.id
-        WHERE id=${userId} AND status="isCreated";
-          `,
-    );
-
-    const { rows: products } = await client.query(`
-         SELECT * FROM products
-         JOIN order_products ON products.id=order_products."productId"
-         `);
-
-    order.forEach((order) => {
-      order.products = order.filter((product) =>
-        product.productId == product.id
-      )
-    });
-         
-     return orders;
-  } catch (error) {
-    throw error;
-  }
-} */
