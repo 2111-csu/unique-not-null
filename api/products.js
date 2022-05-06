@@ -127,5 +127,4 @@ productsRouter.get("/:productId/orders", requireUser, async (req, res, next) => 
     }
 });
 
-
 module.exports = productsRouter;

@@ -16,6 +16,7 @@ const {
 const jwt = require("jsonwebtoken");
 const { requireUser, checkAdmin } = require("./utils");
 const { getOrdersByUser } = require("../db/orders");
+const { user } = require("pg/lib/defaults");
 
 // usersRouter.use('/',(req, res, next) => {
 //   //console.log("A request is being made to /users");
@@ -149,6 +150,7 @@ usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
         updateUser().username = username;
       }
     }
+    
     if (password) {
       if (password.length < 8) {
         throw {
@@ -181,7 +183,6 @@ usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
       next (error);
     }
 });
-
 
 module.exports = usersRouter;
 
