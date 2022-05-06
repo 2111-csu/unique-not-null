@@ -55,7 +55,7 @@ const App = () => {
             method: 'GET'
           });
           console.log('userCart57', userCart);
-          if (!userCart.data.userCart.length) {
+          if (!userCart.data.userCart[0]) {
             const newCart = await callApi({
               url: 'api/orders',
               method: 'POST',
@@ -87,7 +87,7 @@ const App = () => {
     getAPIStatus();
     getCart();
 
-  }, [loggedIn]); 
+  }, [loggedIn, setMyCart]); 
 
   
   return (
@@ -127,11 +127,13 @@ const App = () => {
             token={token} 
             myCart={myCart} 
             setMyCart={setMyCart}
+            loggedIn={loggedIn}
+            guestCart={guestCart}
           />
         </Route>
 
         <Route exact path="/cart/checkout">
-          <Checkout token={token} myCart={myCart} message={message} />
+          <Checkout token={token} myCart={myCart} message={message} setMyCart={setMyCart} />
         </Route>
 
         <Route exact path="/login">

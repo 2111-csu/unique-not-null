@@ -1,8 +1,6 @@
 const express = require("express");
 const ordersRouter = express.Router();
 
-
-
 const { getAllOrders, createOrder, getCartByUser, updateOrder, getOrderById } = require("../db/orders");
 const { addProductToOrder, updateOrderProduct } = require('../db/orderProducts');
 const { requireUser, checkAdmin } = require("./utils");
@@ -81,62 +79,65 @@ ordersRouter.get("/:orderId", async (req, res, next) => {
   }
 });
 
-  ordersRouter.delete('/:orderId', async (req, res, next) => {
-    try {
-      console.log(req.body)
-      const id = req.params.id;
-      const deletedOrder = await cancelOrder(id);
-      res.send({deletedOrder, message: 'Order has been deleted.'});
-    } catch (error) {
-      return next(error);
-    };
-  });
+
+ordersRouter.delete('/:orderId', async (req, res, next) => {
+  try {
+    console.log(req.body)
+    const { id } = req.params;
+    const deletedOrder = await cancelOrder(id);
+    res.send({deletedOrder, message: 'Order has been deleted.'});
+  } catch (error) {
+    return next(error);
+  };
+});
 
 
-  ordersRouter.patch('/:orderId', requireUser, async (req, res, next) => {
-    const { orderId } = req.params;
-    const { status } = req.body;
-    try {
-      const updatedOrder = await updateOrder(orderId, { status });
-      res.send({
-        updatedOrder: updatedOrder,
-        message: 'Order has been updated.'
+ordersRouter.patch('/:orderId', async (req, res, next) => {
+  const { orderId } = req.params;
+  const { status } = req.body;
+  
+  try {
+    const updatedOrder = await updateOrder({ id: orderId,  status: status });
+    console.log('updatedOrder', updatedOrder);
+    res.send({
+      updatedOrder,
+      message: `Order Updated to: ${status}`
+    });
+  } catch (error) {
+    throw (error);
+  };
+});
+
+/*add a single product to an order, if product already exists increment quantity, update price */
+ordersRouter.post('/:orderId/products', async (req, res, next) => {
+  const { productId, price, quantity } = req.body;
+  const { orderId } = req.params;
+  console.log('body', req.body);
+  try {
+    const order = await getOrderById(orderId);
+    const [product] = order.products.filter(product => product.productId === Number(productId));
+    
+    if (product) {
+      console.log('prodArr', product);
+      console.log('prodQuan', product.quantity);
+      console.log('quan', quantity);
+      const newQuan = product.quantity + quantity;
+      console.log('newQuan', newQuan);
+      const updateQuantity = await updateOrderProduct({id: product.id, quantity: newQuan});
+      res.send(updateQuantity)
+    } else {
+      const orderProduct = await addProductToOrder({
+        orderId,
+        productId,
+        price: Number(price),
+        quantity
       });
-    } catch (error) {
-      throw (error);
-    };
-  });
-
-  /*add a single product to an order, if product already exists increment quantity, update price */
-  ordersRouter.post('/:orderId/products', async (req, res, next) => {
-    const { productId, price, quantity } = req.body;
-    const { orderId } = req.params;
-    console.log('body', req.body);
-    try {
-      const order = await getOrderById(orderId);
-      const [product] = order.products.filter(product => product.productId === Number(productId));
-      
-      if (product) {
-        console.log('prodArr', product);
-        console.log('prodQuan', product.quantity);
-        console.log('quan', quantity);
-        const newQuan = product.quantity + quantity;
-        console.log('newQuan', newQuan);
-        const updateQuantity = await updateOrderProduct({id: product.id, quantity: newQuan});
-        res.send(updateQuantity)
-      } else {
-        const orderProduct = await addProductToOrder({
-          orderId,
-          productId,
-          price: Number(price),
-          quantity
-        });
-        res.send(orderProduct);
-      }
-    } catch (error) {
-        console.log('error', error);
-        throw error;
-      }
+      res.send(orderProduct);
+    }
+  } catch (error) {
+      console.log('error', error);
+      throw error;
+    }
 });
 
 module.exports = ordersRouter;

@@ -2,30 +2,72 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { callApi } from "../axios-services";
 
-const Cart = ({ myCart, setMyCart, token }) => {
+const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart }) => {
 
   const history = useHistory();
   const [quantity, setQuantity] = useState();
 
 
   const getCart = async () => {
-    try {
-      const userCart = await callApi({
-        url: '/api/orders/cart',
-        token,
-        method: 'GET'
-      });
-      if (userCart) {
-        console.log('userCart', userCart.data);
-        setMyCart(userCart.data.userCart[0]);
+    if (!loggedIn && !guestCart) {
+      localStorage.setItem('guestCart', JSON.stringify({products: []}));
+    } else if (!loggedIn && guestCart) {
+      return;
+    } else {
+      try {
+        const userCart = await callApi({
+          url: '/api/orders/cart',
+          token,
+          method: 'GET'
+        });
+        console.log('userCart57', userCart);
+        if (!userCart.data.userCart[0]) {
+          const newCart = await callApi({
+            url: 'api/orders',
+            method: 'POST',
+            token
+          });
+
+          console.log('newCart65', newCart);
+          const newUserCart = await callApi({
+            url: '/api/orders/cart',
+            token,
+            method: 'GET'
+          });
+
+          console.log('userCart72', newUserCart.data);
+          setMyCart(newUserCart.data.userCart[0])
+
+        } else {
+          console.log('userCart76', userCart.data);
+          setMyCart(userCart.data.userCart[0]);
+        }
+
+      } catch (error) {
+        console.log(error);
+        throw error;
       }
-      
-    } catch (error) {
-      console.log(error);
-      throw error;
     }
+      
+  } 
+  // const getCart = async () => {
+  //   try {
+  //     const userCart = await callApi({
+  //       url: '/api/orders/cart',
+  //       token,
+  //       method: 'GET'
+  //     });
+  //     if (userCart) {
+  //       console.log('userCart', userCart.data);
+  //       setMyCart(userCart.data.userCart[0]);
+  //     }
+      
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw error;
+  //   }
     
-  }
+  // }
 
   useEffect(() => getCart(), []); 
 
