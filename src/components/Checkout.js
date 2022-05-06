@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { callApi } from "../axios-services";
+import { Snackbar } from "./Snackbar";
 
-const Checkout = ({ token, myCart, message, setMessage, setMyCart }) => {
+const Checkout = ({ token, myCart, setMessage, setMyCart }) => {
 
 const history = useHistory();
 
@@ -18,8 +19,12 @@ const handleCompleteOrder = async (event, orderId) => {
       }
     })
     console.log('completeOrder', completeOrder);
-    setMyCart();
-    history.push('/account')
+    setMyCart(null);
+    localStorage.removeItem("guestCart");
+    localStorage.setItem('guestCart', JSON.stringify({products: []}));
+    setMessage('Thank You For Your Order');
+    Snackbar();
+    history.push('/')
   } catch(error) {
     throw error
   }
@@ -37,8 +42,12 @@ const handleCancelOrder = async (event, orderId) => {
       }
     });
     console.log('cancelOrder', cancelOrder);
-    setMyCart();
-    history.push('/account')
+    setMyCart(null);
+    localStorage.removeItem("guestCart");
+    localStorage.setItem('guestCart', JSON.stringify({products: []}));
+    setMessage("Order Canceled");
+    Snackbar();
+    history.push('/')
   } catch(error){
     throw error
   }

@@ -32,15 +32,18 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
   console.log('mycart', myCart);
   const sortedProducts = products.filter(product => productMatches(product, searchTerm));
 
-  const handleAddProductToCart = async (event, productId, price, myCart) => {
+  const handleAddProductToCart = async (event, productId, price, myCart, product) => {
     event.preventDefault();
     if (!loggedIn) {
       const cart = guestCart.products;
       console.log('cart', cart);
       const newProd = {
+        name: product.name,
+        description: product.description,
         productId: productId,
         price: Number(price),
-        quantity: Number(quantity)
+        quantity: Number(quantity),
+        imageurl: product.imageurl
       }
       const newCart = [...cart, newProd]
       console.log('newCart', newCart);
@@ -96,7 +99,7 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
             <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
             min='0'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
             <button className='button' type='submit' 
-            onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart)}>Add to Cart</button>
+            onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart, product)}>Add to Cart</button>
             
           </div>
         )}

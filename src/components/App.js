@@ -36,59 +36,59 @@ const App = () => {
   const [orders, setOrders] = useState();
   const [myCart, setMyCart] = useState();
 
-  useEffect(() => {
-    const getAPIStatus = async () => {
-      const healthy = await callApi({ url: "/api/health", method: "GET" });
-      setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
-    };
+  const getAPIStatus = async () => {
+    const healthy = await callApi({ url: "/api/health", method: "GET" });
+    setAPIHealth(healthy ? "api is up! OK" : "api is down :/");
+  };
 
-    const getCart = async () => {
-      if (!loggedIn && !guestCart) {
-        localStorage.setItem('guestCart', JSON.stringify({products: []}));
-      } else if (!loggedIn && guestCart) {
-        return;
-      } else {
-        try {
-          const userCart = await callApi({
+  const getCart = async () => {
+    if (!loggedIn && !guestCart) {
+      localStorage.setItem('guestCart', JSON.stringify({products: []}));
+    } else if (!loggedIn && guestCart) {
+      return;
+    } else if (!myCart) {
+      try {
+        const userCart = await callApi({
+          url: '/api/orders/cart',
+          token,
+          method: 'GET'
+        });
+        console.log('userCart57', userCart);
+        if (!userCart.data.userCart[0]) {
+          const newCart = await callApi({
+            url: 'api/orders',
+            method: 'POST',
+            token
+          });
+
+          console.log('newCart65', newCart);
+          const newUserCart = await callApi({
             url: '/api/orders/cart',
             token,
             method: 'GET'
           });
-          console.log('userCart57', userCart);
-          if (!userCart.data.userCart[0]) {
-            const newCart = await callApi({
-              url: 'api/orders',
-              method: 'POST',
-              token
-            });
 
-            console.log('newCart65', newCart);
-            const newUserCart = await callApi({
-              url: '/api/orders/cart',
-              token,
-              method: 'GET'
-            });
+          console.log('userCart72', newUserCart.data);
+          setMyCart(newUserCart.data.userCart[0])
 
-            console.log('userCart72', newUserCart.data);
-            setMyCart(newUserCart.data.userCart[0])
-
-          } else {
-            console.log('userCart76', userCart.data);
-            setMyCart(userCart.data.userCart[0]);
-          }
-
-        } catch (error) {
-          console.log(error);
-          throw error;
+        } else {
+          console.log('userCart76', userCart.data);
+          setMyCart(userCart.data.userCart[0]);
         }
+
+      } catch (error) {
+        console.log(error);
+        throw error;
       }
-        
-    } 
+    }
+      
+  } 
+
+  useEffect(() => {
     getAPIStatus();
     getCart();
 
-  }, [loggedIn, setMyCart]); 
-
+  }, [loggedIn, myCart]); 
   
   return (
     <>
@@ -133,7 +133,7 @@ const App = () => {
         </Route>
 
         <Route exact path="/cart/checkout">
-          <Checkout token={token} myCart={myCart} message={message} setMyCart={setMyCart} />
+          <Checkout token={token} myCart={myCart} setMessage={setMessage} setMyCart={setMyCart} />
         </Route>
 
         <Route exact path="/login">
