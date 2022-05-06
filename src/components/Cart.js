@@ -7,6 +7,29 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart }) => {
   const history = useHistory();
   const [quantity, setQuantity] = useState();
 
+  const mergeCarts = async (visitorCart, userCart) => {
+    if (userCart) {
+      for (let i = 0; i < visitorCart.products.length; i++) {
+        let product = visitorCart.products[i]
+        try {
+          const addProduct = await callApi({
+            url: `api/orders/${userCart.id}/products`,
+            method: "POST",
+            token,
+            data: {
+              productId: product.productId,
+              price: Number(product.price),
+              quantity: Number(product.quantity)
+            }
+          });
+        } catch (error) {
+          console.log(error);
+          throw error;
+        }
+      }
+    }
+  } 
+
 
   const getCart = async () => {
     if (!loggedIn && !guestCart) {
@@ -43,6 +66,10 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart }) => {
           setMyCart(userCart.data.userCart[0]);
         }
 
+        if (loggedIn && guestCart) {
+          mergeCarts(guestCart, myCart)
+        }
+
       } catch (error) {
         console.log(error);
         throw error;
@@ -69,7 +96,7 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart }) => {
     
   // }
 
-  useEffect(() => getCart(), []); 
+  useEffect(() => getCart(), [guestCart]); 
 
   const handleEditQuantity = async (event, productId) => {
     event.preventDefault();
@@ -110,6 +137,22 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart }) => {
   
   return (
     <>
+      {guestCart && !myCart ? 
+        <>
+         {guestCart.products && guestCart.products.map((product) => {
+          return (
+            <div key={product.id} className='product-container'>
+              <h4>product name: {product.name}</h4>
+              <h4>product description: {product.description}</h4>
+              <h4>price: {product.price}</h4>
+              <img src={product.imageurl} alt={`the ${product.name}`} className='small'/>
+              <input type='number' id='quantity-input' name='quantity' min='0'max='10'
+              placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
+              <h4>quantity: {product.quantity}</h4>
+            </div>
+          );
+        })}
+        </> : null}
       {myCart? 
       <>
         <div key={myCart.id} id="single-order" style={{ border: "1px solid black", margin:"20px"}}>
