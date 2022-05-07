@@ -28,7 +28,7 @@ const getAllProducts = async () => {
   }
 }
 
-const createProduct = async ({ name, description, price, imageurl, inStock, category }) => {
+const createProduct = async ({ name, description, price, imageurl, inStock = false, category }) => {
   try {
     const {
       rows: [product] } = await client.query(

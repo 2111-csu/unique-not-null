@@ -10,7 +10,7 @@ const {
 } = require("../db");
 const { getAllOrders, getOrdersByProduct } = require("../db/orders");
 
-const { requireUser } = require("./utils");
+const { requireUser, checkAdmin } = require("./utils");
 
 /*GET return a list of products in the database*/
 productsRouter.get("/", async (req, res, next) => {
@@ -24,10 +24,10 @@ productsRouter.get("/", async (req, res, next) => {
 
 /*POST Create a new product*/
 productsRouter.post("/", requireUser, async (req, res, next) => {
-  const { name, price, imageUrl } = req.body;
+  const { name, price, imageUrl, category, description, inStock } = req.body;
   try {
-
-    if(checkAdmin) {
+    const checkAdmin = true
+    if (checkAdmin) {
     const product = await createProduct({ name, description, price, imageUrl, inStock, category });
 
     res.send({
