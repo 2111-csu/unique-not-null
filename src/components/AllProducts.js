@@ -38,6 +38,7 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
       const cart = guestCart.products;
       console.log('cart', cart);
       const newProd = {
+        id: product.id,
         name: product.name,
         description: product.description,
         productId: productId,

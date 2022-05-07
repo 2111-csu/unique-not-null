@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { callApi } from "../axios-services";
+import "../style/Cart.css";
 
-const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart }) => {
+const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) => {
 
   const history = useHistory();
   const [quantity, setQuantity] = useState();
+  const [guestQuantity, setGuestQuantity] = useState();
 
   const mergeCarts = async (visitorCart, userCart) => {
     if (userCart) {
@@ -134,57 +136,95 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart }) => {
     event.preventDefault();
     history.push('/cart/checkout');
   }
+
+  const guestEdit = (event, productId) => {
+    event.preventDefault();
+    const cart = guestCart.products;
+    const [editQuantity] = cart.filter(item => item.id === productId)
+    console.log('prod', editQuantity);
+    if (!guestQuantity || guestQuantity == 0) {
+      if (cart.length === 1) {
+        localStorage.setItem('guestCart', JSON.stringify({products: []}));
+        getCart();
+      } else {
+        const editCart = cart.filter(item => item.id !== productId)
+        console.log('newCart', editCart);
+        setGuestCart({products: editCart})
+        localStorage.setItem('guestCart', JSON.stringify({products: editCart}));
+        getCart();
+      }
+    } else {
+      const editCart = cart.filter(item => item.id !== productId)
+      editQuantity.quantity = guestQuantity;
+      const newCart = [...editCart, editQuantity]
+      console.log('newCart', newCart);
+      setGuestCart({products: newCart})
+      localStorage.setItem('guestCart', JSON.stringify({products: newCart}));
+      getCart();
+    }
+  }
   
   return (
-    <>
-      {guestCart && !myCart ? 
-        <>
+    <div className='cart'>
+      {myCart || guestCart ? null : <div><h1>There are no products in your cart</h1></div>}
+      {guestCart && (!myCart || myCart === false) ? 
+        <div className='cart-container'>
          {guestCart.products && guestCart.products.map((product) => {
           return (
-            <div key={product.id} className='product-container'>
-              <h4>product name: {product.name}</h4>
-              <h4>product description: {product.description}</h4>
-              <h4>price: {product.price}</h4>
-              <img src={product.imageurl} alt={`the ${product.name}`} className='small'/>
-              <input type='number' id='quantity-input' name='quantity' min='0'max='10'
-              placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
-              <h4>quantity: {product.quantity}</h4>
+            <div key={product.id} className='cart-product'>
+              <div className='cart-image'>
+                <img src={product.imageurl} alt={`the ${product.name}`} className='small'/>
+              </div>
+              <div className='cart-info'>
+                <h3>{product.name}</h3>
+                <p>{product.description}</p>
+                <p>${product.price}</p>
+                <p>Quantity: {product.quantity}</p>
+              </div>
+              <div  className='cart-buttons'>
+                <input type='number' id='quantity-input' name='quantity' min='0'max='10'
+                placeholder='Quantity' value={guestQuantity} onChange={(event) => setGuestQuantity(event.target.value)}/>
+                <button type="submit" className="button"
+                onClick={(event) => guestEdit(event, product.id)} >Edit / Remove</button> 
+              </div>
             </div>
           );
         })}
-        </> : null}
+        </div> : null}
       {myCart? 
-      <>
-        <div key={myCart.id} id="single-order" style={{ border: "1px solid black", margin:"20px"}}>
-          <h4><u>Order id: </u>{myCart.id}</h4>
-          <h4><u>Date placed: </u>{myCart.datePlaced}</h4>
-        </div>
-
+      <div className='cart-container'>
         {myCart.products && myCart.products.map((product) => {
         return (
-          <div key={product.id} className='product-container'>
-            <h4>product id: {product.id}</h4>
-            <h4>product name: {product.name}</h4>
-            <h4>product description: {product.description}</h4>
-            <h4>price: {product.price}</h4>
-            <img src={product.imageurl} alt={`the ${product.name}`} className='small'/>
-            <input type='number' id='quantity-input' name='quantity' min='0'max='10'
-            placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
-            <h4>quantity: {product.quantity}</h4>
-          {/*new buttons*/}
-            <button type="submit"className="button"
-            onClick={(e) => handleEditQuantity(e, product.id)}>Change Quantity</button>
-            <button type="submit"className="button"
-            onClick={(e) => handleRemoveProduct(e, product.id)}>Remove Product</button>
+          <div key={product.id} className='cart-product'>
+            <div className='cart-image'>
+              <img src={product.imageurl} alt={`the ${product.name}`} className='small'/>
+            </div>
+            <div className='cart-info'>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <p>${product.price}</p>
+              <p>quantity: {product.quantity}</p>
+            </div>
+            <div className='cart-buttons'>
+              <input type='number' id='quantity-input' name='quantity' min='0'max='10'
+              placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
+              
+              <button type="submit"className="button"
+              onClick={(e) => handleEditQuantity(e, product.id)}>Change Quantity</button>
+              <button type="submit"className="button"
+              onClick={(e) => handleRemoveProduct(e, product.id)}>Remove Product</button>
+            </div>
           </div>
         );
       })}
-      </> : <h1>Nothing to show here</h1> }
+      </div> 
+      : null }
+      <div className='checkout-container'>
+        <button type="submit" className="button" onClick={clickCheckout} >Checkout</button> 
+      </div>
+        
 
-      <button type="submit" className="button"
-      onClick={clickCheckout} >Checkout</button>  
-
-    </>
+    </div>
   );
 };
 
