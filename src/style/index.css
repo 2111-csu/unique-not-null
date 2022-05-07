@@ -82,6 +82,11 @@ body {
   margin:12px;
 }
 
+button:hover {
+  background-color: darkgray;
+}
+
+
 #quantity-input {
   height: 25px;
   width: 85px;

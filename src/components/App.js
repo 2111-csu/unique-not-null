@@ -93,11 +93,6 @@ const App = () => {
   return (
     <>
       <div className="app-container">
-        <h1>Hello, World!</h1>
-        <p>API Status: {APIHealth}</p>
-      </div>
-
-      <div className="app-container">
         <Title
           loggedIn={loggedIn}
           setLoggedIn={setLoggedIn}
@@ -129,6 +124,7 @@ const App = () => {
             setMyCart={setMyCart}
             loggedIn={loggedIn}
             guestCart={guestCart}
+            setGuestCart={setGuestCart}
           />
         </Route>
 
