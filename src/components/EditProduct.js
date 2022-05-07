@@ -61,8 +61,8 @@ const handleDelete = async (event, productId) => {
 
 return (
     <div id='admin-product-page'>
-    <form className='create-product-container'>
-        <h4>Create new product.</h4>
+    <form className='edit-product-form'>
+        <h4>Edit product:</h4>
         
         <input className='input-field' type='text'
          placeholder='product name' value={name}
