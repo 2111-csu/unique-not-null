@@ -48,8 +48,59 @@ const deleteReview = async(id) => {
     };
 };
 
+const getReviewsById = async() => {
+    try {
+        const { rows: [reviews] } = await client.query(`
+            SELECT * FROM users
+            WHERE id=$1
+        `, [id]);
+        return reviews;
+    } catch (error) {
+        throw error;
+    };
+};
+
+const getAllReviews = async() => {
+    try {
+        const { rows: [reviews] } = await client.query(`
+            SELECT * FROM reviews
+        `);
+        return reviews;
+    } catch (error) {
+        throw error;
+    };
+};
+
+const getReviewsByProductId = async(productId) => {
+    try {
+        const { rows: [reviewsByProductId] } = await client.query(`
+            SELECT * FROM reviews
+            WHERE "productId"=$1
+        `, [productId]);
+        return reviewsByProductId
+    } catch (error) {
+        throw error;
+    };
+};
+
+const getReviewsByUserId = async(userId) => {
+    try {
+        const { rows: [reviewsByUserId] } = await client.query(`
+            SELECT * FROM reviews
+            WHERE "userId"=$1
+        `, [userId]);
+        return reviewsByUserId;
+    } catch (error) {
+        throw error;
+    };
+};
+
 module.exports = {
     createReview,
     updateReview,
     deleteReview,
+    getReviewsById,
+    getAllReviews,
+    getReviewsByProductId,
+    getReviewsByUserId
 };
