@@ -16,6 +16,7 @@ html {
 }
 
 body {
+  
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -33,6 +34,7 @@ body {
 }
 
 #single-product, .product-container {
+  
   border: 3px solid black;
   margin: 20px;
   background-color:honeydew;

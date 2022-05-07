@@ -67,6 +67,15 @@ productsRouter.patch("/:productId", requireUser, async (req, res, next) => {
   const { productId } = req.params;
   const { name, price } = req.body;
 
+  const updateFields = {};
+
+    if(price) {
+        updateFields.price = price;
+    }
+    if(quantity) {
+        updateFields.quantity = quantity
+    }
+    
   try {
     if(checkAdmin) {
     const updatedProduct = await updateProduct({
