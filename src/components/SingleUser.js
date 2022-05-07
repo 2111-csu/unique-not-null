@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom';
 import { callApi } from "../axios-services";
 
 const SingleUser = ({ token, loggedIn }) => {
+
+  const history = useHistory();
   const [user, setUser] = useState({});
   const [myOrders, setMyOrders] = useState([]);
 
@@ -22,9 +25,14 @@ const SingleUser = ({ token, loggedIn }) => {
     getData();
 
   }, []);
-    
+
+  const handleEdit = async (event, userId) => {
+    event.preventDefault();
+    history.push(`/admin/users/${userId}`)
+  }
+  
   return (
-    <div>
+    <div id='single-user-view'>
       {token && loggedIn ? (
         <>
           <h3>user id: {user.id}</h3>
@@ -33,6 +41,9 @@ const SingleUser = ({ token, loggedIn }) => {
           <h3>email address: {user.email}</h3>
           <img src={`${user.imageurl}`} alt={`${user.username}`}></img>
           <h3>username: {user.username}</h3>
+
+          <button type="submit" className="button"
+           onClick={e => handleEdit(e, user.id)}>Edit User</button>
 
           {myOrders && myOrders.map((order) => {
             return (
@@ -43,7 +54,7 @@ const SingleUser = ({ token, loggedIn }) => {
 
                 {order.products.map((product) => {
                   return (
-                    <div>
+                    <div id='product-view'>
                       <h4>order id: {order.id}</h4>
                       <h4>product id: {product.id}</h4>
                       <h4>product name: {product.name}</h4>

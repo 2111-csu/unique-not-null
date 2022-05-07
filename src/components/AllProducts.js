@@ -83,7 +83,7 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
 
       <h5 id='search-word'>Search: </h5>
       <input id='search-field' type='text'placeholder='search here'
-        onChange={(e) => { history.push(e.target.value ? `/products?searchTerm=${e.target.value}` : '/products') }}/>
+      onChange={(e) => { history.push(e.target.value ? `/products?searchTerm=${e.target.value}` : '/products') }}/>
       
       <div>
       {sortedProducts.map(product => {

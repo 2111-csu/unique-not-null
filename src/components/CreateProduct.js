@@ -39,7 +39,7 @@ const handleSubmit = async (event) => {
 
 return (
 
-    <form className='create-product-container' onSubmit={handleSubmit}>
+    <form className='create-product-form' onSubmit={handleSubmit}>
         <h4>Create new product.</h4>
         
         <input className='input-field' type='text'
