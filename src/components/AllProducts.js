@@ -32,6 +32,34 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
   }
   console.log('mycart', myCart);
   const sortedProducts = products.filter(product => productMatches(product, searchTerm));
+  let displayProducts = sortedProducts;
+
+  const sweetPop = products.filter(product => product.category === "Sweet");
+  const savoryPop = products.filter(product => product.category === "Savory");
+  const sweetSavoryPop = products.filter(product => product.category === "Sweet & Savory");
+  console.log('sweet', sweetPop);
+  console.log('savory', savoryPop);
+  console.log('sweetSavory', sweetSavoryPop);
+
+  const viewSweet = (event) => {
+    event.preventDefault();
+    history.push('/products?searchTerm=Sweet')
+  }
+
+  const viewSavory = (event) => {
+    event.preventDefault();
+    history.push('/products?searchTerm=Savory')
+  }
+
+  const viewSweetSavory = (event) => {
+    event.preventDefault();
+    history.push('/products?searchTerm=Sweet%20&%20Savory')
+  }
+
+  const viewAll = (event) => {
+    event.preventDefault();
+    history.push('/products')
+  }
 
   const handleAddProductToCart = async (event, productId, price, myCart, product) => {
     event.preventDefault();
@@ -83,20 +111,28 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
     <div id="products-page">
       <div id='search-container'>
         <h5 id='search-word'>Search Popcorn: </h5>
-        <input id='search-field' type='text'placeholder='search here'
+        <input id='search-field' type='text'placeholder='search'
         onChange={(e) => { history.push(e.target.value ? `/products?searchTerm=${e.target.value}` : '/products') }}/>
+        <h4>Search by Category</h4>
+        <button className='button' type='submit' onClick={viewSweet}>Sweet</button>
+        <button className='button' type='submit' onClick={viewSavory}>Savory</button>
+        <button className='button' type='submit' onClick={viewSweetSavory}>Sweet & Savory</button>
+        <button className='button' type='submit' onClick={viewAll}>Clear</button>
       </div>
       
+
       <div id='product-cards'>
-        {sortedProducts.map(product => {
+        {sortedProducts.length? null : <h2>Sorry, No Products to View</h2>}
+        {displayProducts.map(product => {
           return (
             <div key={product.id} id='single-product'>
               <h3>{product.name}</h3>
               <img src={product.imageurl} alt={`the ${product.name}`} className='medium'/>
               <div id='prod-desc'>
                 <p>{product.description}</p>
-                <p>${product.price}</p>
               </div>
+                <p>Category: {product.category}</p>
+                <p>${product.price}</p>
               <button className='product-button' type='submit' 
                 onClick={(e) => goToProduct(e, product.id)}>View Product Details</button>
               <div id='quantity-button'>

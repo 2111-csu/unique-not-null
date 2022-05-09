@@ -67,7 +67,7 @@ body {
 }
 
 .button {
-  height: 25px;
+  height: 30px;
   width: 130px;
   border-radius: 5px 5px 5px;
   box-shadow: 7px 5px 5px slateblue;
@@ -80,10 +80,11 @@ button:hover {
 
 
 #quantity-input {
-  height: 25px;
+  height: 30px;
   width: 85px;
   border-radius: 4px 4px 4px;
   margin:12px;
+  text-align: center;
 }
 
 img.medium {
@@ -102,6 +103,7 @@ img.small{
   justify-content: space-around;
   background-color: honeydew;
   height: 120px;
+  padding: 10px;
 }
 
 #navbar {

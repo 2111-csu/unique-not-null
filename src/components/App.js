@@ -103,7 +103,7 @@ const App = () => {
           setGuestCart={setGuestCart}
         />
         <Route exact path="/">
-          {/* <Home /> */}
+          <Home products={products} setProducts={setProducts}/>
         </Route>
 
         <Route exact path="/admin">
