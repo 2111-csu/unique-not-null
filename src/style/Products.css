@@ -1,12 +1,14 @@
 #product-cards {
   box-sizing: border-box;
   display: flex;
+  flex-basis: 74vw;
+  flex-grow: 0;
   flex-wrap: wrap;
-  margin: 10px 4% 0 4%;
+  margin: 10px 2vw 0 2vw;
   padding: 10px 0 0 10px;
   justify-content: space-evenly;
   overflow: hidden;
-  width: 75%;
+  width: 74vw;
 }
 
 #single-product {
@@ -25,7 +27,7 @@
 
 #single-product img {
   width: 90%;
-  height: 40%;
+  height: 30%;
   object-fit: cover;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
   margin-top: 10px;
@@ -34,6 +36,7 @@
 #prod-desc {
   width: 90%;
   height: 45%;
+  max-height: 45%;
 }
 
 #prod-desc p {
@@ -60,7 +63,7 @@
 
 #single-product .product-button {
   text-decoration: none;
-  height: 25px;
+  height: 30px;
   width: 92%;
   padding: 5px;
   border-radius: 5px;
@@ -76,5 +79,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20%;
+  left: 0;
+  width: 20vw;
 }
