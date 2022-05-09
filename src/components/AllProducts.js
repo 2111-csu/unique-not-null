@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useLocation, useHistory } from 'react-router';
 import { callApi } from '../axios-services'
+import "../style/Products.css";
 
 const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart, setGuestCart }) => {
   const [quantity, setQuantity] = useState();
@@ -70,41 +71,43 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
         console.log('error', error);
         throw error;
       }
-    }
-    
-    
-}
+    }    
+  }
+
+  const goToProduct = (event, productId) => {
+    event.preventDefault();
+    history.push(`/products/${productId}`)
+  }
 
   return (
     <div id="products-page">
-
-      <h2>CornHub Products</h2>
-      <h3>Get Popping!</h3>
-
-      <h5 id='search-word'>Search: </h5>
-      <input id='search-field' type='text'placeholder='search here'
-      onChange={(e) => { history.push(e.target.value ? `/products?searchTerm=${e.target.value}` : '/products') }}/>
+      <div id='search-container'>
+        <h5 id='search-word'>Search Popcorn: </h5>
+        <input id='search-field' type='text'placeholder='search here'
+        onChange={(e) => { history.push(e.target.value ? `/products?searchTerm=${e.target.value}` : '/products') }}/>
+      </div>
       
-      <div id='product-card'>
-      {sortedProducts.map(product => {
-        return (
-          <div key={product.id} id='single-product'>
-            <h4><u>Name:</u>
-            <Link to={`/products/${product.id}`}> {product.name}
-            </Link></h4>
-            <h4><u>Description:</u> {product.description}</h4>
-            <h4><u>Price:</u> {product.price}</h4>
-            <img src={product.imageurl} alt={`the ${product.name}`} className='medium'/>
-            <h4><u>In stock?</u> {product.inStock}</h4>
-            
-            <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
-            min='0'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
-            <button className='button' type='submit' 
-            onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart, product)}>Add to Cart</button>
-            
-          </div>
-        )}
-      )} 
+      <div id='product-cards'>
+        {sortedProducts.map(product => {
+          return (
+            <div key={product.id} id='single-product'>
+              <h3>{product.name}</h3>
+              <img src={product.imageurl} alt={`the ${product.name}`} className='medium'/>
+              <div id='prod-desc'>
+                <p>{product.description}</p>
+                <p>${product.price}</p>
+              </div>
+              <button className='product-button' type='submit' 
+                onClick={(e) => goToProduct(e, product.id)}>View Product Details</button>
+              <div id='quantity-button'>
+                <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
+                min='0'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
+                <button className='button' type='submit' 
+                onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart, product)}>Add Product to Cart</button>
+              </div>
+            </div>
+          )}
+        )} 
       </div>
 
     </div>

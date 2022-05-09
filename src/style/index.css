@@ -16,10 +16,8 @@ html {
 }
 
 body {
-  
   margin: 0;
   padding: 0;
-  height: 100vh;
   width: 100vw;
   background: cornflowerblue;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -28,21 +26,15 @@ body {
 .navlink {
   font: bold 1.3em "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  color: indigo;
-  margin: 25px;
-
+  color: black;
+  margin: 15px;
+  text-decoration: none
 }
 
-#single-product, .product-container {
-  
-  border: 3px solid black;
-  margin: 20px;
-  background-color:honeydew;
-  width: 50%;
-  margin: 50px;
-  padding: 20px;
-
+.navlink:hover {
+  background-color: cornflowerblue;
 }
+
 
 #username-input, #password-input,
 #firstname-input, #lastname-input,
@@ -79,7 +71,7 @@ body {
   width: 130px;
   border-radius: 5px 5px 5px;
   box-shadow: 7px 5px 5px slateblue;
-  margin:12px;
+  margin: 12px;
 }
 
 button:hover {
@@ -101,4 +93,27 @@ img.medium {
 
 img.small{
   width: 30%;
+}
+
+#site-title {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: space-around;
+  background-color: honeydew;
+  height: 120px;
+}
+
+#navbar {
+  display: flex;
+  align-self: flex-end;
+  margin-right: 25px;
+}
+
+#title {
+  display: flex;
+  align-self: flex-start;
+  margin-top: -10px;
+  margin-left: 10px;
+  margin-bottom: -10px;
 }

@@ -19,7 +19,7 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken
   }
 
   return <div id='site-title'>
-    <div>
+    <div id='title'>
       <h1>Popcorn Perfection</h1>
     </div>
     <div id='navbar'>
@@ -27,7 +27,7 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken
       <Link className='navlink'to="/products">Products</Link>
       {loggedIn? <Link className='navlink' to="/account">My Orders</Link> : <Link className='navlink' to="/login">Login</Link>}
       {loggedIn? <Link className='navlink' to="/" onClick={Logout}>Logout</Link> : <Link className='navlink' to="/register">Register</Link>}
-      <Link className='navlink'to="/cart">View Cart</Link>
+      <Link className='navlink' to="/cart">Cart</Link>
     </div>
     <div id='snackbar'>{message}</div>
   </div>

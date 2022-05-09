@@ -24,7 +24,8 @@
 
 .cart-image img.small {
   height: 150px;
-  width: 150px
+  width: 150px;
+  object-fit: cover;
 }
 
 .cart-info {
