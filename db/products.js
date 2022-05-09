@@ -14,13 +14,19 @@ const getProductById = async (id) => {
 
 const getAllProducts = async () => {
   try {
-    const { rows: productIds } = await client.query(`
-           SELECT id FROM products;
+    const { rows: products } = await client.query(`
+           SELECT * FROM products;
            `);
 
-    const products = await Promise.all(
-      productIds.map((product) => getProductById(product.id))
-    );
+    const {rows: reviews } = await client.query(`
+           SELECT * FROM reviews
+           JOIN reviews ON products.id=reviews."productId"
+         `);
+     
+         products.forEach((product) => {
+           product.reviews = reviews.filter((review) => review.productId == product.id);
+         })
+         console.log('products', products);
 
     return products;
   } catch (error) {
