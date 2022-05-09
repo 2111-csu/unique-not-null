@@ -24,7 +24,6 @@ const AllOrders = ( {token, orders, setOrders} ) => {
             <h4><u>Date placed: </u>{order.datePlaced}</h4> 
             </div>
 
-            
             {order.products && order.products.map((product) => {
             return (
               <div key={product.id} className='product-container'style={{ border: "1px solid black" }}>
