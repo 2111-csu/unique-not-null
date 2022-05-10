@@ -138,7 +138,7 @@ const createInitialProducts = async () => {
         {
           name: "Colorado Kettle Corn",
           price: 8,
-          description: 'A perfect blend of savory and sweet, this kettle corn concoction will keep you munching until it disappears.',
+          description: 'A sublime blend of savory and sweet, this kettle corn concoction will keep you munching until it disappears.',
           imageurl: 'https://www.foodlovinfamily.com/wp-content/uploads/2020/07/Kettle-corn-main-square.jpg',
           category: 'Sweet & Savory'
         },
