@@ -32,7 +32,6 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
     }
   } 
 
-
   const getCart = async () => {
     if (!loggedIn && !guestCart) {
       localStorage.setItem('guestCart', JSON.stringify({products: []}));
@@ -79,24 +78,6 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
     }
       
   } 
-  // const getCart = async () => {
-  //   try {
-  //     const userCart = await callApi({
-  //       url: '/api/orders/cart',
-  //       token,
-  //       method: 'GET'
-  //     });
-  //     if (userCart) {
-  //       console.log('userCart', userCart.data);
-  //       setMyCart(userCart.data.userCart[0]);
-  //     }
-      
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw error;
-  //   }
-    
-  // }
 
   useEffect(() => getCart(), [guestCart]); 
 
@@ -163,13 +144,15 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
       getCart();
     }
   }
-  
+  let total = 0;
   return (
     <div className='cart'>
       {myCart || guestCart ? null : <div><h1>There are no products in your cart</h1></div>}
       {guestCart && (!myCart || myCart === false) ? 
         <div className='cart-container'>
          {guestCart.products && guestCart.products.map((product) => {
+          const lineTotal = product.price * product.quantity;
+          total += lineTotal;
           return (
             <div key={product.id} className='cart-product'>
               <div className='cart-image'>
@@ -178,8 +161,9 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
               <div className='cart-info'>
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
-                <p>${product.price}</p>
+                <p>${product.price} / per pound</p>
                 <p>Quantity: {product.quantity}</p>
+                <p>Total: ${lineTotal}</p>
               </div>
               <div  className='cart-buttons'>
                 <input type='number' id='quantity-input' name='quantity' min='0'max='10'
@@ -194,6 +178,8 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
       {myCart? 
       <div className='cart-container'>
         {myCart.products && myCart.products.map((product) => {
+          const lineTotal = product.price * product.quantity;
+          total += lineTotal;
         return (
           <div key={product.id} className='cart-product'>
             <div className='cart-image'>
@@ -202,8 +188,9 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
             <div className='cart-info'>
               <h3>{product.name}</h3>
               <p>{product.description}</p>
-              <p>${product.price}</p>
-              <p>quantity: {product.quantity}</p>
+              <p>${product.price} / per pound</p>
+              <p>Quantity: {product.quantity}</p>
+              <p>Total: ${lineTotal}</p>
             </div>
             <div className='cart-buttons'>
               <input type='number' id='quantity-input' name='quantity' min='0'max='10'
@@ -212,7 +199,7 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
               <button type="submit"className="button"
               onClick={(e) => handleEditQuantity(e, product.id)}>Change Quantity</button>
               <button type="submit"className="button"
-              onClick={(e) => handleRemoveProduct(e, product.id)}>Remove Product</button>
+              onClick={(e) => handleRemoveProduct(e, product.id)}>Remove</button>
             </div>
           </div>
         );
@@ -220,10 +207,10 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
       </div> 
       : null }
       <div className='checkout-container'>
-        <button type="submit" className="button" onClick={clickCheckout} >Checkout</button> 
+        <h2>Ready to Checkout?</h2>
+        <p>Cart Total: ${total}</p>
+        <button type="submit" className="button" onClick={clickCheckout} >Let's get Poppin!</button> 
       </div>
-        
-
     </div>
   );
 };

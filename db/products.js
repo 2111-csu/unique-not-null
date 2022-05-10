@@ -18,15 +18,15 @@ const getAllProducts = async () => {
            SELECT * FROM products;
            `);
 
-    // const {rows: reviews } = await client.query(`
-    //        SELECT * FROM reviews
-    //        JOIN reviews ON products.id=reviews."productId"
-    //      `);
+    const {rows: reviews } = await client.query(`
+           SELECT * FROM reviews
+           JOIN products ON products.id=reviews."productId"
+         `);
      
-    //      products.forEach((product) => {
-    //        product.reviews = reviews.filter((review) => review.productId == product.id);
-    //      })
-    //      console.log('products', products);
+         products.forEach((product) => {
+           product.reviews = reviews.filter((review) => review.productId == product.id);
+         })
+         console.log('products', products);
 
     return products;
   } catch (error) {
