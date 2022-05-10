@@ -1,4 +1,4 @@
-.cart {
+.cart, .checkout {
   box-sizing: border-box;
   display: flex;
 }
@@ -48,6 +48,8 @@
 
 .checkout-container {
   display: flex;
+  flex-direction: column;
   width: 30vw;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
 }

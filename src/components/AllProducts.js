@@ -32,14 +32,6 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
   }
   console.log('mycart', myCart);
   const sortedProducts = products.filter(product => productMatches(product, searchTerm));
-  let displayProducts = sortedProducts;
-
-  const sweetPop = products.filter(product => product.category === "Sweet");
-  const savoryPop = products.filter(product => product.category === "Savory");
-  const sweetSavoryPop = products.filter(product => product.category === "Sweet & Savory");
-  console.log('sweet', sweetPop);
-  console.log('savory', savoryPop);
-  console.log('sweetSavory', sweetSavoryPop);
 
   const viewSweet = (event) => {
     event.preventDefault();
@@ -123,7 +115,7 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
 
       <div id='product-cards'>
         {sortedProducts.length? null : <h2>Sorry, No Products to View</h2>}
-        {displayProducts.map(product => {
+        {sortedProducts.map(product => {
           return (
             <div key={product.id} id='single-product'>
               <h3>{product.name}</h3>

@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { callApi } from "../axios-services";
 import { Snackbar } from "./Snackbar";
+import '../style/Cart.css'
 
 const Checkout = ({ token, myCart, setMessage, setMyCart }) => {
 
@@ -58,43 +59,51 @@ const handleBackToCart = (event) => {
   history.push('/cart');
 }
 
+let total = 0;
+
 return (
-  <div className="app-container"> 
+  <>
     <h1>Checkout</h1>
-    {myCart? 
-      <>
-        <div key={myCart.id} id="single-order" style={{ border: "1px solid black", margin:"20px"}}>
-            <h4><u>User id: </u>{myCart.userId}</h4>
-            <h4><u>Order id: </u>{myCart.id}</h4>
-            <h4><u>Date placed: </u>{myCart.datePlaced}</h4>
-        </div> 
-          
-      {myCart.products && myCart.products.map((product) => {
-            return (
-              <div key={product.id} className='product-container'>
-                <h4>product id: {product.id}</h4>
-                <h4>product name: {product.name}</h4>
-                <h4>product description: {product.description}</h4>
-                <h4>price: {product.price}</h4>
-                <img src={product.imageurl} alt={`the ${product.name}`} className='small'/>
-              </div>
-            ) })} 
-          </> : <h1>Nothing to show here</h1> }
-  
-    <button type="submit" className="button"
-    onClick={e => handleCompleteOrder(e, myCart.id)}>
-    Complete Order</button>
+    <div className="checkout"> 
+      
+      {myCart? 
+        <div id='cart-container'>
+            
+        {myCart.products && myCart.products.map((product) => {
+          const lineTotal = product.price * product.quantity;
+          total += lineTotal;
+              return (
+                <div key={product.id} className='cart-product'>
+                  <div className='cart-image'>
+                    <img src={product.imageurl} alt={`the ${product.name}`} className='small'/>
+                  </div>
+                  <div className='cart-info'>
+                    <h3>{product.name}</h3>
+                    <p>{product.description}</p>
+                    <p>${product.price} / per pound</p>
+                    <p>Quantity: {product.quantity}</p>
+                    <p>Total: ${lineTotal}</p>
+                  </div>
+                </div>
+              ) })} 
+        </div> : <h1>No Products to show here</h1> }
+      <div className='checkout-container'>
+        <p>Order Total: ${total}</p>
+        <button type="submit" className="button"
+        onClick={e => handleCompleteOrder(e, myCart.id)}>
+        Complete Order</button>
 
-    <button type="submit" className="button"
-    onClick={e => handleCancelOrder(e, myCart.id)}>
-    Cancel Order</button>
+        <button type="submit" className="button"
+        onClick={e => handleCancelOrder(e, myCart.id)}>
+        Cancel Order</button>
 
-    <label htmlFor="back-edit">Need to change your order?</label>
-    <button type="submit" className="button"
-    onClick={e => handleBackToCart(e, myCart.id)}>
-    Return to Order</button>
-
-  </div>
+        <label htmlFor="back-edit">Need to change your order?</label>
+        <button type="submit" className="button"
+        onClick={e => handleBackToCart(e, myCart.id)}>
+        Return to Order</button>
+      </div>
+    </div>
+  </>
 )
 };
 
