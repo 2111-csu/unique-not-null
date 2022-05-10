@@ -132,6 +132,7 @@ ordersRouter.post('/:orderId/products', async (req, res, next) => {
         price: Number(price),
         quantity
       });
+      console.log('orderProduct', orderProduct);
       res.send(orderProduct);
     }
   } catch (error) {
