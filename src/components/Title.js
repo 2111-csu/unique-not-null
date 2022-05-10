@@ -20,7 +20,7 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken
 
   return <div id='site-title'>
     <div id='title'>
-      <h1>Popcorn Perfection</h1>
+      <h1>Popped Perfection</h1>
     </div>
     <div id='navbar'>
       <Link className='navlink' to="/">Home</Link>
