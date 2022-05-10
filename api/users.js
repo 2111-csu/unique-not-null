@@ -111,29 +111,6 @@ usersRouter.get("/:username", async (req, res, next) => {
   }
 });
 
-usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
-  const { userId } = req.params;
-  const _user = req.user
-  try {
-    const user = await getUserById(userId);
-    console.log('user', _user);
-    if ((_user.isAdmin === true) || (_user.id === user.id)) {
-      const orders = await getOrdersByUser(user.username);
-      res.send(orders);
-    } else {
-      res.send({
-        error: "AdminError",
-        message: "You must be an Admin to access that"
-      })
-    }
-    
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-});
-
-
 usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
   try {
     const { id, username, password, email } = req.body;
@@ -183,6 +160,30 @@ usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
       next (error);
     }
 });
+
+usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
+  const { userId } = req.params;
+  const _user = req.user
+  try {
+    const user = await getUserById(userId);
+    console.log('_user', _user);
+    if ((_user.isAdmin === true) || (_user.id === user.id)) {
+      const orders = await getOrdersByUser(user.id);
+      console.log('orders172', orders);
+      res.send(orders);
+    } else {
+      res.send({
+        error: "AdminError",
+        message: "You must be an Admin to access that"
+      })
+    }
+    
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
+
 
 module.exports = usersRouter;
 

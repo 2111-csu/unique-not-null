@@ -39,24 +39,24 @@ const updateOrder = async ({id, ...fields}) => {
   }
 };
 
-const getOrdersByUser = async (username) => {
+const getOrdersByUser = async (userId) => {
   try {
     const {rows: orders } = await client.query(`
-      SELECT orders.*, users.id, users.username
-      FROM users
-      JOIN orders ON orders."userId"=users.id
-      WHERE users.username=$1;
-    `, [username]);
+      SELECT *
+      FROM orders
+      WHERE "userId"=$1;
+    `, [userId]);
 
     const {rows: products} = await client.query(`
       SELECT * FROM products
-      JOIN order_products ON products.id=order_products."productId"
+      JOIN order_products ON order_products."productId"=products.id;
     `);
-
+    console.log('products54', products);
+    console.log('orders55', orders);
     orders.forEach((order) => {
-      order.products = products.filter((product) => product.orderId == order.id);
+      order.products = products.filter(product => product.orderId === order.id);
     })
-    console.log('order', orders);
+    console.log('order59', orders);
     
     return orders;
   } catch (error) {
