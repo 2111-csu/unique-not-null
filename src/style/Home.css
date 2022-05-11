@@ -54,3 +54,24 @@ img {
   height: 400px;
   object-fit: cover;
 }
+
+@media screen and (max-width: 600px) {
+  .slideshow {
+    max-width: 100vw;
+  }
+  
+  .slideshowSlider {
+    width: 100vw;
+    height: 300px;
+  }
+
+  .slide {
+    height: 300px;
+  }
+
+  .slideshowDots {
+    display: none;
+  }
+
+  
+}

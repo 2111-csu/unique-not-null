@@ -53,3 +53,34 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+@media screen and (max-width: 600px) {
+  .cart, .checkout {
+    display: flex;
+    flex-direction: column;
+  }
+  .cart-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100vw;
+  }
+
+  .checkout-container {
+    align-items: center;
+    width: 100vw;
+  }
+
+  .cart-product {
+    width: 95vw;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-bottom: 3px black solid;
+    border-top: none;
+  }
+
+  .cart-buttons {
+    flex-direction: row;
+  }
+}
