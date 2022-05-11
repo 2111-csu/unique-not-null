@@ -18,11 +18,17 @@ const { requireUser, checkAdmin } = require("./utils");
 const { getOrdersByUser } = require("../db/orders");
 const { user } = require("pg/lib/defaults");
 
-// usersRouter.use('/',(req, res, next) => {
-//   //console.log("A request is being made to /users");
-//   console.log(req.body);
-//   res.send('A request is being made to users.');
-// });
+usersRouter.get('/', requireUser, async (req, res, next) => {
+  try {
+    if (checkAdmin) {
+      const allUsers = await getAllUsers();
+      console.log('allUsers', allUsers);
+      res.send(allUsers);
+    }
+  } catch (error) {
+    throw error;
+  }
+})
 
 usersRouter.post("/register", async (req, res, next) => {
   const { username, password, email, firstName, lastName } = req.body;

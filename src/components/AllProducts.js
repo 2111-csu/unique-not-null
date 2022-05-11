@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router';
 import { callApi } from '../axios-services'
 import "../style/Products.css";
@@ -129,7 +128,7 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
                 onClick={(e) => goToProduct(e, product.id)}>View Product Details</button>
               <div id='quantity-button'>
                 <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
-                min='0'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
+                min='1'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
                 <button className='button' type='submit' 
                 onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart, product)}>Add Product to Cart</button>
               </div>

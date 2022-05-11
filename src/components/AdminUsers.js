@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 import { useLocation, useHistory } from 'react-router';
-import { callApi } from '../axios-services'
 
-const AllUsers = ( {token} ) => {
-    const [users, setUsers] = useState([]);
+const AdminUsers = ( { users } ) => {
     //const [firstName, setFirstName] = useState('');
     //const [lastName, setLastName] = useState('');
     //const [email, setEmail] = useState('');
@@ -16,17 +14,6 @@ const AllUsers = ( {token} ) => {
     const history = useHistory();
     const searchParams = new URLSearchParams(search);
     const searchTerm = searchParams.get('searchTerm') || '';
-  
-    useEffect(() => {
-        const getUsers = async () => {
-          const apiResponse = await callApi({url: '/api/users', method: 'GET', token});
-          console.log(apiResponse);
-          console.log(apiResponse.data);
-          setUsers(apiResponse.data);
-        }
-        getUsers();
-      }, [setUsers]);
-
     
       const userMatches = (user, searchTerm) => {
         const { firstName, lastName, email, username } = user;   
@@ -38,7 +25,7 @@ const AllUsers = ( {token} ) => {
         }
       }
       console.log('users', users);
-      const sortedUsers = users.filter(user => userMatches(user, searchTerm));
+      const sortedUsers = users && users.filter(user => userMatches(user, searchTerm));
 
       return (
         <div id="users-page">
@@ -58,7 +45,6 @@ const AllUsers = ( {token} ) => {
                         <h4><u>Last name:</u> {user.lastName}</h4>
                         <h4><u>Email:</u> {user.email}</h4>
                         <h4><u>username:</u> {user.username}</h4>
-                        <img src={user.imageurl} alt={`${user.username}`} className='medium'/>
                         <h4><u>Admin? </u> {user.isAdmin}</h4>
                     </div>
                     ) } )} 
@@ -68,4 +54,4 @@ const AllUsers = ( {token} ) => {
       )
 
 }
-export default AllUsers;
+export default AdminUsers;

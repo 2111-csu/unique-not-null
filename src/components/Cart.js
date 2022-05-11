@@ -166,7 +166,7 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
                 <p>Total: ${lineTotal}</p>
               </div>
               <div  className='cart-buttons'>
-                <input type='number' id='quantity-input' name='quantity' min='0'max='10'
+                <input type='number' id='quantity-input' name='quantity' min='1'max='10'
                 placeholder='Quantity' value={guestQuantity} onChange={(event) => setGuestQuantity(event.target.value)}/>
                 <button type="submit" className="button"
                 onClick={(event) => guestEdit(event, product.id)} >Edit / Remove</button> 
