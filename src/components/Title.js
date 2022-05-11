@@ -28,6 +28,7 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken
       {loggedIn? <Link className='navlink' to="/account">My Account</Link> : <Link className='navlink' to="/login">Login</Link>}
       {loggedIn? <Link className='navlink' to="/" onClick={Logout}>Logout</Link> : <Link className='navlink' to="/register">Register</Link>}
       <Link className='navlink' to="/cart">Cart</Link>
+      {loggedIn && (loggedIn.isAdmin === true) ? <Link className='navlink' to='/admin'>Admin</Link> : null}
     </div>
     <div id='snackbar'>{message}</div>
   </div>

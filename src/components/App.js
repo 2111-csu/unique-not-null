@@ -3,16 +3,16 @@ import { Route } from "react-router-dom";
 import { callApi } from "../axios-services";
 import {
   Admin,
-  Header,
   Home,
-  Payment,
   AllProducts,
+  AdminProducts,
+  AdminOrders,
+  AdminUsers,
   SingleProduct,
   SingleOrder,
   SingleUser,
   Login,
   Register,
-  User,
   Title,
   Cart,
   Checkout
@@ -107,7 +107,18 @@ const App = () => {
         </Route>
 
         <Route exact path="/admin">
-          {/* <Admin /> need state for inventory here */}
+          <Admin  
+            AdminProducts={<AdminProducts />}
+            AdminOrders={<AdminOrders />}
+            AdminUsers={<AdminUsers />}
+            token={token}
+            setMessage={setMessage}
+            products={products}
+            setProducts={setProducts}
+            orders={orders}
+            setOrders={setOrders}
+
+          />
         </Route>
 
         <Route exact path="/account">
