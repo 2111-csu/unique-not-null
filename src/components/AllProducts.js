@@ -105,7 +105,7 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
         <h5 id='search-word'>Search Popcorn: </h5>
         <input id='search-field' type='text'placeholder='search'
         onChange={(e) => { history.push(e.target.value ? `/products?searchTerm=${e.target.value}` : '/products') }}/>
-        <h4>Search by Category</h4>
+        <h4>Browse by Category</h4>
         <button className='button' type='submit' onClick={viewSweet}>Sweet</button>
         <button className='button' type='submit' onClick={viewSavory}>Savory</button>
         <button className='button' type='submit' onClick={viewSweetSavory}>Sweet & Savory</button>

@@ -15,7 +15,7 @@ const SingleProduct = ({ products }) => {
       <h4><u>In stock?</u>{product.inStock}</h4>   
     </div>
   )
-        
+    
 };
 
 export default SingleProduct;

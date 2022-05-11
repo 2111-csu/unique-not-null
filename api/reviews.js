@@ -56,7 +56,7 @@ reviewsRouter.delete('/:reviewId', requireUser, async (req, res, next) => {
         } else {
             next (post ? {
                 name: 'unauthorizedError',
-                message: 'You can only reviews you have written'
+                message: 'You can only delete or edit reviews you have written'
             } : {
                 name: 'nonexistentReviewError',
                 message: 'That review does not exist'
