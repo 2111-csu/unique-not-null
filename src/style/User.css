@@ -7,7 +7,7 @@
   display: flex;
   width: 25vw;
   flex-direction: column;
-  background-color: honeydew;
+  background-color:rgba(205, 134, 63, 0.76); ;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
   border-radius: 5px;
   margin: 1vw;
