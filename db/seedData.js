@@ -118,6 +118,54 @@ const createTables = async () => {
           password: '123456789', 
           email: 'tigergrl25@gmail.com', 
           isAdmin: false 
+        },
+        { 
+          firstName: 'Jenn', 
+          lastName: 'Jones', 
+          username: 'Birch',
+          password: '123456789', 
+          email: 'jjonessteamboat@gmail.com', 
+          isAdmin: false 
+        },
+        { 
+          firstName: 'Bennett', 
+          lastName: 'Willis', 
+          username: 'ScooterKid',
+          password: '123456789', 
+          email: 'bemersonw@gmail.com', 
+          isAdmin: false 
+        },
+        { 
+          firstName: 'Elena', 
+          lastName: 'Quarles', 
+          username: 'ellenq',
+          password: '123456789', 
+          email: 'fakeemail@gmail.com', 
+          isAdmin: false 
+        },
+        { 
+          firstName: 'Tim', 
+          lastName: 'Potten', 
+          username: 'dorkface',
+          password: '123456789', 
+          email: 'timpotten@gmail.com', 
+          isAdmin: false 
+        },
+        { 
+          firstName: 'Jaime', 
+          lastName: 'Meline', 
+          username: 'el-p',
+          password: '123456789', 
+          email: 'runthejewels@gmail.com', 
+          isAdmin: false 
+        },
+        { 
+          firstName: 'Jeff', 
+          lastName: 'Tweedy', 
+          username: 'wilco',
+          password: '123456789', 
+          email: 'wilcoband@gmail.com', 
+          isAdmin: false 
         }
       ];
       const users = await Promise.all(usersToCreate.map(createUser));
@@ -164,16 +212,58 @@ const createInitialProducts = async () => {
           category: 'Savory'
         },
         {
-          name: "Japopcorn",
+          name: "JaPopcorn",
           price: 12,
           description: 'A delicious swirl of soy sauce, sesame, rice vinegar, roasted nori and wasabi. Unbelievable umami in every bite.',
           imageurl: 'https://www.lacrema.com/wp-content/uploads/2014/08/sushipopcorn-1024x683.jpg',
           category: 'Savory'
         },
         {
-          name: "Popmallowcorn",
+          name: "PopMallowCorn",
           price: 9,
           description: 'The favorite of co-owner Nick, this is the Lucky Charms of gourmet popcorn.',
+          imageurl: 'https://www.dessertnowdinnerlater.com/wp-content/uploads/2020/08/Marshmallow-Popcorn-4.jpg',
+          category: 'Sweet'
+        },
+        {
+          name: "Cookies & Cream",
+          price: 12,
+          description: 'Get ready for your favorite ice cream flavor in a bag of popcorn.',
+          imageurl: 'https://www.iheartnaptime.net/wp-content/uploads/2017/06/cookies-and-cream-popcorn-recipe.jpg',
+          category: 'Sweet'
+        },
+        {
+          name: "ParmCorn",
+          price: 10,
+          description: 'A little lemon, pepper, and parmesan in every handful.',
+          imageurl: 'https://www.popcorn.org/Portals/0/EasyDNNnews/704/LemonParmPopcorn.jpg',
+          category: 'Savory'
+        },
+        {
+          name: "Chex Mix Popcorn",
+          price: 10,
+          description: 'Guaranteed cereal-free, but with all the nostalgic holiday flavor you love.',
+          imageurl: 'https://thepracticalkitchen.com/wp-content/uploads/2020/06/chex_mix_popcorn-0318-1-scaled.jpg',
+          category: 'Savory'
+        },
+        {
+          name: "Poppy Chow",
+          price: 12,
+          description: 'This bag of childhood nostalgia is just like Grandma used to make. Unlike Grandma, we will never pinch your cheeks.',
+          imageurl: 'https://tornadoughalli.com/wp-content/uploads/2017/12/Puppy-Chow-Popcorn1.jpg',
+          category: 'Sweet'
+        },
+        {
+          name: "Pickle Rick's Pick",
+          price: 10,
+          description: 'No need to travel through interdimensional space to enjoy this salty, briny classic.',
+          imageurl: 'https://www.accidentalhappybaker.com/wp-content/uploads/2020/05/DSC05141-480x480.jpg',
+          category: 'Savory'
+        },
+        {
+          name: "Peanut Butter Jelly Time",
+          price: 9,
+          description: 'Where he at? Where he at? Where he at? Where he at? There he go. There he go. There he go. There he go.',
           imageurl: 'https://www.dessertnowdinnerlater.com/wp-content/uploads/2020/08/Marshmallow-Popcorn-4.jpg',
           category: 'Sweet'
         },
@@ -321,6 +411,66 @@ const createInitialProducts = async () => {
         {title: 'Mainlining sugar.',
         content: 'I just... NO.',
         stars: 2,
+        userId: 4,
+        productId: 6},
+        {title: 'Daaaaaammmmnnnn.',
+        content: 'I could barely stop eating this long enough to write a review.',
+        stars: 5,
+        userId: 5,
+        productId: 7},
+        {title: 'I would season this differently.',
+        content: 'Less lemon, more parm. The it would be perfect.',
+        stars: 3,
+        userId: 6,
+        productId: 8},
+        {title: 'So appreciative...',
+        content: 'They actually used real bacon grease in this!',
+        stars: 5,
+        userId: 7,
+        productId: 9},
+        {title: 'Good lord this is sweet.',
+        content: 'Maybe too sweet? But if you are into that, have at it.',
+        stars: 3,
+        userId: 8,
+        productId: 10},
+        {title: 'Rick would love this. Not sure about Morty.',
+        content: 'Wubba lubba dub dub.',
+        stars: 4,
+        userId: 9,
+        productId: 11},
+        {title: 'Gluten-free PBJ flavor.',
+        content: 'No bread, all the PBJ flavor. Love it.',
+        stars: 5,
+        userId: 4,
+        productId: 6},
+        {title: 'Dessert with less guilt.',
+        content: 'Like eating a DQ blizzard, but with 1/3 the calories.',
+        stars: 4,
+        userId: 5,
+        productId: 7},
+        {title: 'Perfect to share with your bae.',
+        content: 'A bag of this, a movie, and my man on the couch next to me. Bliss.',
+        stars: 4,
+        userId: 6,
+        productId: 8},
+        {title: 'We eat this year-round...',
+        content: 'Not just over the holidays.',
+        stars: 5,
+        userId: 7,
+        productId: 9},
+        {title: 'Woof.',
+        content: 'Tail wag.',
+        stars: 4,
+        userId: 8,
+        productId: 10},
+        {title: 'Life is effort, and I will stop when I die! -Jerry',
+        content: 'Or when I eat a bag of this stuff.',
+        stars: 4,
+        userId: 9,
+        productId: 11},
+        {title: 'Wrong jelly...',
+        content: 'Grape sucks. Should have gone with boysenberry.',
+        stars: 3,
         userId: 4,
         productId: 6},
       ]
