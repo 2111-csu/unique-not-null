@@ -264,7 +264,7 @@ const createInitialProducts = async () => {
           name: "Peanut Butter Jelly Time",
           price: 9,
           description: 'Where he at? Where he at? Where he at? Where he at? There he go. There he go. There he go. There he go.',
-          imageurl: 'https://www.dessertnowdinnerlater.com/wp-content/uploads/2020/08/Marshmallow-Popcorn-4.jpg',
+          imageurl: 'https://cravingkernels.com/wp-content/uploads/2021/06/10.jpg',
           category: 'Sweet'
         },
       ];
@@ -283,10 +283,35 @@ const createInitialProducts = async () => {
     try {
       const ordersToCreate = [
         {userId: 1, status: 'created'},
+        {userId: 1, status: 'completed'},
+        {userId: 1, status: 'canceled'},
         {userId: 2, status: 'created'},
-        {userId: 3, status: 'created'},
+        {userId: 2, status: 'completed'},
         {userId: 2, status: 'canceled'},
+        {userId: 3, status: 'created'},
         {userId: 3, status: 'completed'},
+        {userId: 3, status: 'canceled'},
+        {userId: 4, status: 'created'},
+        {userId: 4, status: 'completed'},
+        {userId: 4, status: 'canceled'},
+        {userId: 5, status: 'created'},
+        {userId: 5, status: 'completed'},
+        {userId: 5, status: 'canceled'},
+        {userId: 6, status: 'created'},
+        {userId: 6, status: 'completed'},
+        {userId: 6, status: 'canceled'},
+        {userId: 7, status: 'created'},
+        {userId: 7, status: 'completed'},
+        {userId: 7, status: 'canceled'},
+        {userId: 8, status: 'created'},
+        {userId: 8, status: 'completed'},
+        {userId: 8, status: 'canceled'},
+        {userId: 9, status: 'created'},
+        {userId: 9, status: 'completed'},
+        {userId: 9, status: 'canceled'},
+        {userId: 10, status: 'created'},
+        {userId: 10, status: 'completed'},
+        {userId: 10, status: 'canceled'},
       ]
         const orders = await Promise.all(
           ordersToCreate.map((order) => createOrder(order))
