@@ -68,3 +68,27 @@
   text-align: center;
   margin: auto;
 }
+
+@media screen and (max-width: 600px) {
+  #single-user {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #user-info {
+    width: 95vw;
+    align-items: center;
+  }
+
+  #all-orders {
+    display: flex;
+    width: 95vw;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  #order-card {
+    width: 95%;
+  }
+
+}

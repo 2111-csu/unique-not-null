@@ -122,3 +122,23 @@ img.small{
   margin-left: 10px;
   margin-bottom: -10px;
 }
+
+@media screen and (max-width: 600px) {
+  #site-title {
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    height: 170px;
+  }
+
+  #title {
+    align-self: center;
+  }
+
+  #navbar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+}
