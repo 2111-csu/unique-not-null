@@ -101,7 +101,9 @@ img.small{
   flex-direction: column;
   width: 100vw;
   justify-content: space-around;
-  /* background-color: honeydew; */
+  /* background-color: honeydew; 
+  background-color:rgba(244, 165, 96, 0.692)
+  */
   background-image: url('https://images.contentstack.io/v3/assets/blt5423a503ab876a21/bltb6bc341b16e2b1e8/5f64f04c945334688477ff23/FallingPopcornBackground-1920x1080.jpg');
   height: 120px;
   padding: 10px;
