@@ -13,5 +13,5 @@ export { default as AdminUsers } from './AdminUsers';
 export { default as SingleProduct } from './SingleProduct';
 export { default as SingleUser } from './SingleUser';
 export { default as SingleOrder } from './SingleOrder';
-//export { default as StripeContainer } from './StripeContainer';
-//export { default as PaymentForm } from './PaymentForm';
+export { default as StripeContainer } from './StripeContainer';
+export { default as PaymentForm } from './PaymentForm';

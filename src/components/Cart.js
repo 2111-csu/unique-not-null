@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { callApi } from "../axios-services";
 import "../style/Cart.css";
-//import StripeContainer from '.'
 
 const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) => {
 
@@ -218,16 +217,3 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
 
 export default Cart;
 
-/*
-put at top:
-import StripeContainer from './StripeContainer'
-
->>>>>>>>>STRIPE<<<<<<<<<<<<<<<<
-
-<div className='checkout-container'>
-  <h2>Ready to Checkout?</h2>
-  <p>Cart Total: ${total}</p>
-  <StripeContainer />
-  <button type="submit" className="button" onClick={clickCheckout} >Let's get Poppin!</button> 
-</div>
-*/

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { callApi } from "../axios-services";
 import { Snackbar } from "./Snackbar";
 import '../style/Cart.css'
+import StripeContainer from './StripeContainer'
 
 const Checkout = ({ token, myCart, setMessage, setMyCart }) => {
 
@@ -89,9 +90,10 @@ return (
         </div> : <h1>No Products to show here</h1> }
       <div className='checkout-container'>
         <p>Order Total: ${total}</p>
-        <button type="submit" className="button"
+        <StripeContainer token={token}/>
+       {/* <button type="submit" className="button"
         onClick={e => handleCompleteOrder(e, myCart.id)}>
-        Complete Order</button>
+              Complete Order</button> */}
 
         <button type="submit" className="button"
         onClick={e => handleCancelOrder(e, myCart.id)}>
@@ -119,4 +121,20 @@ const Checkout = () => {
     </div>
   );
 }; 
+
+
+put at top:
+import StripeContainer from './StripeContainer'
+
+>>>>>>>>>STRIPE<<<<<<<<<<<<<<<<
+
+<div className='checkout-container'>
+  <h2>Ready to Checkout?</h2>
+  <p>Cart Total: ${total}</p>
+  <StripeContainer />
+  <button type="submit" className="button" onClick={clickCheckout} >Let's get Poppin!</button> 
+</div>
+
+ <StripeContainer token={token}/>
+
 */

@@ -17,7 +17,7 @@ server.use(bodyParser.json())
 //stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
 //should this go somewhere else? in api/index.js  ? 
-server.post('/api/payment', cors(), async(req, res) => {
+server.post('/api/cart/checkout', cors(), async(req, res) => {
   let {amount, id} = req.body 
   try {
     const payment = await stripe.paymentIntents.create({
