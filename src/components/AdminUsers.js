@@ -33,7 +33,7 @@ const AdminUsers = ( { users } ) => {
 
             <h5 id='search-word'>Search: </h5>
             <input id='search-field' type='text' placeholder='search'
-             onChange={(e) => { history.push(e.target.value ? `/users?searchTerm=${e.target.value}` : '/users') }}/>
+             onChange={(e) => { history.push(e.target.value ? `/admin?searchTerm=${e.target.value}` : '/admin') }}/>
       
          <div>
             {sortedUsers.map(user => {

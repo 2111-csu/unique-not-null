@@ -126,6 +126,7 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
     if (!guestQuantity || guestQuantity == 0) {
       if (cart.length === 1) {
         localStorage.setItem('guestCart', JSON.stringify({products: []}));
+        setGuestCart({products: []});
         getCart();
       } else {
         const editCart = cart.filter(item => item.id !== productId)
