@@ -5,7 +5,7 @@ const { Client } = require('pg');
 const DB_NAME = 'corn-dev';
 
 const DB_URL =
-  process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
+  `postgres://localhost:5432/${DB_NAME}`;
 
 let client;
 
