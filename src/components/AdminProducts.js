@@ -29,7 +29,7 @@ const AdminProducts = ({ products }) => {
       <div id='search-container'>
         <h5 id='search-word'>Search Popcorn: </h5>
         <input id='search-field' type='text'placeholder='search'
-        onChange={(e) => { history.push(e.target.value ? `/products?searchTerm=${e.target.value}` : '/products') }}/>
+        onChange={(e) => { history.push(e.target.value ? `/admin?searchTerm=${e.target.value}` : '/admin') }}/>
       </div>
       <div id="products-page">
         
