@@ -11,6 +11,37 @@ server.use(cors());
 const morgan = require('morgan');
 server.use(morgan('dev'));
 
+const bodyParser = require('body-parser');
+server.use(bodyParser.json())
+
+//stripe
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
+//should this go somewhere else? in api/index.js  ? 
+server.post('/api/cart/checkout', cors(), async(req, res) => {
+  let {amount, id} = req.body 
+  try {
+    const payment = await stripe.paymentIntents.create({
+      amount,
+      currency: "USD",
+      description: "Popped Perfection",
+      payment_method: id,
+      confirm: true
+    })
+    console.log('payment,' ,payment)
+    res.json({
+      messsage:'Payment successful',
+      success: true
+    })
+  } catch (error) {
+    console.log("Payment error", error)
+    res.json({
+      message: "payment error",
+      success: false
+    })
+  }
+})
+
+
 // handle application/json requests
 server.use(express.json());
 
