@@ -7,10 +7,39 @@
   height: 100%;
 }
 
-#site-title {
+/* #site-title {
   display: flex;
   flex-direction: column;
   align-items: center;
+} */
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.nav-ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  list-style-type: none;
+}
+
+.hamburger {
+  background-color: transparent;
+  border: 0;
+  display: none;
+  color: black;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.hamburger:focus {
+  outline: none;
 }
 
 #products-page {
@@ -83,4 +112,19 @@
     align-items: center;
     margin-top: 20px;
   }
+
+  .nav-ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-ul.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
 }
