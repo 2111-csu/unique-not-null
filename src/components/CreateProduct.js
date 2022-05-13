@@ -7,7 +7,6 @@ const [name, setName] = useState('');
 const [description, setDescription] = useState('');
 const [price, setPrice] = useState('');
 const [image, setImage] = useState('');
-const [inStock, setInStock] = useState(false);
 const [category, setCategory] = useState('');
 
 const handleSubmit = async (event) => {
@@ -22,7 +21,6 @@ const handleSubmit = async (event) => {
             description,
             price: Number(price),
             imageurl: image,
-            inStock,
             category
         }
     });
@@ -39,40 +37,36 @@ const handleSubmit = async (event) => {
 
 return (
 
-    <form className='create-product-form' onSubmit={handleSubmit}>
-        <h4>Create new product.</h4>
+    <form className='create-product-form' id='single-product' onSubmit={handleSubmit}>
+        <h3>Create new product</h3>
         
         <input className='input-field' type='text'
-         placeholder='product name' value={name}
-         onChange={e => setName(e.target.value)}>
+        placeholder='product name' value={name}
+        onChange={e => setName(e.target.value)}>
         </input>
 
         <input className='input-field' type='text'
-          placeholder='description' value={description}
-          onChange={e => setDescription(e.target.value)}>
+        placeholder='description' value={description}
+        onChange={e => setDescription(e.target.value)}>
+        </input>
+
+        <input className='desc-field' id='' type='text'
+        placeholder=' price' value={price}
+        onChange={e => setPrice(e.target.value)}>
         </input>
 
         <input className='input-field' type='text'
-         placeholder=' price' value={price}
-         onChange={e => setPrice(e.target.value)}>
+        placeholder='imageurl' value={image}
+        onChange={e => setImage(e.target.value)}>
         </input>
+        <select id="select" onChange={(e) => {setCategory(e.target.value)}}>
+            <option>Select A Category</option>
+            <option value="Sweet">Sweet</option>
+            <option value="Savory">Savory</option>
+            <option value="Sweet & Savory">Sweet & Savory</option>
+        </select>
 
-        <input className='input-field' type='text'
-          placeholder='imageurl' value={image}
-          onChange={e => setImage(e.target.value)}>
-         </input>
-
-         <input className='input-field' type='text'
-          placeholder='instock'value={inStock}
-          onChange={e => setInStock(e.target.value)}>
-          </input>
-
-        <input className='input-field' type='text'
-         placeholder='category' value={category}
-         onChange={e => setCategory(e.target.value)}>
-         </input>
-
-         <button className='button' type='submit'>Create Product</button>
+        <button className='button' type='submit'>Create Product</button>
 
     </form>
 
