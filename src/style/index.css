@@ -115,12 +115,9 @@ img.small{
   margin-right: 25px;
 }
 
-#title {
+#site-title nav h1 {
   display: flex;
   align-self: flex-start;
-  margin-top: -10px;
-  margin-left: 10px;
-  margin-bottom: -10px;
 }
 
 @media screen and (max-width: 600px) {

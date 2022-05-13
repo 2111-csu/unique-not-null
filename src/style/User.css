@@ -1,12 +1,16 @@
 #single-user {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   box-sizing: border-box;
 }
 
 #user-info {
   display: flex;
-  width: 25vw;
-  flex-direction: column;
+  width: 80vw;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
   background-color:rgba(205, 134, 63, 0.76); ;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
   border-radius: 5px;
@@ -18,10 +22,11 @@
 #all-orders {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   width: 55vw;
   background: rgb(250, 225, 82);
-  border: 10px solid honeydew;
-  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
+  /* border: 10px solid honeydew; */
+  /* box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4); */
   border-radius: 5px;
   margin: 1vw;
   padding: 5px;
@@ -92,3 +97,17 @@
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -191,7 +191,7 @@ const createInitialProducts = async () => {
           category: 'Sweet & Savory'
         },
         {
-          name: "Chocolate Peanut Butter Popcorn",
+          name: "Peanut Butter Choco-corn",
           price: 10,
           description: 'What else can you say about chocolate and peanut butter together? A stone cold classic.',
           imageurl: 'https://thelemonbowl.com/wp-content/uploads/2018/03/Peanut-Butter-Chocolate-Drizzled-Popcorn-1-500x375.jpg',
@@ -327,12 +327,12 @@ const createInitialProducts = async () => {
     console.log('starting to create orderProducts...')
     try {
       const orderProductstoCreate = [
-        {orderId: 1, productId: 1, price: 5, quantity: 2},
+        {orderId: 1, productId: 1, price: 8, quantity: 2},
         {orderId: 2, productId: 2, price: 10, quantity: 3},
-        {orderId: 1, productId: 3, price: 15, quantity: 3},
-        {orderId: 2, productId: 4, price: 20, quantity: 1},
-        {orderId: 3, productId: 5, price: 25, quantity: 2},
-        {orderId: 3, productId: 6, price: 50, quantity: 1},
+        {orderId: 1, productId: 3, price: 10, quantity: 3},
+        {orderId: 2, productId: 4, price: 12, quantity: 1},
+        {orderId: 3, productId: 5, price: 12, quantity: 2},
+        {orderId: 3, productId: 6, price: 9, quantity: 1},
       ]
         const orderProducts = await Promise.all(
           orderProductstoCreate.map((orderProduct) => addProductToOrder(orderProduct))
