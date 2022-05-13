@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { callApi } from "../axios-services";
 import { Snackbar } from "./Snackbar";
 import "../style/PaymentForm.css";
+import "../style/Cart.css";
 import axios from "axios"
 
 const CARD_OPTIONS = {
@@ -81,14 +82,14 @@ const PaymentForm = ({ setMessage, token, setMyCart, orderId }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form>
         <fieldset className="FormGroup">
           <div className="FormRow" style={{ width: "250px" }}>
             <CardElement options={CARD_OPTIONS} style={{ width: "200px" }} />
           </div>
         </fieldset>
-        <button className="button">Pay</button>
       </form>
+      <button className="button" onClick={handleSubmit}>Pay</button>
     </>
   );
 };

@@ -1,8 +1,10 @@
 import React from 'react';
 import { useLocation, useHistory } from 'react-router';
+import { callApi } from '../axios-services';
 import "../style/Products.css";
+import CreateProduct from './CreateProduct';
 
-const AdminProducts = ({ products }) => {
+const AdminProducts = ({ products, token }) => {
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search);
@@ -11,6 +13,22 @@ const AdminProducts = ({ products }) => {
   const goToProduct = (event, productId) => {
     event.preventDefault();
     history.push(`/products/${productId}`)
+  }
+
+  const deleteProduct = async (event, productId) => {
+    event.preventDefault();
+    try {
+      const deletedProduct = await callApi({
+        url: `/api/products/${productId}`,
+        method: "DELETE",
+        token
+      });
+
+      console.log('deleted product', deletedProduct);
+      history.push('/');
+    } catch (error) {
+      throw error;
+    }
   }
   const productMatches = (product, searchTerm) => {
     const { name, description, category } = product;   
@@ -34,6 +52,7 @@ const AdminProducts = ({ products }) => {
       <div id="products-page">
         
         <div id='product-cards'>
+          <CreateProduct token={token}/>
           {sortedProducts.length? null : <h2>Sorry, No Products to View</h2>}
           {sortedProducts.map(product => {
             return (
@@ -46,7 +65,9 @@ const AdminProducts = ({ products }) => {
                   <p>Category: {product.category}</p>
                   <p>${product.price}</p>
                 <button className='product-button' type='submit' 
-                  onClick={(e) => goToProduct(e, product.id)}>View Product Details</button>
+                  onClick={(e) => goToProduct(e, product.id)}>Edit Product</button>
+                <button className='product-button' type='submit' 
+                  onClick={(e) => deleteProduct(e, product.id)}>Delete Product</button>
               </div>
             )}
           )} 
