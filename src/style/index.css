@@ -122,20 +122,24 @@ img.small{
 
 @media screen and (max-width: 600px) {
   #site-title {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100vw;
-    height: 170px;
+    height: 200px;
   }
 
-  #title {
+  #site-title nav h1 {
     align-self: center;
   }
 
-  #navbar {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  #site-title button {
+    align-self: center;
   }
 
+  #site-title #nav-ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
 }

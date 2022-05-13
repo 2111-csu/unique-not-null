@@ -71,6 +71,14 @@ const updateProduct = async ({id, ...fields}) => {
 
 const destroyProduct = async (id) => {
   try {
+    await client.query(`
+        DELETE FROM order_products 
+        WHERE "productId" = $1;
+    `, [id]);
+    await client.query(`
+        DELETE FROM reviews
+        WHERE "productId" = $1;
+    `, [id]);
     const { rows: [deletedProduct] } = await client.query(`
       DELETE FROM products 
       WHERE id=${id}

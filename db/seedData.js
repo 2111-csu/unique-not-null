@@ -467,7 +467,7 @@ const createInitialProducts = async () => {
         content: 'No bread, all the PBJ flavor. Love it.',
         stars: 5,
         userId: 4,
-        productId: 6},
+        productId: 12},
         {title: 'Dessert with less guilt.',
         content: 'Like eating a DQ blizzard, but with 1/3 the calories.',
         stars: 4,
@@ -497,7 +497,7 @@ const createInitialProducts = async () => {
         content: 'Grape sucks. Should have gone with boysenberry.',
         stars: 3,
         userId: 4,
-        productId: 6},
+        productId: 12},
       ]
         const reviews = await Promise.all(
           reviewsToCreate.map((review) => createReview(review))

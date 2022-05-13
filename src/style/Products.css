@@ -15,7 +15,7 @@
   display: flex;
   flex-basis: 350px;
   max-width: 450px;
-  height: 525px;
+  height: 550px;
   flex-grow: 0;
   margin: 0;
   padding: 10px;
@@ -42,6 +42,13 @@
 
 #prod-desc p {
   overflow: hidden;
+}
+
+#price-category {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
 }
 
 #quantity-button {

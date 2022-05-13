@@ -122,8 +122,10 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
               <div id='prod-desc'>
                 <p>{product.description}</p>
               </div>
-                <p>Category: {product.category}</p>
-                <p>${product.price}</p>
+              <div id='price-category'>
+                <div><p>Category: {product.category}</p></div>
+                <div><p>Price: ${product.price}</p></div>
+              </div>
               <button className='product-button' type='submit' 
                 onClick={(e) => goToProduct(e, product.id)}>View Product Details</button>
               <div id='quantity-button'>
