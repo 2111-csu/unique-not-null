@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Snackbar } from "./Snackbar";
 
 const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken, setGuestCart }) => {
-
+  
   const history = useHistory();
 
     const Logout = () => {
@@ -18,19 +18,35 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken
     history.push('/');
   }
 
+    const handleHamburger = () => {
+      const hamburger = document.getElementById('hamburger');
+      const navUL = document.getElementById('nav-ul');
+
+      hamburger.addEventListener('click', () => {
+        navUL.classList.toggle('show');
+  });
+}
+
   return <div id='site-title'>
-    <div id='title'>
-      <h1>Popped Perfection</h1>
-    </div>
-    <div id='navbar'>
-      <Link className='navlink' to="/">Home</Link>
-      <Link className='navlink'to="/products">Products</Link>
-      {loggedIn? <Link className='navlink' to="/account">My Account</Link> : <Link className='navlink' to="/login">Login</Link>}
-      {loggedIn? <Link className='navlink' to="/" onClick={Logout}>Logout</Link> : <Link className='navlink' to="/register">Register</Link>}
-      <Link className='navlink' to="/cart">Cart</Link>
-      {loggedIn && (loggedIn.isAdmin === true) ? <Link className='navlink' to='/admin'>Admin</Link> : null}
-    </div>
-    <div id='snackbar'>{message}</div>
+    <nav>
+      {/* <div id='title'> */}
+        <h1><b>Popped Perfection</b></h1>
+      {/* </div> */}
+      {/* <div id='navbar'> */}
+      <button class="hamburger" id="hamburger" onClick={handleHamburger}>
+      <i class="fa fa-bars"></i>
+      </button>
+        <ul className="nav-ul" id="nav-ul">
+          <li><Link className='navlink' to="/">Home</Link></li>
+          <li><Link className='navlink'to="/products">Products</Link></li>
+          <li>{loggedIn? <Link className='navlink' to="/account">My Account</Link> : <Link className='navlink' to="/login">Login</Link>}</li>
+          <li>{loggedIn? <Link className='navlink' to="/" onClick={Logout}>Logout</Link> : <Link className='navlink' to="/register">Register</Link>}</li>
+          <li><Link className='navlink' to="/cart">Cart</Link></li>
+          <li>{loggedIn && (loggedIn.isAdmin === true) ? <Link className='navlink' to='/admin'>Admin</Link> : null}</li>
+        </ul>
+      {/* </div> */}
+      <div id='snackbar'>{message}</div>
+    </nav>
   </div>
 };
 
