@@ -26,7 +26,6 @@ productsRouter.get("/", async (req, res, next) => {
 productsRouter.post("/", requireUser, async (req, res, next) => {
   const { name, price, imageUrl, category, description, inStock } = req.body;
   try {
-    const checkAdmin = true
     if (checkAdmin) {
     const product = await createProduct({ name, description, price, imageUrl, inStock, category });
 

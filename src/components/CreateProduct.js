@@ -50,7 +50,7 @@ return (
         onChange={e => setDescription(e.target.value)}>
         </input>
 
-        <input className='desc-field' id='' type='text'
+        <input className='input-field' id='' type='text'
         placeholder=' price' value={price}
         onChange={e => setPrice(e.target.value)}>
         </input>

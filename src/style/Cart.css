@@ -82,5 +82,7 @@
 
   .cart-buttons {
     flex-direction: row;
+    flex-wrap: wrap;
+    
   }
 }
