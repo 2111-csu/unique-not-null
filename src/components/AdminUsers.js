@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { useLocation, useHistory } from 'react-router';
+import '../style/User.css'
 
 const AdminUsers = ( { users } ) => {
     //const [firstName, setFirstName] = useState('');
@@ -27,6 +28,11 @@ const AdminUsers = ( { users } ) => {
       console.log('users', users);
       const sortedUsers = users && users.filter(user => userMatches(user, searchTerm));
 
+      const handleEdit = async (event, userId) => {
+        event.preventDefault();
+        history.push(`/admin/users/${userId}`)
+      }
+
       return (
         <div id="users-page">
             <h2>List of Users</h2>
@@ -38,15 +44,14 @@ const AdminUsers = ( { users } ) => {
          <div>
             {sortedUsers.map(user => {
                 return (
-                    <div key={user.id} id='single-user'>
-                        <h4><u>User Name:</u>
-                        <Link to={`/users/${user.id}`}> {user.firstName} {user.lastName}</Link></h4>
-                        <h4><u>First name:</u> {user.firstName}</h4>
-                        <h4><u>Last name:</u> {user.lastName}</h4>
-                        <h4><u>Email:</u> {user.email}</h4>
-                        <h4><u>username:</u> {user.username}</h4>
-                        <h4><u>Admin? </u> {user.isAdmin}</h4>
-                    </div>
+                  <div id='user-info'>
+                    <p>Name: {user.firstName} {user.lastName}</p>
+                    <p>Email Address: {user.email}</p>
+                    <p>Username: {user.username}</p>
+        
+                    <button type="submit" className="button"
+                    onClick={e => handleEdit(e, user.id)}>Edit Account</button>
+                  </div>
                     ) } )} 
          </div>
       

@@ -6,7 +6,7 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken
   
   const history = useHistory();
 
-    const Logout = () => {
+  const Logout = () => {
     setLoggedIn(null);
     setMyCart(null);
     setToken(null);
@@ -18,13 +18,9 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken
     history.push('/');
   }
 
-    const handleHamburger = () => {
-      const hamburger = document.getElementById('hamburger');
-      const navUL = document.getElementById('nav-ul');
-
-      hamburger.addEventListener('click', () => {
-        navUL.classList.toggle('show');
-  });
+  const handleHamburger = () => {
+    const navUL = document.getElementById('nav-ul');
+    navUL.classList.toggle('show');
 }
 
   return <div id='site-title'>
@@ -33,8 +29,8 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken
         <h1><b>Popped Perfection</b></h1>
       {/* </div> */}
       {/* <div id='navbar'> */}
-      <button class="hamburger" id="hamburger" onClick={handleHamburger}>
-      <i class="fa fa-bars"></i>
+      <button className="hamburger" id="hamburger" onClick={handleHamburger}>
+      <i className="fa fa-bars"></i>
       </button>
         <ul className="nav-ul" id="nav-ul">
           <li><Link className='navlink' to="/">Home</Link></li>
