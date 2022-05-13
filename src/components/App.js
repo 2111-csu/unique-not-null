@@ -140,7 +140,12 @@ const App = () => {
         </Route>
 
         <Route exact path="/cart/checkout">
-          <Checkout token={token} myCart={myCart} setMessage={setMessage} setMyCart={setMyCart} />
+          <Checkout 
+            token={token} 
+            myCart={myCart} 
+            setMessage={setMessage} 
+            setMyCart={setMyCart}
+          />
         </Route>
 
         <Route exact path="/login">

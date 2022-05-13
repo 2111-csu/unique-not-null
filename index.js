@@ -1,6 +1,7 @@
 // This is the Web Server
 const express = require('express');
 const server = express();
+require("dotenv").config()
 
 // enable cross-origin resource sharing to proxy api requests
 // from localhost:3000 to localhost:4000 in local dev env
@@ -12,12 +13,13 @@ const morgan = require('morgan');
 server.use(morgan('dev'));
 
 const bodyParser = require('body-parser');
-server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
 
 //stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
 //should this go somewhere else? in api/index.js  ? 
-server.post('/api/cart/checkout', cors(), async(req, res) => {
+server.post('/payment', cors(), async (req, res) => {
   let {amount, id} = req.body 
   try {
     const payment = await stripe.paymentIntents.create({

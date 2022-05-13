@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { callApi } from "../axios-services";
 import "../style/Cart.css";
 
-const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) => {
+const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart  }) => {
 
   const history = useHistory();
   const [quantity, setQuantity] = useState();
@@ -145,7 +145,7 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
       getCart();
     }
   }
-  let total = 0;
+  let cartTotal = 0;
   return (
     <div className='cart'>
       {myCart || guestCart ? null : <div><h1>There are no products in your cart</h1></div>}
@@ -153,7 +153,7 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
         <div className='cart-container'>
          {guestCart.products && guestCart.products.map((product) => {
           const lineTotal = product.price * product.quantity;
-          total += lineTotal;
+          cartTotal += lineTotal;
           return (
             <div key={product.id} className='cart-product'>
               <div className='cart-image'>
@@ -180,7 +180,7 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
       <div className='cart-container'>
         {myCart.products && myCart.products.map((product) => {
           const lineTotal = product.price * product.quantity;
-          total += lineTotal;
+          cartTotal += lineTotal;
         return (
           <div key={product.id} className='cart-product'>
             <div className='cart-image'>
@@ -209,7 +209,7 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart }) =
       : null }
       <div className='checkout-container'>
         <h2>Ready to Checkout?</h2>
-        <p>Cart Total: ${total}</p>
+        <p>Cart Total: ${cartTotal}</p>
         <button type="submit" className="button" onClick={clickCheckout} >Let's get Poppin!</button> 
       </div>
     </div>

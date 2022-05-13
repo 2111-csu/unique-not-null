@@ -90,7 +90,7 @@ return (
         </div> : <h1>No Products to show here</h1> }
       <div className='checkout-container'>
         <p>Order Total: ${total}</p>
-        <StripeContainer token={token}/>
+        <StripeContainer setMessage={setMessage} orderId={myCart.id} setMyCart={setMyCart} token={token}/>
        {/* <button type="submit" className="button"
         onClick={e => handleCompleteOrder(e, myCart.id)}>
               Complete Order</button> */}

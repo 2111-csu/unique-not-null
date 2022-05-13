@@ -8,12 +8,16 @@ const PUBLIC_KEY = "pk_test_51KyQNZDSB6EJnrLZAtEPFc48bxyIRUohyI7V4q8RYJcE6ESvgJH
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY)
 
-const StripeContainer = ({token}) => {
+const StripeContainer = ({ token, setMessage, orderId, setMyCart }) => {
 
     return (
 
         <Elements stripe={stripeTestPromise} >
-            <PaymentForm token={token}/>
+            <PaymentForm 
+            setMessage={setMessage} 
+            orderId={orderId} 
+            setMyCart={setMyCart} 
+            token={token}/>
         </Elements>
     )
 
