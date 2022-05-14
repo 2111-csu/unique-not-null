@@ -11,6 +11,7 @@ const {
   //getOrdersByUsername
   getAllUsers,
   //updateUser
+  getUserByEmail
 } = require("../db/users");
 
 const jwt = require("jsonwebtoken");
@@ -117,33 +118,44 @@ usersRouter.get("/:username", async (req, res, next) => {
   }
 });
 
-usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
+usersRouter.patch('/:userId', requireUser, async (req, res, next) => {
   try {
-    const { id, username, password, email } = req.body;
-    const _user = await getUserByUsername(username);
-    const _userEmail = await User.getUserByEmail(email);
-    const updateUser = { id: id };
+    const { firstName, lastName, email, username } = req.body;
+    const { userId } = req.params;
+    const _user = await getUserById(userId);
+    const _userEmail = await getUserByEmail(_user.email);
+    const updateFields = {};
+
+    if (firstName) {
+      updateFields.firstName = firstName;
+    }
+
+    if (lastName) {
+      updateFields.lastName = lastName;
+    }
+
     if (username) {
-      if (_user) {
+      if (_user.username) {
         throw {
           name: 'AlreadyExistsError',
           message: 'Username taken, try again',
         };
       } else {
-        updateUser().username = username;
+        updateFields.username = username;
       }
     }
     
-    if (password) {
-      if (password.length < 8) {
-        throw {
-          name: 'PasswordTooShortError',
-          message: 'Password is too short, try again',
-        };
-      } else {
-        updateUser().password = password;
-        }
-      }
+    // if (password) {
+    //   if (password.length < 8) {
+    //     throw {
+    //       name: 'PasswordTooShortError',
+    //       message: 'Password is too short, try again',
+    //     };
+        
+    //   } else {
+    //     updateUser().password = password;
+    //     }
+    //   }
         if (email) {
           if (!email.includes("@")) {
             throw {
@@ -156,11 +168,12 @@ usersRouter.patch('/:userId', checkAdmin, async (req, res, next) => {
               message: "That email is already in use",
             };
           } else {
-            updateUser().email = email;
+            updateFields.email = email;
           }
       }
-      const updatedUser = await User.updateUser(updateUser);
+      const updatedUser = await updateUser({id:userId, ...updateFields});
       delete updatedUser.password;
+      console.log('updatedUser...', updatedUser);
       res.send({ updatedUser, message: "User updated successfully"});
     } catch (error) {
       next (error);

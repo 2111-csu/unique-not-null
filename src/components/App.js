@@ -18,6 +18,7 @@ import {
   Checkout
 } from "./";
 import "../style/App.css";
+import EditUser from "./EditUser";
 
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
@@ -35,6 +36,7 @@ const App = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState();
   const [myCart, setMyCart] = useState();
+  const [users, setUsers] = useState();
 
   const getAPIStatus = async () => {
     const healthy = await callApi({ url: "/api/health", method: "GET" });
@@ -126,6 +128,14 @@ const App = () => {
             token={token} 
             loggedIn={loggedIn} 
           />
+        </Route>
+
+        <Route exact path="/edit/users/:userId">
+          <EditUser
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+            token={token}
+            />
         </Route>
 
         <Route exact path="/cart">

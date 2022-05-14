@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { callApi } from "../axios-services";
 import { useParams, useHistory } from 'react-router-dom';
 
-const EditUser = ({ token }) => { 
+const EditUser = ({ token, loggedIn, setLoggedIn }) => { 
 
    const { userId } = useParams();
    const history  = useHistory();
+   const userToEdit = loggedIn;
    const [firstName, setFirstName] = useState('');
    const [lastName, setLastName] = useState('');
    const [email, setEmail] = useState('');
@@ -13,12 +14,11 @@ const EditUser = ({ token }) => {
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const [isAdmin, setIsAdmin] = useState(false);
-   
     
-    const userToEdit = users.filter(user => user.id === userId)
+    
     //const [userToEdit] = users.filter(user => user.id === Nunber(userId))
     
-    const handleEdit = async (event, userId) => {
+    const handleEdit = async (event) => {
         event.preventDefault();
         try {
         const editedUser= await callApi({
@@ -29,14 +29,13 @@ const EditUser = ({ token }) => {
                 firstName,
                 lastName,
                 email,
-                imageurl,
                 username,
                 password,
-                isAdmin  
             }
         });  
         console.log('editedUser,', editedUser);
-        history.push('/admin/users');
+        setLoggedIn(editedUser.data.updatedUser);
+        history.push('/account');
         
        } catch(error) {
          throw error
@@ -67,44 +66,44 @@ const EditUser = ({ token }) => {
             <h4>Edit a user:</h4>
             
             <input className='input-field' type='text'
-             placeholder='first name' value={firstName}
+             placeholder={loggedIn.firstName} value={firstName}
              onChange={e => setFirstName(e.target.value)}>
             </input>
     
             <input className='input-field' type='text'
-              placeholder='last name' value={lastName}
+              placeholder={loggedIn.lastName} value={lastName}
               onChange={e => setLastName(e.target.value)}>
             </input>
     
             <input className='input-field' type='text'
-             placeholder='email' value={email}
+             placeholder={loggedIn.email} value={email}
              onChange={e => setEmail(e.target.value)}>
             </input>
     
-            <input className='input-field' type='text'
+            {/* <input className='input-field' type='text'
               placeholder='image' value={imageurl}
               onChange={e => setImageurl(e.target.value)}>
-             </input>
+             </input> */}
     
              <input className='input-field' type='text'
-              placeholder='username'value={username}
+              placeholder={loggedIn.username} value={username}
               onChange={e => setUsername(e.target.value)}>
               </input>
     
             <input className='input-field' type='text'
-             placeholder='password' value={password}
+             placeholder={'enter new password'} value={password}
              onChange={e => setPassword(e.target.value)}>
              </input>
 
-             <input className='input-field' type='text'
+             {/* <input className='input-field' type='text'
              placeholder='isAdmin' value={isAdmin}
              onChange={e => setIsAdmin(e.target.value)}>
-             </input>
+             </input> */}
     
         </form>
     
         <button type="submit"className="button"
-         onClick={(e) => handleEdit(e, userToEdit.id)}>Edit User</button>
+         onClick={(e) => handleEdit(e)}>Edit User</button>
          
         <button type="submit"className="button"
          onClick={(e) => handleDelete(e, userToEdit.id)}>Delete User</button>

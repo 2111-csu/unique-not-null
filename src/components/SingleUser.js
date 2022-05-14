@@ -39,7 +39,7 @@ const SingleUser = ({ token, loggedIn }) => {
 
   const handleEdit = async (event, userId) => {
     event.preventDefault();
-    history.push(`/admin/users/${userId}`)
+    history.push(`/edit/users/${userId}`)
   }
   console.log('myOrders', myOrders);
 
@@ -51,10 +51,10 @@ const SingleUser = ({ token, loggedIn }) => {
         <>
           <div id='user-info'>
             <h2><u>Account Information</u></h2>
-            <p>First Name: {loggedIn.firstName}</p>
-            <p>Last Name: {loggedIn.lastName}</p>
-            <p>Email Address: {loggedIn.email}</p>
-            <p>Username: {loggedIn.username}</p>
+            <p><b>First Name:</b> {loggedIn.firstName}</p>
+            <p><b>Last Name:</b> {loggedIn.lastName}</p>
+            <p><b>Email Address:</b> {loggedIn.email}</p>
+            <p><b>Username:</b> {loggedIn.username}</p>
 
             <button type="submit" className="button"
             onClick={e => handleEdit(e, user.id)}>Edit Account</button>
