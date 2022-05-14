@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import { useLocation, useHistory } from 'react-router';
-import '../style/User.css'
+import '../style/User.css';
+import { callApi } from '../axios-services';
 
-const AdminUsers = ( { users } ) => {
+const AdminUsers = ( { users, token } ) => {
     //const [firstName, setFirstName] = useState('');
     //const [lastName, setLastName] = useState('');
     //const [email, setEmail] = useState('');
@@ -33,6 +34,22 @@ const AdminUsers = ( { users } ) => {
         history.push(`/admin/users/${userId}`)
       }
 
+      const deleteUser = async (event, userId) => {
+        event.preventDefault();
+        try {
+          const deletedUser = await callApi({
+            url: `/api/users/${userId}`,
+            method: "DELETE",
+            token
+          });
+    
+          console.log('deleted user', deletedUser);
+          history.push('/');
+        } catch (error) {
+          throw error;
+        }
+      }
+
       return (
         <div id="users-page">
             <h2>List of Users</h2>
@@ -49,8 +66,10 @@ const AdminUsers = ( { users } ) => {
                     <p>Email Address: {user.email}</p>
                     <p>Username: {user.username}</p>
         
-                    <button type="submit" className="button"
-                    onClick={e => handleEdit(e, user.id)}>Edit Account</button>
+                    {/* <button type="submit" className="button"
+                    onClick={e => handleEdit(e, user.id)}>Edit Account</button> */}
+                    <button className='button' type='submit' 
+                  onClick={(e) => deleteUser(e, user.id)}>Delete User</button>
                   </div>
                     ) } )} 
          </div>
