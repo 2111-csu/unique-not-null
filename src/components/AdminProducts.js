@@ -66,7 +66,7 @@ const AdminProducts = ({ products, token }) => {
                 <div id='admin-product-buttons'>
                   <button className='product-button' type='submit' 
                   onClick={(e) => goToProduct(e, product.id)}>Edit</button>
-                <button className='product-button' type='submit' 
+                  <button className='product-button' type='submit' 
                   onClick={(e) => deleteProduct(e, product.id)}>Delete</button>
                 </div>
                 

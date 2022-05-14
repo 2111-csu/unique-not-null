@@ -17,7 +17,6 @@ const {
 const jwt = require("jsonwebtoken");
 const { requireUser, checkAdmin } = require("./utils");
 const { getOrdersByUser } = require("../db/orders");
-const { user } = require("pg/lib/defaults");
 
 usersRouter.get('/', requireUser, async (req, res, next) => {
   try {
