@@ -54,6 +54,8 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
 
   const handleAddProductToCart = async (event, productId, price, myCart, product) => {
     event.preventDefault();
+
+     
     if (!loggedIn) {
       const cart = guestCart.products;
       console.log('cart', cart);
@@ -126,12 +128,13 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
                 <p>${product.price}</p>
               <button className='product-button' type='submit' 
                 onClick={(e) => goToProduct(e, product.id)}>View Product Details</button>
+
               <div id='quantity-button'>
                 <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
                 min='1'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
                 <button className='button' type='submit' 
                 onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart, product)}>Add Product to Cart</button>
-              </div>
+              </div> 
             </div>
           )}
         )} 

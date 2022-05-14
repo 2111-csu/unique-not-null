@@ -1,4 +1,4 @@
-#single-product-view {
+#single-product-page {
 
    margin: 30px; 
 }
@@ -10,7 +10,7 @@
     max-width: 450px;
     height: 525px;
     flex-grow: 0;
-    margin: 20px;
+    /* margin: 20px; */
     padding: 10px;
     margin: 0 10px 10px 0;
     background-color:rgba(205, 134, 63, 0.76);
@@ -27,7 +27,7 @@ margin: 25px;
 #single-review {
 
     display: flex;
-    flex-basis: 350px;
+    flex-basis: 420px;
     flex-direction: column;
     max-width:450px;
     height: 200px;
@@ -39,4 +39,3 @@ margin: 25px;
     border-radius: 5px;
 
 }
-

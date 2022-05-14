@@ -169,14 +169,19 @@ const App = () => {
 
         <Route exact path="/products/:productId">
           <SingleProduct 
+            token={token} 
             products={products} 
+            myCart={myCart} 
+            loggedIn={loggedIn}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
           />
         </Route>
 
         <Route exact path="/register">
           <Register 
             setToken={setToken} 
-            setMessage={setMessage}
+            setMessage={setMessage}  
           />
         </Route>
 
