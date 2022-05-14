@@ -11,7 +11,8 @@ const {
   //getOrdersByUsername
   getAllUsers,
   //updateUser
-  getUserByEmail
+  getUserByEmail,
+  destroyUser
 } = require("../db/users");
 
 const jwt = require("jsonwebtoken");
@@ -207,6 +208,19 @@ usersRouter.get('/:userId/orders', requireUser, async (req, res, next) => {
   }
 });
 
+usersRouter.delete('/:userId', async (req, res, next) => {
+  const { userId } = req.params;
+  try {
+    const userToDelete = await destroyUser(userId);
+    console.log('userToDelete', userToDelete);
+    res.send({
+      userToDelete,
+      message: "User deleted successfully"
+    });
+  } catch (error) {
+    throw error;
+  };
+});
 
 module.exports = usersRouter;
 

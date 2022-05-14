@@ -126,12 +126,20 @@ const updateUser = async ({ id, ...fields }) => {
     } catch (error) {
       console.error("Cannot get user by email", error)
     };
-  } ;
+  };
 
-/*
+  const destroyUser = async (id) => {
+    try {
+      const { rows: [deletedUser] } = await client.query(`
+        DELETE FROM users
+        WHERE id=$1
+      `, [id]);
+      return deletedUser;
+    } catch (error) {
+      throw error;
+    };
+  };
 
-
-*/
 module.exports = {
   client,
   createUser,
@@ -140,5 +148,6 @@ module.exports = {
   getUserById,
   getUserByUsername,
   updateUser,
-  getUserByEmail
+  getUserByEmail,
+  destroyUser
 }
