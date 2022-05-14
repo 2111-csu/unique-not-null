@@ -3,13 +3,9 @@ import { useLocation, useHistory } from 'react-router';
 import { callApi } from '../axios-services';
 import "../style/AdminOrders.css";
 
-const AdminOrders = ( { token, orders } ) => {
+const AdminOrders = ( { token, orders, getOrders } ) => {
 
   const [status, setStatus] = useState();
-  const [created, setCreated] = useState();
-  const [processing, setProcessing] = useState();
-  const [completed, setCompleted] = useState();
-  const [canceled, setCanceled] = useState();
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search);
@@ -65,8 +61,8 @@ const AdminOrders = ( { token, orders } ) => {
         }
       })
       console.log('edit status, ', editedOrderStatus)
-      setStatus(status)
-      history.push('/admin')
+      setStatus()
+      getOrders();
     }
     
     catch(error) {
@@ -96,10 +92,10 @@ const AdminOrders = ( { token, orders } ) => {
 
           <select id="select" onChange={(e) => {setStatus(e.target.value)}}>
             <option>Change order status:</option>
-            <option value={created}>created</option>
-            <option value={processing}>processing</option>
-            <option value={completed}>completed</option>
-            <option value={canceled}>canceled</option>
+            <option value='created'>created</option>
+            <option value='processing'>processing</option>
+            <option value='completed'>completed</option>
+            <option value='canceled'>canceled</option>
           </select>
 
           <button type="submit"className="button"
