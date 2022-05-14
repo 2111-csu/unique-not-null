@@ -119,7 +119,7 @@ usersRouter.get("/:username", async (req, res, next) => {
 
 usersRouter.patch('/:userId', requireUser, async (req, res, next) => {
   try {
-    const { firstName, lastName, email, username } = req.body;
+    const { firstName, lastName, email, username, isAdmin } = req.body;
     const { userId } = req.params;
     const _user = await getUserById(userId);
     const _userEmail = await getUserByEmail(_user.email);
@@ -170,6 +170,11 @@ usersRouter.patch('/:userId', requireUser, async (req, res, next) => {
             updateFields.email = email;
           }
       }
+
+      if (isAdmin && checkAdmin) {
+        updateFields.isAdmin = isAdmin;
+      }
+      
       const updatedUser = await updateUser({id:userId, ...updateFields});
       delete updatedUser.password;
       console.log('updatedUser...', updatedUser);
