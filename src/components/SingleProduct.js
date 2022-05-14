@@ -1,13 +1,55 @@
-import React from 'react';
+import React, { useState }from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import "../style/SingleProduct.css";
+import { callApi } from '../axios-services'
 
-const SingleProduct = ({ products }) => {
+const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestCart }) => {
   const { productId } = useParams();
+  const [quantity, setQuantity] = useState(1);
   const history = useHistory();
-
-
+  
   const [product] = products.filter(product => product.id === Number(productId));
+  console.log('product, singleProduct,',product);
+  const handleAddProductToCart = async (event, productId) => {
+    event.preventDefault();
+    if (!loggedIn) {
+      const cart = guestCart.products;
+      console.log('cart', cart);
+      const newProd = {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        productId: productId,
+        price: product.price,
+        quantity: Number(quantity),
+        imageurl: product.imageurl
+      }
+      const newCart = [...cart, newProd]
+      console.log('newCart', newCart);
+      setGuestCart({products: newCart})
+      localStorage.setItem('guestCart', JSON.stringify({products: newCart}));
+      
+    } else {
+      try {
+        const addedProduct = await callApi({
+          url: `api/orders/${myCart.id}/products`,
+          method: "POST",
+          token,
+          data: {
+            productId,
+            price: product.price,
+            quantity: Number(quantity)
+          }
+        });
+        setQuantity();
+        console.log('product', addedProduct);
+        history.push('/cart')
+      } catch (error) {
+        console.log('error', error);
+        throw error;
+      }
+    }    
+  }
 
   const handleBackToProducts = (event) => {
     event.preventDefault();
@@ -20,13 +62,31 @@ const SingleProduct = ({ products }) => {
 
   return (
     <>
-    <div id='single-product-view'>
+    <div id='single-product-page'>
     <div id='single-product'>
       <h4>{product.name}</h4>
       <h4>{product.description}</h4>
       <h4>Price: ${product.price}</h4>
       <img src={product.imageurl} alt={`the ${product.name}`} className='medium'/>
       <h4>In stock?{product.inStock}</h4>   
+
+      <div id='quantity-button'>
+        <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
+         min='1'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
+         <button className='button' type='submit' 
+         onClick={(e) => handleAddProductToCart(e, product.id)}>Add Product to Cart</button>
+     
+
+        {/* <button type="submit" className="button"
+        onClick={e => handleBackToProducts(e)}>
+        Back to Products</button>
+
+        <button type="submit" className="button"
+        onClick={e => handleBackToHome(e)}>
+        Back to Home</button> */}
+
+      </div>
+
      </div>
 
      <div id='reviews-section'>Reviews
@@ -48,7 +108,7 @@ const SingleProduct = ({ products }) => {
       <button type="submit" className="button"
       onClick={e => handleBackToHome(e)}>
       Back to Home</button>
-    
+      
     </div>
     </>
   )
@@ -57,14 +117,3 @@ const SingleProduct = ({ products }) => {
 
 export default SingleProduct;
 
-/* 
- return (
-    <div key={product.id} id='single-product' >
-      <h4>{product.name}</h4>
-      <h4>{product.description}</h4>
-      <h4>Price: </u>{product.price}</h4>
-      <img src={product.imageurl} alt={`the ${product.name}`}/>
-      <h4>In stock?{product.inStock}</h4>   
-    </div>
-  )
-*/

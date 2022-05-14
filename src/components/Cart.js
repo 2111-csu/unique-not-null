@@ -112,6 +112,11 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart  }) 
         throw error
       }
     };
+
+    const handleBackToProducts = (event) => {
+      event.preventDefault();
+      history.push('/products');
+    }
   
   const clickCheckout = (event) => {
     event.preventDefault();
@@ -194,13 +199,15 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart  }) 
               <p>Total: ${lineTotal}</p>
             </div>
             <div className='cart-buttons'>
-              <input type='number' id='quantity-input' name='quantity' min='0'max='10'
+              <input type='number' id='quantity-input' name='quantity' min='1'max='10'
               placeholder='Quantity' value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
               
               <button type="submit"className="button"
               onClick={(e) => handleEditQuantity(e, product.id)}>Change Quantity</button>
               <button type="submit"className="button"
               onClick={(e) => handleRemoveProduct(e, product.id)}>Remove</button>
+
+              
             </div>
           </div>
         );
@@ -211,6 +218,10 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart  }) 
         <h2>Ready to Checkout?</h2>
         <p>Cart Total: ${cartTotal}</p>
         <button type="submit" className="button" onClick={clickCheckout} >Let's get Poppin!</button> 
+
+        <label>Want more?</label>
+        <button type="submit" className="button"
+        onClick={e => handleBackToProducts(e)}>Back to Products</button>
       </div>
     </div>
   );

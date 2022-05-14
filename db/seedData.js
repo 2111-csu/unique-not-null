@@ -444,7 +444,7 @@ const createInitialProducts = async () => {
         userId: 5,
         productId: 7},
         {title: 'I would season this differently.',
-        content: 'Less lemon, more parm. The it would be perfect.',
+        content: 'Less lemon, more parm. Then it would be perfect.',
         stars: 3,
         userId: 6,
         productId: 8},
