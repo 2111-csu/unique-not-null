@@ -74,7 +74,7 @@ const Admin = ({ token, setMessage, products, setProducts, orders, setOrders }) 
       <button className='button' type='submit' onClick={clickUsers}>All Users</button>
     </div>
     {isProducts? <AdminProducts products={products} setProducts={setProducts} token={token}/> : null}
-    {isOrders? <AdminOrders token={token} orders={orders} setOrders={setOrders}/> : null}
+    {isOrders? <AdminOrders token={token} orders={orders} setOrders={setOrders} getOrders={getOrders}/> : null}
     {isUsers? <AdminUsers token={token} users={users} setUsers={setUsers} getUsers={getUsers}/> : null}
   </>
 }

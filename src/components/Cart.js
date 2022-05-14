@@ -151,9 +151,10 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart  }) 
     }
   }
   let cartTotal = 0;
+  
   return (
     <div className='cart'>
-      {myCart || guestCart ? null : <div><h1>There are no products in your cart</h1></div>}
+      {myCart.products && myCart.products.length == 0 && guestCart && !guestCart.products.length ? <div><h1>There are no products in your cart</h1></div> : null }
       {guestCart && (!myCart || myCart === false) ? 
         <div className='cart-container'>
          {guestCart.products && guestCart.products.map((product) => {

@@ -130,6 +130,16 @@ const updateUser = async ({ id, ...fields }) => {
 
   const destroyUser = async (id) => {
     try {
+      await client.query(`
+        DELETE FROM orders
+        WHERE "userId" = $1;
+    `, [id]);
+
+    await client.query(`
+        DELETE FROM reviews
+        WHERE "userId" = $1;
+    `, [id]);
+    
       const { rows: [deletedUser] } = await client.query(`
         DELETE FROM users
         WHERE id=$1

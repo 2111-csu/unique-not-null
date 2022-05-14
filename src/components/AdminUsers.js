@@ -52,7 +52,7 @@ const AdminUsers = ( { users, token, getUsers } ) => {
           });
     
           console.log('deleted user', deletedUser);
-          history.push('/');
+          getUsers();
         } catch (error) {
           throw error;
         }
