@@ -64,23 +64,34 @@ productsRouter.get("/:productId", async (req, res, next) => {
 
 productsRouter.patch("/:productId", requireUser, async (req, res, next) => {
   const { productId } = req.params;
-  const { name, price } = req.body;
+  const { name, price, description, imageurl, inStock, category } = req.body;
 
   const updateFields = {};
 
+    if(name) {
+        updateFields.name = name;
+    }
     if(price) {
         updateFields.price = price;
     }
-    if(quantity) {
-        updateFields.quantity = quantity
+    if(description) {
+        updateFields.description = description;
+    }
+    if(imageurl) {
+        updateFields.imageurl = imageurl;
+    }
+    if(inStock) {
+        updateFields.inStock = inStock;
+    }
+    if(category) {
+        updateFields.category = category;
     }
     
   try {
     if(checkAdmin) {
     const updatedProduct = await updateProduct({
       id: productId,
-      name,
-      price,
+      ...updateFields
     });
 
     res.send(updatedProduct);

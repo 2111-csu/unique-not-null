@@ -62,6 +62,7 @@ const updateProduct = async ({id, ...fields}) => {
           WHERE id=${ id }
           RETURNING *;
       `, Object.values(fields));
+      console.log(product);
       return {message: "Product Updated"};
   } catch (error) {
       throw error;

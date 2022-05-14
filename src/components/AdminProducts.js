@@ -12,7 +12,7 @@ const AdminProducts = ({ products, token }) => {
   
   const goToProduct = (event, productId) => {
     event.preventDefault();
-    history.push(`/products/${productId}`)
+    history.push(`/edit/product/${productId}`)
   }
 
   const deleteProduct = async (event, productId) => {
@@ -45,7 +45,6 @@ const AdminProducts = ({ products, token }) => {
   return (
     <>
       <div id='search-container'>
-        <h5 id='search-word'>Search Popcorn: </h5>
         <input id='search-field' type='text'placeholder='search'
         onChange={(e) => { history.push(e.target.value ? `/admin?searchTerm=${e.target.value}` : '/admin') }}/>
       </div>
@@ -64,10 +63,13 @@ const AdminProducts = ({ products, token }) => {
                 </div>
                   <p>Category: {product.category}</p>
                   <p>${product.price}</p>
+                <div id='admin-product-buttons'>
+                  <button className='product-button' type='submit' 
+                  onClick={(e) => goToProduct(e, product.id)}>Edit</button>
                 <button className='product-button' type='submit' 
-                  onClick={(e) => goToProduct(e, product.id)}>Edit Product</button>
-                <button className='product-button' type='submit' 
-                  onClick={(e) => deleteProduct(e, product.id)}>Delete Product</button>
+                  onClick={(e) => deleteProduct(e, product.id)}>Delete</button>
+                </div>
+                
               </div>
             )}
           )} 

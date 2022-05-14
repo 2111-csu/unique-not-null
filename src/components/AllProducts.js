@@ -4,7 +4,7 @@ import { callApi } from '../axios-services'
 import "../style/Products.css";
 
 const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart, setGuestCart }) => {
-  const [quantity, setQuantity] = useState();
+  const [quantity, setQuantity] = useState(1);
   const { search } = useLocation();
   const history = useHistory();
   const searchParams = new URLSearchParams(search);
