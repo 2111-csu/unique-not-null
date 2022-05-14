@@ -15,7 +15,7 @@
   display: flex;
   flex-basis: 350px;
   max-width: 450px;
-  height: 550px;
+  max-height: 550px;
   flex-grow: 0;
   margin: 0;
   padding: 10px;
@@ -62,18 +62,17 @@
 }
 
 #quantity-button button {
-  width: 60%;
+  width: 50%;
 }
 
 #quantity-button input {
-  width: 25%;
+  width: 20%;
 }
 
 #single-product .product-button {
   text-decoration: none;
   height: 30px;
-  width: 92%;
-  padding: 5px;
+  width: 82.5%;
   border-radius: 5px;
   color: black;
   box-shadow: 7px 5px 5px slateblue;
@@ -89,6 +88,16 @@
   align-items: center;
   left: 0;
   width: 20vw;
+}
+
+#admin-product-buttons {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+}
+
+#admin-product-buttons button {
+  margin: 0 10px 0 10px;
 }
 
 @media screen and (max-width: 600px) {

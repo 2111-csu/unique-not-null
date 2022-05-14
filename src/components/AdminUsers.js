@@ -44,7 +44,7 @@ const AdminUsers = ( { users } ) => {
          <div>
             {sortedUsers.map(user => {
                 return (
-                  <div id='user-info'>
+                  <div id='user-info' key={user.id}>
                     <p>Name: {user.firstName} {user.lastName}</p>
                     <p>Email Address: {user.email}</p>
                     <p>Username: {user.username}</p>
