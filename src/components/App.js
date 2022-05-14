@@ -19,6 +19,8 @@ import {
 } from "./";
 import "../style/App.css";
 import EditUser from "./EditUser";
+import EditProduct from "./EditProduct";
+
 
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
@@ -158,6 +160,13 @@ const App = () => {
           />
         </Route>
 
+        <Route exact path="/edit/product/:productId">
+          <EditProduct 
+            products={products}
+            token={token}
+          />
+        </Route>
+
         <Route exact path="/login">
           <Login
             setLoggedIn={setLoggedIn}
@@ -179,14 +188,19 @@ const App = () => {
 
         <Route exact path="/products/:productId">
           <SingleProduct 
+            token={token} 
             products={products} 
+            myCart={myCart} 
+            loggedIn={loggedIn}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
           />
         </Route>
 
         <Route exact path="/register">
           <Register 
             setToken={setToken} 
-            setMessage={setMessage}
+            setMessage={setMessage}  
           />
         </Route>
 

@@ -7,15 +7,14 @@ const EditProduct = ({ token, products }) => {
 
 const { productId } = useParams();
 const history  = useHistory();
-const [name, setName] = useState('');
-const [description, setDescription] = useState('');
-const [price, setPrice] = useState('');
-const [image, setImage] = useState('');
+const [product] = products.filter(product => product.id === Number(productId));
+console.log('product', product);
+const [name, setName] = useState(product.name);
+const [description, setDescription] = useState(product.description);
+const [price, setPrice] = useState(product.price);
+const [image, setImage] = useState(product.imageurl);
 const [inStock, setInStock] = useState(false);
-const [category, setCategory] = useState('');  //do we need this?
-
-const productToEdit = products.filter(product => product.id === productId)
-//const [productToEdit] = products.filter(product => product.id === Nunber(productId))
+const [category, setCategory] = useState(product.category);
 
 const handleEdit = async (event, productId) => {
     event.preventDefault();
@@ -34,11 +33,11 @@ const handleEdit = async (event, productId) => {
         }
     });  
     console.log('editedProduct,', editedProduct);
-    history.push('/admin/products');
+    history.push('/admin');
     
-   } catch(error) {
+    } catch(error) {
      throw error
-}
+    }
 
 }//handleEdit close
 
@@ -84,23 +83,26 @@ return (
           onChange={e => setImage(e.target.value)}>
          </input>
 
-         <input className='input-field' type='text'
-          placeholder='instock'value={inStock}
-          onChange={e => setInStock(e.target.value)}>
-          </input>
+         <select id="select" onChange={(e) => {setInStock(e.target.value)}}>
+            <option>In Stock?</option>
+            <option value={false}>Out of Stock</option>
+            <option value={true}>In Stock</option>
+        </select>
 
-        <input className='input-field' type='text'
-         placeholder='category' value={category}
-         onChange={e => setCategory(e.target.value)}>
-         </input>
+          <select id="select" onChange={(e) => {setCategory(e.target.value)}}>
+            <option>Select A Category</option>
+            <option value="Sweet">Sweet</option>
+            <option value="Savory">Savory</option>
+            <option value="Sweet & Savory">Sweet & Savory</option>
+        </select>
 
     </form>
 
     <button type="submit"className="button"
-     onClick={(e) => handleEdit(e, productToEdit.id)}>Edit Product</button>
+     onClick={(e) => handleEdit(e, product.id)}>Edit Product</button>
      
     <button type="submit"className="button"
-     onClick={(e) => handleDelete(e, productToEdit.id)}>Delete Product</button>
+     onClick={(e) => handleDelete(e, product.id)}>Delete Product</button>
      
     </div>
 
