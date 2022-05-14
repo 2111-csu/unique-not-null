@@ -86,16 +86,16 @@ const getUserByUsername = async(username) => {
   }
 }
 
-const updateUser = async (fields = {}) => {
-  const { id } = fields;
-  delete fields.id;
+const updateUser = async ({ id, ...fields }) => {
+  // const { id } = fields;
+  // delete fields.id;
 
   if (fields.password) {
     const hashedPassword = await bcrypt.hash(fields.password, SALT_COUNT);
     fields.password = hashedPassword;
   }
 
-  const setString = Object.keys(fields).map((key, index) => `"{key}"=$${index + 2}`).join(", ");
+  const setString = Object.keys(fields).map((key, index) => `"${key}"=$${index + 2}`).join(", ");
   if (setString.length === 0) {
     return;
   }
@@ -106,7 +106,7 @@ const updateUser = async (fields = {}) => {
         SET ${setString}
         WHERE id=$1
         RETURNING *;
-      `, [ID, ...Object.values(fields)]);
+      `, [id, ...Object.values(fields)]);
       return user;
       }
     } catch (error) {
@@ -119,6 +119,7 @@ const updateUser = async (fields = {}) => {
   const getUserByEmail = async (email) => {
     try {
       const { rows: [user] } = await client.query(`
+        SELECT * FROM users
         WHERE email=$1
       `, [email]);
       return user;
