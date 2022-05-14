@@ -48,7 +48,7 @@ const getUser = async({ username, password }) => {
 const getAllUsers = async() => {
   try {
     const { rows } = await client.query(`
-      SELECT id, username, "firstName", "lastName", email FROM users;
+      SELECT id, username, "firstName", "lastName", email, "isAdmin" FROM users;
     `);
     return rows;
   } catch (error) {

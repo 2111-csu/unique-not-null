@@ -8,33 +8,39 @@ const Admin = ({ token, setMessage, products, setProducts, orders, setOrders }) 
   const [isOrders, setIsOrders] = useState(false);
   const [isUsers, setIsUsers] = useState(false);
 
-  useEffect(() => {
-    const getData = async () => {
-      const apiResponse = await callApi({url: '/api/products', method: 'GET'});
-      console.log(apiResponse);
-      console.log(apiResponse.data);
-      setProducts(apiResponse.data);
-    }
-    getData();
+
+  const getProducts = async () => {
+    const apiResponse = await callApi({url: '/api/products', method: 'GET'});
+    console.log(apiResponse);
+    console.log(apiResponse.data);
+    setProducts(apiResponse.data);
+  }
+
+  useEffect(() => {  
+    getProducts();
   }, [setProducts]);
 
-  useEffect(() => {
-    const getData = async () => {
-      const apiResponse = await callApi({url: '/api/orders', method: 'GET', token});
-      console.log(apiResponse);
-      console.log(apiResponse.data);
-      setOrders(apiResponse.data);
-    }
-    getData();
-  }, [setOrders]);
+  
+  const getOrders = async () => {
+    const apiResponse = await callApi({url: '/api/orders', method: 'GET', token});
+    console.log(apiResponse);
+    console.log(apiResponse.data);
+    setOrders(apiResponse.data);
+  }
 
   useEffect(() => {
-    const getUsers = async () => {
-      const apiResponse = await callApi({url: '/api/users', method: 'GET', token});
-      console.log(apiResponse);
-      console.log(apiResponse.data);
-      setUsers(apiResponse.data);
-    }
+    getOrders();
+  }, [setOrders]);
+
+  
+  const getUsers = async () => {
+    const apiResponse = await callApi({url: '/api/users', method: 'GET', token});
+    console.log(apiResponse);
+    console.log(apiResponse.data);
+    setUsers(apiResponse.data);
+  }
+
+  useEffect(() => {
     getUsers();
   }, [setUsers]);
 
@@ -69,7 +75,7 @@ const Admin = ({ token, setMessage, products, setProducts, orders, setOrders }) 
     </div>
     {isProducts? <AdminProducts products={products} setProducts={setProducts} token={token}/> : null}
     {isOrders? <AdminOrders token={token} orders={orders} setOrders={setOrders}/> : null}
-    {isUsers? <AdminUsers token={token} users={users} setUsers={setUsers} /> : null}
+    {isUsers? <AdminUsers token={token} users={users} setUsers={setUsers} getUsers={getUsers}/> : null}
   </>
 }
 

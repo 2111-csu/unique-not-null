@@ -1,16 +1,10 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useLocation, useHistory } from 'react-router';
 import '../style/User.css';
 import { callApi } from '../axios-services';
 
-const AdminUsers = ( { users, token } ) => {
-    //const [firstName, setFirstName] = useState('');
-    //const [lastName, setLastName] = useState('');
-    //const [email, setEmail] = useState('');
-    //const [imageurl, setImageUrl] = useState('');
-    //const [username, setUsername] = useState('');
-    //const [isAdmin, setIsAdmin] = useState(false);
+const AdminUsers = ( { users, token, getUsers } ) => {
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const { search } = useLocation();
     const history = useHistory();
@@ -31,7 +25,21 @@ const AdminUsers = ( { users, token } ) => {
 
       const handleEdit = async (event, userId) => {
         event.preventDefault();
-        history.push(`/admin/users/${userId}`)
+        try {
+          const editedUser= await callApi({
+              url: `/api/users/${userId}`,
+              method: 'PATCH',
+              token,
+              data: {
+                  isAdmin
+              }
+          });  
+          console.log('editedUser,', editedUser);
+          getUsers();
+          
+          } catch(error) {
+            throw error
+          }
       }
 
       const deleteUser = async (event, userId) => {
@@ -65,9 +73,14 @@ const AdminUsers = ( { users, token } ) => {
                     <p>Name: {user.firstName} {user.lastName}</p>
                     <p>Email Address: {user.email}</p>
                     <p>Username: {user.username}</p>
-        
-                    {/* <button type="submit" className="button"
-                    onClick={e => handleEdit(e, user.id)}>Edit Account</button> */}
+                    <p>{user.isAdmin? 'Fancy Enough' : 'Not Fancy Enough'}</p>
+                    <select id="select" onChange={(e) => {setIsAdmin(e.target.value)}}>
+                      <option>Select A Category</option>
+                      <option value={false}>Not Admin</option>
+                      <option value={true}>Make Admin</option>
+                    </select>
+                    <button type="submit" className="button"
+                    onClick={e => handleEdit(e, user.id)}>Edit Admin</button>
                     <button className='button' type='submit' 
                   onClick={(e) => deleteUser(e, user.id)}>Delete User</button>
                   </div>
