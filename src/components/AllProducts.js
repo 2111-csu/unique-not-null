@@ -25,8 +25,8 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
     const toCheck = [name, description, category]
     for (const field of toCheck) {
       if (field.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return true;
-      }
+      return true;
+      }  
     }
   }
   console.log('mycart', myCart);

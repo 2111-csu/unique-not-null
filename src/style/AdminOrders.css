@@ -21,7 +21,7 @@
     display:flex;
     flex-basis: 350px;
     max-width: 250px;
-    height: 260px;
+    height: 360px;
     flex-grow: 0;
     flex-direction: column;
     flex-wrap: wrap;

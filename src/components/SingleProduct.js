@@ -63,13 +63,18 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
   return (
     <>
     <div id='single-product-page'>
-    <div id='single-product'>
-      <h4>{product.name}</h4>
-      <h4>{product.description}</h4>
-      <h4>Price: ${product.price}</h4>
+    <div key={product.id} id='single-product'>
+      <h3>{product.name}</h3>
       <img src={product.imageurl} alt={`the ${product.name}`} className='medium'/>
-      <h4>In stock?{product.inStock}</h4>   
 
+      <div id='prod-desc'>
+        <p>{product.description}</p>
+      </div>
+      <div id='price-category'>
+        <div><p>Category: {product.category}</p></div>
+        <div><p>Price: ${product.price}</p></div>
+      </div>
+  
       <div id='quantity-button'>
         <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
          min='1'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
