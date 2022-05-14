@@ -1,5 +1,5 @@
 import React, { useState }from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router';
 import "../style/SingleProduct.css";
 import { callApi } from '../axios-services'
 
@@ -10,7 +10,7 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
   
   const [product] = products.filter(product => product.id === Number(productId));
   console.log('product, singleProduct,',product);
-  const handleAddProductToCart = async (event, productId) => {
+  const handleAddProductToCart = async (event, myCart, product) => {
     event.preventDefault();
     if (!loggedIn) {
       const cart = guestCart.products;
@@ -19,7 +19,7 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
         id: product.id,
         name: product.name,
         description: product.description,
-        productId: productId,
+        productId: product.id,
         price: product.price,
         quantity: Number(quantity),
         imageurl: product.imageurl
@@ -32,16 +32,15 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
     } else {
       try {
         const addedProduct = await callApi({
-          url: `api/orders/${myCart.id}/products`,
+          url: `/api/orders/${myCart.id}/products`,
           method: "POST",
           token,
           data: {
-            productId,
-            price: product.price,
+            productId: product.id,
+            price: Number(product.price),
             quantity: Number(quantity)
           }
         });
-        setQuantity();
         console.log('product', addedProduct);
         history.push('/cart')
       } catch (error) {
@@ -74,16 +73,16 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
         <input type='number' id='quantity-input' name='quantity' placeholder='Quantity'
          min='1'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
          <button className='button' type='submit' 
-         onClick={(e) => handleAddProductToCart(e, product.id)}>Add Product to Cart</button>
+         onClick={(e) => handleAddProductToCart(e, myCart, product)}>Add Product to Cart</button>
      
 
-        {/* <button type="submit" className="button"
+        <button type="submit" className="button"
         onClick={e => handleBackToProducts(e)}>
         Back to Products</button>
 
         <button type="submit" className="button"
         onClick={e => handleBackToHome(e)}>
-        Back to Home</button> */}
+        Back to Home</button>
 
       </div>
 
@@ -99,15 +98,15 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
             </div>
           )
         })} 
-      </div>  
+      </div>
      
-      <button type="submit" className="button"
+      {/* <button type="submit" className="button"
       onClick={e => handleBackToProducts(e)}>
       Back to Products</button>
 
       <button type="submit" className="button"
       onClick={e => handleBackToHome(e)}>
-      Back to Home</button>
+      Back to Home</button> */}
       
     </div>
     </>
