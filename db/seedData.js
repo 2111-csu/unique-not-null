@@ -257,7 +257,7 @@ const createInitialProducts = async () => {
           name: "Pickle Rick's Pick",
           price: 10,
           description: 'No need to travel through interdimensional space to enjoy this salty, briny classic.',
-          imageurl: 'https://www.accidentalhappybaker.com/wp-content/uploads/2020/05/DSC05141-480x480.jpg',
+          imageurl: 'https://images.squarespace-cdn.com/content/v1/55e6fdb0e4b05e0262ccf48d/1629323433167-Q36BRMJI4611J34QF9K2/PXL_20210818_205019224.PORTRAIT.jpg?format=1000w',
           category: 'Savory'
         },
         {
