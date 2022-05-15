@@ -90,10 +90,10 @@ const EditUser = ({ token, loggedIn, setLoggedIn }) => {
               onChange={e => setUsername(e.target.value)}>
               </input>
     
-            <input className='input-field' type='text'
+            {/* <input className='input-field' type='text'
              placeholder={'enter new password'} value={password}
              onChange={e => setPassword(e.target.value)}>
-             </input>
+             </input> */}
 
              {/* <input className='input-field' type='text'
              placeholder='isAdmin' value={isAdmin}
