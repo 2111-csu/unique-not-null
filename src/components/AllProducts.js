@@ -72,6 +72,7 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
       console.log('newCart', newCart);
       setGuestCart({products: newCart})
       localStorage.setItem('guestCart', JSON.stringify({products: newCart}));
+      history.push('/cart');
       
     } else {
       try {

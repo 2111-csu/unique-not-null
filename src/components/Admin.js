@@ -67,8 +67,10 @@ const Admin = ({ token, setMessage, products, setProducts, orders, setOrders }) 
   }
 
   return <>
+    
+    <h1>Admin</h1>
     <div id='admin-page'>
-      <h1>Admin</h1>
+      
       <button className='button' type='submit' onClick={clickProducts}>All Products</button>
       <button className='button' type='submit' onClick={clickOrders}>All Orders</button>
       <button className='button' type='submit' onClick={clickUsers}>All Users</button>

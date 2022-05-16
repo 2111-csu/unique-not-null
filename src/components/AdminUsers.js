@@ -58,14 +58,12 @@ const AdminUsers = ( { users, token, getUsers } ) => {
         }
       }
 
-      return (
-        <div id="users-page">
-            <h2>List of Users</h2>
-
-            <h5 id='search-word'>Search: </h5>
+      return <>
+        
+          <div id='search-container'>
             <input id='search-field' type='text' placeholder='search'
-             onChange={(e) => { history.push(e.target.value ? `/admin?searchTerm=${e.target.value}` : '/admin') }}/>
-      
+            onChange={(e) => { history.push(e.target.value ? `/admin?searchTerm=${e.target.value}` : '/admin') }}/>
+          </div>
          <div>
             {sortedUsers.map(user => {
                 return (
@@ -87,8 +85,8 @@ const AdminUsers = ( { users, token, getUsers } ) => {
                     ) } )} 
          </div>
       
-        </div>
-      )
+        
+      </>
 
 }
 export default AdminUsers;

@@ -1,4 +1,4 @@
-import React, { useState }from 'react';
+import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router';
 import "../style/SingleProduct.css";
 import { callApi } from '../axios-services'
@@ -28,7 +28,8 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
       console.log('newCart', newCart);
       setGuestCart({products: newCart})
       localStorage.setItem('guestCart', JSON.stringify({products: newCart}));
-      
+      history.push('/cart');
+
     } else {
       try {
         const addedProduct = await callApi({
@@ -92,10 +93,10 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
 
       </div>
 
-     </div>
-
-     <div id='reviews-section'>
-        <h2><b>Reviews</b></h2>
+      </div>
+      <h2><b>Reviews</b></h2>
+      <div id='reviews-section'>
+        
         {product.reviews && product.reviews.map(review => {
           return (
             <div key={review.id} id='single-review'>

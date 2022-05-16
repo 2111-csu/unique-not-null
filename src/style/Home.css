@@ -46,7 +46,7 @@
 }
 
 .slideshowDot.active {
-  background-color: #6a0dad;
+  background-color: rgba(205, 134, 63, 0.76);
 }
 
 img {

@@ -76,7 +76,6 @@ const SingleUser = ({ token, loggedIn }) => {
                       return (
                         <div id='order-product' key={product.id}>
                           <p>{product.quantity}x {product.name} | ${product.price}ea | Product Total: ${lineTotal}</p>
-                          <p></p>
                         </div>
                       );
                     })}

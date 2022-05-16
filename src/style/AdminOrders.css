@@ -9,7 +9,7 @@
     flex-wrap: wrap;
     margin: 10px;
     padding: 10px;
-    background-color:peru;
+    background-color:rgba(205, 134, 63, 0.76);
     border-radius: 8px;
 }
 
@@ -20,11 +20,18 @@
     flex-grow: 0;
     flex-direction: column;
     flex-wrap: wrap;
-    background-color:khaki;
+    /* background-color:khaki; */
     margin:5px;
     padding:10px;
     border-radius: 5px;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
+    /* box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4); */
+    text-align: center;
+}
+
+#order-container button {
+    display: flex;
+    width: 70%;
+    align-self: center;
 }
 
 /* 
