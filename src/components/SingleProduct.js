@@ -80,26 +80,28 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
          <button className='button' type='submit' 
          onClick={(e) => handleAddProductToCart(e, myCart, product)}>Add Product to Cart</button>
      
+        <div id='back-buttons'>
+          <button type="submit" className="button"
+          onClick={e => handleBackToProducts(e)}>
+          Back to Products</button>
 
-        <button type="submit" className="button"
-        onClick={e => handleBackToProducts(e)}>
-        Back to Products</button>
-
-        <button type="submit" className="button"
-        onClick={e => handleBackToHome(e)}>
-        Back to Home</button>
+          <button type="submit" className="button"
+          onClick={e => handleBackToHome(e)}>
+          Back to Home</button>
+        </div>
 
       </div>
 
      </div>
 
-     <div id='reviews-section'>Reviews
+     <div id='reviews-section'>
+        <h2><b>Reviews</b></h2>
         {product.reviews && product.reviews.map(review => {
           return (
             <div key={review.id} id='single-review'>
-              <h4>{review.title} </h4>
+              <h4><b>{review.title}</b> </h4>
               <h4>{review.content}</h4>
-              <h4>Stars: {review.stars}</h4>
+              <h4><b>Stars: </b>{review.stars}/5</h4>
             </div>
           )
         })} 
