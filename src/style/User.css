@@ -5,6 +5,7 @@
   box-sizing: border-box;
 }
 
+
 #user-info {
   display: flex;
   width: 80vw;
@@ -36,8 +37,7 @@
   display: flex;
   flex-direction: column;
   margin: 10px auto 10px auto;
-  background: rgb(250, 225, 82);
-  border: 10px solid honeydew;
+  background: rgba(205, 134, 63, 0.76);
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
   border-radius: 5px;
   width: 48%;

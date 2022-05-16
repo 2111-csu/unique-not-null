@@ -35,6 +35,9 @@ body {
   background-color: rgb(250, 225, 82);
 }
 
+.title-link {
+  text-decoration: none;
+}
 
 #username-input, #password-input,
 #firstname-input, #lastname-input,
@@ -72,7 +75,6 @@ body {
   height:auto;
   width:auto;
   border: 2px solid black;
-  background:honeydew;
   margin: 10px
 }
 
@@ -80,14 +82,13 @@ body {
   height: 30px;
   width: 130px;
   border-radius: 5px 5px 5px;
-  box-shadow: 7px 5px 5px slateblue;
+  box-shadow: 5px 3px 5px black;
   margin: 12px;
 }
 
 button:hover {
   background-color: darkgray;
 }
-
 
 #quantity-input {
   height: 30px;
@@ -129,6 +130,7 @@ img.small{
   display: flex;
   align-self: flex-start;
 }
+
 
 @media screen and (max-width: 600px) {
   #site-title {

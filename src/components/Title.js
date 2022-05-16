@@ -26,7 +26,8 @@ const Title = ({ loggedIn, setLoggedIn, message, setMessage, setMyCart, setToken
   return <div id='site-title'>
     <nav>
       {/* <div id='title'> */}
-        <h1><b>Popped Perfection</b></h1>
+      <Link className='title-link' to="/"><h1><b>Popped Perfection</b></h1></Link>
+        {/* <h1><b>Popped Perfection</b></h1> */}
       {/* </div> */}
       {/* <div id='navbar'> */}
       <button className="hamburger" id="hamburger" onClick={handleHamburger}>

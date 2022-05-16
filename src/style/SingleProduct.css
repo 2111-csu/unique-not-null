@@ -1,7 +1,7 @@
 #single-product-page {
     display: flex;
-    justify-content: center;
     flex-direction: column;
+    align-items: center;
     margin-top: 20px;  
 }
 
@@ -13,20 +13,25 @@
     flex-grow: 0;
     padding: 10px;
     margin: 0 10px 10px 0;
-    background-color:peru;
+    background-color:rgba(205, 134, 63, 0.76);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
     border-radius: 5px;
+}
+
+#reviews-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 #single-review {
     display: flex;
     flex-basis: 420px;
     flex-direction: column;
-    max-width: 450px;
-    flex-grow: 0;
+    width: 450px;
     padding: 10px;
     margin: 20px 0 20px 0;
-    background-color:peru;
+    background-color:rgba(205, 134, 63, 0.76);
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
     border-radius: 5px;
 }

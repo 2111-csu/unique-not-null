@@ -72,7 +72,7 @@ const AdminOrders = ( { token, orders, getOrders } ) => {
   
   return ( 
       <>
-      <div id="order-filter-status">View orders by status
+      <div id="order-filter-status">Filter: 
        <button className='button' type='submit' onClick={viewCreated}>Created</button>
        <button className='button' type='submit' onClick={viewProcessing}>Processing</button>
        <button className='button' type='submit' onClick={viewCompleted}>Completed</button>
@@ -102,17 +102,16 @@ const AdminOrders = ( { token, orders, getOrders } ) => {
           onClick={(e) => handleEditOrderStatus(e, order.id)}>Edit Status</button>
 
         
+         
+          
+            {order.products && order.products.map((product) => {
+            return (
+              <div key={product.id}>
+                <p>{product.quantity}x {product.name} | ${product.price}ea </p>
+              </div>
+            ) } ) }
+            {order.products.length? null : <p>No Products in Order</p>}
           </div>
-
-          {order.products && order.products.map((product) => {
-          return (
-            <div key={product.id} className='product-container'>
-              <li>product id: {product.id}</li>
-              <li>product: {product.name}</li>
-              <li>price: {product.price}</li>
-              <li>quantity: {product.quantity}</li>
-            </div>
-          ) } ) }
 
       </div> 
     ) } ) }
