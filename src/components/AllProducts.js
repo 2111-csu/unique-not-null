@@ -117,6 +117,15 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
       <div id='product-cards'>
         {sortedProducts.length? null : <h2>Sorry, No Products to View</h2>}
         {sortedProducts.map(product => {
+          const NumberOfReviews = product.reviews.length;
+          let totalStars = 0;
+          product.reviews.forEach(review => {
+            totalStars += review.stars;
+          });
+          let averageStars = (totalStars / NumberOfReviews).toFixed(1);
+          if (totalStars === 0) {
+            averageStars = 0;
+          }
           return (
             <div key={product.id} id='single-product'>
               <h3>{product.name}</h3>
@@ -136,6 +145,8 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
                 min='1'max='10'value={quantity} onChange={(event) => setQuantity(event.target.value)}/>
                 <button className='button' type='submit' 
                 onClick={(e) => handleAddProductToCart(e, product.id, product.price, myCart, product)}>Add Product to Cart</button>
+                <p>{averageStars}/5 Stars</p>
+                <p>{NumberOfReviews} Reviews</p>
               </div> 
             </div>
           )}

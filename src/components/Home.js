@@ -69,6 +69,7 @@ const Home = ({ products, setProducts }) => {
         ))}
       </div>
     </div>
+    <h1>Fresh Off The Cob</h1>
 
     <div id="products-page">
       <div id='product-cards'>

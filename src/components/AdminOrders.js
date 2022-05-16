@@ -79,10 +79,10 @@ const AdminOrders = ( { token, orders, getOrders } ) => {
        <button className='button' type='submit' onClick={viewCanceled}>Canceled</button>
        <button className='button' type='submit' onClick={viewAll}>All orders</button>
       </div>
+      <div id="admin-orders-page">
    {sortedOrders.length ? null: <h2>Sorry, no orders to view.</h2>}
     {sortedOrders && sortedOrders.map(order => {
     return (
-      <div id="admin-orders-page">
       <div id="admin-order" key={order.id}> 
           <div id='order-container' key={order.id} >
           <h4>Order id: {order.id}</h4>
@@ -115,8 +115,8 @@ const AdminOrders = ( { token, orders, getOrders } ) => {
           ) } ) }
 
       </div> 
-      </div>
     ) } ) }
+    </div>
   </> )
 }
 
