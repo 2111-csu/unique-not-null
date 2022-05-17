@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useLocation, useHistory } from 'react-router';
-//import reviewsRouter from "../../api/reviews";
 import { callApi } from '../axios-services'
 
 const Reviews = ({ products, setProducts }) => {
@@ -59,15 +58,3 @@ const Reviews = ({ products, setProducts }) => {
 
 }
 export default Reviews;
-
-/*
-const [title, setTitle] = useState('');
-const [content, setContent] = useState('');
-const [stars, setStars] = useState('');
-const [username, setUsername] = useState('');
-
-const sortedReviews = reviews.filter(review => sortedProducts.filter(
-          product => product.id == review.productId))
-        
-
-*/

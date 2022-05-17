@@ -101,10 +101,7 @@ const AdminOrders = ( { token, orders, getOrders } ) => {
 
           <button type="submit"className="button"
           onClick={(e) => handleEditOrderStatus(e, order.id)}>Edit Status</button>
-
-        
-         
-          
+ 
             {order.products && order.products.map((product) => {
             return (
               <div key={product.id}>
@@ -118,9 +115,6 @@ const AdminOrders = ( { token, orders, getOrders } ) => {
     ) } ) }
     </div>
   </> )
-}
+};
 
 export default AdminOrders;
-
-/*
-*/

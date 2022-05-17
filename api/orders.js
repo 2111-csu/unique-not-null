@@ -8,7 +8,6 @@ const { cancelOrder } = require('../db/orders.js');
 
 /*GET return a list of orders in the database, need admin, how about requireAdmin function?*/
 ordersRouter.get("/", requireUser, async (req, res, next) => {
-    
     try {
       if (checkAdmin) {
         const orders = await getAllOrders();
@@ -30,7 +29,6 @@ ordersRouter.get("/", requireUser, async (req, res, next) => {
 ordersRouter.post("/", requireUser, async (req, res, next) => {
     const { status } = req.body;
     const { id } = req.user;
-
     try {
       const order = await createOrder({
         status,
@@ -51,9 +49,7 @@ ordersRouter.post("/", requireUser, async (req, res, next) => {
 
 ordersRouter.get('/cart', requireUser, async (req, res, next) => {
     const { id } = req.user;
-
     try {
-
       const userCart = await getCartByUser(id)
       console.log('cart', userCart);
       res.send({
@@ -61,7 +57,6 @@ ordersRouter.get('/cart', requireUser, async (req, res, next) => {
         success: true,
         message: 'Cart Retrieved'})
     }
-  
     catch (error) {
       throw error;
     };
@@ -69,7 +64,6 @@ ordersRouter.get('/cart', requireUser, async (req, res, next) => {
 
 ordersRouter.get("/:orderId", async (req, res, next) => {
   const { orderId } = req.params;
-
   try {
     const order = await getOrderById(orderId);
     console.log(order, "Order from ordersRouter.get");
@@ -94,8 +88,7 @@ ordersRouter.delete('/:orderId', async (req, res, next) => {
 
 ordersRouter.patch('/:orderId', async (req, res, next) => {
   const { orderId } = req.params;
-  const { status } = req.body;
-  
+  const { status } = req.body;  
   try {
     const updatedOrder = await updateOrder({ id: orderId,  status: status });
     console.log('updatedOrder', updatedOrder);

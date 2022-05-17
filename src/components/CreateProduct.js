@@ -32,8 +32,7 @@ const handleSubmit = async (event) => {
     } catch(error){
     throw error
     }
-
-}//close handleSubmit
+}
 
 return (
 
@@ -69,9 +68,7 @@ return (
         <button className='button' type='submit'>Create Product</button>
 
     </form>
-
     )
-
-} //function close
+} 
 
 export default CreateProduct;

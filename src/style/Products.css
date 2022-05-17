@@ -11,7 +11,7 @@
   width: 74vw;
 }
 
-#single-product {
+#single-product, #register{
   display: flex;
   flex-basis: 350px;
   max-width: 450px;
