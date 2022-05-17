@@ -83,10 +83,7 @@ const AddSingleUser = ( {token} ) => {
         <button type="submit"className="button">Create User</button>
 
         </div>
-    
     );
-
-
-}
+};
 
 export default AddSingleUser;

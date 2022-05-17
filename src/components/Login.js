@@ -23,7 +23,6 @@ const Login = ({setToken, setLoggedIn, setMessage}) => {
         }
       });
       
-      
       setToken(result.data.token);
       console.log(result.data);
       if (result.data.token) {

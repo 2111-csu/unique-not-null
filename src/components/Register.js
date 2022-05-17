@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { callApi } from '../axios-services';
 import { Snackbar } from './Snackbar';
+import "../style/App.css";
 
 const Register = ({setToken, setMessage}) => {
   const [username, setUsername] = useState('');
@@ -43,25 +44,35 @@ const Register = ({setToken, setMessage}) => {
       throw error;
     }
   }
-  
+
+  const handleBackToHome = (event) => {
+    event.preventDefault();
+    history.push('/');
+  }
+
   return (
     <div id='container'>
       
-      <div id='register'>
+      <div className='register-form' id='register'>
         <form onSubmit={handleSubmit}>
           <label htmlFor='firstname'>First Name: </label>
           <input type='text' id='firstname-input' name='firstName' value={firstName} onChange={(event) => setFirstName(event.target.value)}/>
+          <br />
           <label htmlFor='lastname'>Last Name: </label>
           <input type='text' id='lastname-input' name='lastName' value={lastName} onChange={(event) => setLastName(event.target.value)}/>
           <br />
           <label htmlFor='email'>Email Address: </label>
           <input type='text' id='email-input' name='email' value={email} onChange={(event) => setEmail(event.target.value)}/>
           <br />
-          <label htmlFor='username'>UserName: </label>
+          <label htmlFor='username'>Username: </label>
           <input type='text' id='username-input' name='username' placeholder='username' value={username} onChange={(event) => setUsername(event.target.value)}/>
           <label htmlFor='password'>Password: </label>
           <input type='password' id='password-input' min-length='8' name='password' placeholder='password' value={password} onChange={(event) => setPassword(event.target.value)}/>
           <button type='submit' className='button'>Register</button>
+
+          <button type="submit" className="button"
+          onClick={e => handleBackToHome(e)}>
+          Back to Home</button>
         </form>
       </div>
     </div>

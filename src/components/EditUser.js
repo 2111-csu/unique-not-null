@@ -40,8 +40,7 @@ const EditUser = ({ token, loggedIn, setLoggedIn }) => {
        } catch(error) {
          throw error
     }
-    
-    }//handleEdit close
+ };
     
     const handleDelete = async (event, userId) => {
         event.preventDefault();
@@ -57,8 +56,7 @@ const EditUser = ({ token, loggedIn, setLoggedIn }) => {
            } catch(error) {
              throw error
         }
-    
-    }//handleDelete close
+    };
     
     return (
         <div id='admin-user-page'>

@@ -55,7 +55,6 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
   const handleAddProductToCart = async (event, productId, price, myCart, product) => {
     event.preventDefault();
 
-     
     if (!loggedIn) {
       const cart = guestCart.products;
       console.log('cart', cart);
@@ -161,4 +160,4 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
 
 export default AllProducts;
 
-//from line57  alt={`photo of ${product.name} the ${product.name}`}
+

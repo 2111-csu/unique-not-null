@@ -8,7 +8,6 @@ const Admin = ({ token, setMessage, products, setProducts, orders, setOrders }) 
   const [isOrders, setIsOrders] = useState(false);
   const [isUsers, setIsUsers] = useState(false);
 
-
   const getProducts = async () => {
     const apiResponse = await callApi({url: '/api/products', method: 'GET'});
     console.log(apiResponse);
@@ -20,7 +19,6 @@ const Admin = ({ token, setMessage, products, setProducts, orders, setOrders }) 
     getProducts();
   }, [setProducts]);
 
-  
   const getOrders = async () => {
     const apiResponse = await callApi({url: '/api/orders', method: 'GET', token});
     console.log(apiResponse);
@@ -32,7 +30,6 @@ const Admin = ({ token, setMessage, products, setProducts, orders, setOrders }) 
     getOrders();
   }, [setOrders]);
 
-  
   const getUsers = async () => {
     const apiResponse = await callApi({url: '/api/users', method: 'GET', token});
     console.log(apiResponse);
@@ -49,8 +46,7 @@ const Admin = ({ token, setMessage, products, setProducts, orders, setOrders }) 
     event.preventDefault();
     setIsOrders(false);
     setIsUsers(false);
-    setIsProducts(true);
-    
+    setIsProducts(true);  
   }
 
   const clickOrders = (event) => {
@@ -79,6 +75,6 @@ const Admin = ({ token, setMessage, products, setProducts, orders, setOrders }) 
     {isOrders? <AdminOrders token={token} orders={orders} setOrders={setOrders} getOrders={getOrders}/> : null}
     {isUsers? <AdminUsers token={token} users={users} setUsers={setUsers} getUsers={getUsers}/> : null}
   </>
-}
+};
 
 export default Admin;

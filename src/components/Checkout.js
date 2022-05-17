@@ -9,29 +9,6 @@ const Checkout = ({ token, myCart, setMessage, setMyCart }) => {
 
 const history = useHistory();
 
-const handleCompleteOrder = async (event, orderId) => {
-  event.preventDefault();
-  try {
-    const completeOrder = await callApi({
-      url: `/api/orders/${orderId}`,
-      method: "PATCH",
-      token,
-      data: {
-        status: 'completed'
-      }
-    })
-    console.log('completeOrder', completeOrder);
-    setMyCart(null);
-    localStorage.removeItem("guestCart");
-    localStorage.setItem('guestCart', JSON.stringify({products: []}));
-    setMessage('Thank You For Your Order');
-    Snackbar();
-    history.push('/')
-  } catch(error) {
-    throw error
-  }
-}
-
 const handleCancelOrder = async (event, orderId) => {
   event.preventDefault();
   try {
@@ -91,9 +68,7 @@ return (
       <div className='checkout-container'>
         <p>Order Total: ${total}</p>
         <StripeContainer setMessage={setMessage} orderId={myCart.id} setMyCart={setMyCart} token={token}/>
-       {/* <button type="submit" className="button"
-        onClick={e => handleCompleteOrder(e, myCart.id)}>
-              Complete Order</button> */}
+       {/*  */}
 
         <button type="submit" className="button"
         onClick={e => handleCancelOrder(e, myCart.id)}>
@@ -106,35 +81,38 @@ return (
       </div>
     </div>
   </>
-)
+  )
 };
-
  
 export default Checkout;
 
+
 /*
-const Checkout = () => {
-  return (
-    <div className="app-container">
-      <h1>Checkout</h1>
-      
-    </div>
-  );
-}; 
+const handleCompleteOrder = async (event, orderId) => {
+  event.preventDefault();
+  try {
+    const completeOrder = await callApi({
+      url: `/api/orders/${orderId}`,
+      method: "PATCH",
+      token,
+      data: {
+        status: 'completed'
+      }
+    })
+    console.log('completeOrder', completeOrder);
+    setMyCart(null);
+    localStorage.removeItem("guestCart");
+    localStorage.setItem('guestCart', JSON.stringify({products: []}));
+    setMessage('Thank You For Your Order');
+    Snackbar();
+    history.push('/')
+  } catch(error) {
+    throw error
+  }
+}
 
-
-put at top:
-import StripeContainer from './StripeContainer'
-
->>>>>>>>>STRIPE<<<<<<<<<<<<<<<<
-
-<div className='checkout-container'>
-  <h2>Ready to Checkout?</h2>
-  <p>Cart Total: ${total}</p>
-  <StripeContainer />
-  <button type="submit" className="button" onClick={clickCheckout} >Let's get Poppin!</button> 
-</div>
-
- <StripeContainer token={token}/>
+<button type="submit" className="button"
+onClick={e => handleCompleteOrder(e, myCart.id)}>
+Complete Order</button>
 
 */

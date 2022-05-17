@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { callApi } from "../axios-services";
 import { useParams, useHistory } from 'react-router-dom';
-//import AllProducts from './AllProducts';
+import "../style/App.css";
 
 const EditProduct = ({ token, products }) => { 
 
@@ -39,7 +39,7 @@ const handleEdit = async (event, productId) => {
      throw error
     }
 
-}//handleEdit close
+};
 
 const handleDelete = async (event, productId) => {
     event.preventDefault();
@@ -55,31 +55,40 @@ const handleDelete = async (event, productId) => {
        } catch(error) {
          throw error
     }
+};
 
-}//handleDelete close
+const handleBackToProducts = (event) => {
+    event.preventDefault();
+    history.push('/admin');
+  }
 
 return (
-    <div id='admin-product-page'>
-    <form className='edit-product-form'>
-        <h4>Edit product:</h4>
-        
+     <div id='admin-product-page'>
+ 
+    <form className='edit-product-form' id='single-product'>
+        <h4>Edit product</h4>
+
+        <label htmlFor='product name'>Product: {name}</label>
         <input className='input-field' type='text'
-         placeholder='product name' value={name}
+         placeholder='new product name' 
          onChange={e => setName(e.target.value)}>
         </input>
 
+        <label htmlFor='description' id='edit-description'>Description: {description}</label>
         <input className='input-field' type='text'
-          placeholder='description' value={description}
+          placeholder='new description' 
           onChange={e => setDescription(e.target.value)}>
         </input>
 
+        <label htmlFor='price'>Price: {price}</label>
         <input className='input-field' type='text'
-         placeholder=' price' value={price}
+         placeholder='new price'
          onChange={e => setPrice(e.target.value)}>
         </input>
 
+        <label htmlFor='imageurl'> new imageurl:</label>
         <input className='input-field' type='text'
-          placeholder='imageurl' value={image}
+          placeholder='new imageurl' 
           onChange={e => setImage(e.target.value)}>
          </input>
 
@@ -103,16 +112,16 @@ return (
      
     <button type="submit"className="button"
      onClick={(e) => handleDelete(e, product.id)}>Delete Product</button>
+
+    <button type="submit" className="button"
+    onClick={e => handleBackToProducts(e)}>Back to Products</button>
      
     </div>
 
-);
+  );
 
 };
 
 export default EditProduct;
 
-/* 
-
-
-*/
+ 

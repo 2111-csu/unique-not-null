@@ -39,6 +39,9 @@ body {
   text-decoration: none;
 }
 
+/*
+ Think we can delete this
+ 
 #username-input, #password-input,
 #firstname-input, #lastname-input,
 #email-input {
@@ -50,7 +53,7 @@ body {
   border: 1px solid black;
   margin: 15px;
   text-align: center;
-}
+}*/
 
 #search-word {
   font: bold 1em Tahoma;

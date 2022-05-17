@@ -84,9 +84,6 @@ const AdminUsers = ( { users, token, getUsers } ) => {
                   </div>
                     ) } )} 
          </div>
-      
-        
       </>
-
-}
+};
 export default AdminUsers;

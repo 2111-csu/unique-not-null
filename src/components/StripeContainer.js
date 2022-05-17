@@ -24,5 +24,3 @@ const StripeContainer = ({ token, setMessage, orderId, setMyCart }) => {
 }
 
 export default StripeContainer;
-
-//import { Elements, loadStripe} from 'react-stripe-checkout'

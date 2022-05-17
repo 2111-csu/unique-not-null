@@ -1,5 +1,4 @@
 import React from "react";
-//, { useState }
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useHistory } from "react-router-dom";
 import { callApi } from "../axios-services";
@@ -28,7 +27,7 @@ const CARD_OPTIONS = {
 	}
 }
 
-const PaymentForm = ({ setMessage, token, orderId }) => { //,setMyCart
+const PaymentForm = ({ setMessage, token, orderId }) => { 
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
