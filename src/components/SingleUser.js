@@ -65,9 +65,9 @@ const SingleUser = ({ token, loggedIn }) => {
               return (
                 <div key={order.id} id='order-card'>
                   <div id='order-info'>
-                    <h3>order id: {order.id}</h3>
+                    <h3>order no. {order.id}</h3>
                     <h3>Order Status: {order.status}</h3>
-                    <h3>Date Placed: {order.datePlaced}</h3>
+                    <h3>Date Placed: {order.datePlaced.slice(0, 10)}</h3>
                   </div>
                   
                   <div id='products'>

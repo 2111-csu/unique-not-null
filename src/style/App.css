@@ -137,4 +137,13 @@ nav {
     display: block;
   }
 
+  #admin-page {
+    width: 90%;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  #admin-page button {
+    width: 25%;
+  }
 }

@@ -53,7 +53,7 @@ const createTables = async () => {
           id SERIAL PRIMARY KEY,
           status TEXT NOT NULL,
           "userId" INTEGER REFERENCES users(id),
-          "datePlaced"  TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+          "datePlaced" DATE DEFAULT CURRENT_DATE
         );
         
         CREATE TABLE reviews (

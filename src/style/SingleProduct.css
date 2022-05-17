@@ -39,10 +39,33 @@
 #back-buttons {
     display: flex;
     justify-content: center;
-    width: 90%;
+    width: 85%;
     padding: 10px;
 }
 
 #back-buttons button {
-    width: 45%;
+    width: 40%;
+}
+
+@media screen and (max-width: 600px) {
+    #single-product-page {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+
+      #reviews-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 90vw;
+    }
+    
+      #single-review {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        width: 95vw;
+        flex-grow: 1;
+      }
 }

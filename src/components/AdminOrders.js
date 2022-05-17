@@ -72,7 +72,8 @@ const AdminOrders = ( { token, orders, getOrders } ) => {
   
   return ( 
       <>
-      <div id="order-filter-status">Filter: 
+      <h4>Filter: </h4>
+      <div id="order-filter-status">
        <button className='button' type='submit' onClick={viewCreated}>Created</button>
        <button className='button' type='submit' onClick={viewProcessing}>Processing</button>
        <button className='button' type='submit' onClick={viewCompleted}>Completed</button>
@@ -85,9 +86,9 @@ const AdminOrders = ( { token, orders, getOrders } ) => {
     return (
       <div id="admin-order" key={order.id}> 
           <div id='order-container' key={order.id} >
-          <h4>Order id: {order.id}</h4>
+          <h4>Order no. {order.id}</h4>
           <h4>User id: {order.userId}</h4>
-          <h4>Date placed: {order.datePlaced}</h4> 
+          <h4>Date placed: {order.datePlaced.slice(0, 10)}</h4> 
           <h4>Order status: {order.status}</h4>
 
           <select id="select" onChange={(e) => {setStatus(e.target.value)}}>
