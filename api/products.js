@@ -5,8 +5,8 @@ const {
   getAllProducts,
   createProduct,
   getProductById,
-  updateProduct, //do we need this, is this in db, yes check
-  destroyProduct  //do we need this? is this in db, yes check
+  updateProduct, 
+  destroyProduct
 } = require("../db");
 const { getAllOrders, getOrdersByProduct } = require("../db/orders");
 

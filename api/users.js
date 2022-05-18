@@ -8,9 +8,7 @@ const {
   getUserByUsername,
   getUserById,
   updateUser,
-  //getOrdersByUsername
   getAllUsers,
-  //updateUser
   getUserByEmail,
   destroyUser
 } = require("../db/users");
@@ -107,7 +105,6 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
   }
 });
 
-/*Do we need this?*/
 usersRouter.get("/:username", async (req, res, next) => {
   const { username } = req.params;
   try {
@@ -144,18 +141,7 @@ usersRouter.patch('/:userId', requireUser, async (req, res, next) => {
         updateFields.username = username;
       }
     }
-    
-    // if (password) {
-    //   if (password.length < 8) {
-    //     throw {
-    //       name: 'PasswordTooShortError',
-    //       message: 'Password is too short, try again',
-    //     };
-        
-    //   } else {
-    //     updateUser().password = password;
-    //     }
-    //   }
+ 
         if (email) {
           if (!email.includes("@")) {
             throw {
@@ -223,31 +209,3 @@ usersRouter.delete('/:userId', async (req, res, next) => {
 });
 
 module.exports = usersRouter;
-
-/*
-**does get order by user go in api/orders?**
-
-usersRouter.get("/:username/orders", async (req, res, next) => {
-    const { username } = req.params;
-    try {
-      const user = await getUserByUsername(username);
-      const usersOrders = await getOrdersByUsername(user.username);
-      res.send(usersOrders);
-    } catch (error) {
-      throw error;
-    }
-  });
-
-  // Do we need this?
- usersRouter.get("/:userId", async (req, res, next) => {
-   const { userId } = req.params;
-   try {
-     const user = await getUserById(userId);
-     console.log('user', user);
-     res.send(user);
-   } catch (error) {
-     throw error;
-   }
- });
-
-  */

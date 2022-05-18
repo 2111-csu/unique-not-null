@@ -4,8 +4,7 @@ const {
     createReview,
     updateReview,
     getReviewsById,
-    getAllReviews,
-    getReviewsByProductId
+    getAllReviews
 } = require('../db');
 const { requireUser } = require('./utils');
 
