@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { callApi } from "../axios-services";
 import { useParams, useHistory } from 'react-router-dom';
+import "../style/App.css";
 
 const EditUser = ({ token, loggedIn, setLoggedIn }) => { 
 
@@ -57,47 +58,49 @@ const EditUser = ({ token, loggedIn, setLoggedIn }) => {
              throw error
         }
     };
+    const handleBackToAccount = (event) => {
+        event.preventDefault();
+        history.push('/account');
+      }
+
+    const handleBackToHome = (event) => {
+        event.preventDefault();
+        history.push('/');
+      }
     
     return (
-        <div id='admin-user-page'>
-        <form className='edit-user-form'>
-            <h4>Edit a user:</h4>
+        <div id='container'>
+        <div className='edit-user-form' id='edit-user'>
+        <form >
+            <h4>Edit A User</h4>
             
+            <label htmlFor='firstname'>First Name: </label>
             <input className='input-field' type='text'
              placeholder={loggedIn.firstName} value={firstName}
              onChange={e => setFirstName(e.target.value)}>
             </input>
-    
+            <br />
+
+            <label htmlFor='lastname'>Last Name: </label>
             <input className='input-field' type='text'
               placeholder={loggedIn.lastName} value={lastName}
               onChange={e => setLastName(e.target.value)}>
             </input>
-    
+            <br />
+
+            <label htmlFor='email'>Email Address: </label>
             <input className='input-field' type='text'
              placeholder={loggedIn.email} value={email}
              onChange={e => setEmail(e.target.value)}>
             </input>
+            <br />
     
-            {/* <input className='input-field' type='text'
-              placeholder='image' value={imageurl}
-              onChange={e => setImageurl(e.target.value)}>
-             </input> */}
-    
-             <input className='input-field' type='text'
-              placeholder={loggedIn.username} value={username}
-              onChange={e => setUsername(e.target.value)}>
-              </input>
-    
-            {/* <input className='input-field' type='text'
-             placeholder={'enter new password'} value={password}
-             onChange={e => setPassword(e.target.value)}>
-             </input> */}
-
-             {/* <input className='input-field' type='text'
-             placeholder='isAdmin' value={isAdmin}
-             onChange={e => setIsAdmin(e.target.value)}>
-             </input> */}
-    
+            <label htmlFor='username'>Username: </label>
+            <input className='input-field' type='text'
+            placeholder={loggedIn.username} value={username}
+            onChange={e => setUsername(e.target.value)}>
+            </input>
+            <br />
         </form>
     
         <button type="submit"className="button"
@@ -106,6 +109,14 @@ const EditUser = ({ token, loggedIn, setLoggedIn }) => {
         <button type="submit"className="button"
          onClick={(e) => handleDelete(e, userToEdit.id)}>Delete User</button>
          
+         </div>
+         <button type="submit" className="button" 
+         onClick={e => handleBackToAccount(e)}>Back My Account</button>
+
+         <button type="submit" className="button" 
+         onClick={e => handleBackToHome(e)}>Back to Home</button>
+        
+       
         </div>
     
     );
@@ -114,3 +125,21 @@ const EditUser = ({ token, loggedIn, setLoggedIn }) => {
     
     export default EditUser;
     
+    /* 
+    
+    <input className='input-field' type='text'
+    placeholder='image' value={imageurl}
+    onChange={e => setImageurl(e.target.value)}>
+    </input> 
+    
+    <input className='input-field' type='text'
+     placeholder={'enter new password'} value={password}
+     onChange={e => setPassword(e.target.value)}>
+    </input> 
+
+   <input className='input-field' type='text'
+    placeholder='isAdmin' value={isAdmin}
+    onChange={e => setIsAdmin(e.target.value)}>
+    </input> 
+    
+    */
