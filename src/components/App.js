@@ -92,7 +92,7 @@ const App = () => {
     getAPIStatus();
     getCart();
 
-  }, [loggedIn, myCart]); 
+  }, [loggedIn, myCart, guestCart]); 
   
   return (
     <>
@@ -157,6 +157,8 @@ const App = () => {
             myCart={myCart} 
             setMessage={setMessage} 
             setMyCart={setMyCart}
+            guestCart={guestCart}
+            setGuestCart={setGuestCart}
           />
         </Route>
 
