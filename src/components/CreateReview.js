@@ -4,17 +4,17 @@ import { callApi } from "../axios-services";
 import '../style/App.css';
 import '../style/Products.css';
 
-const CreateReview = ( {token, products} ) => {
+const CreateReview = ( {token, loggedIn, products} ) => {
 
     const { productId } = useParams();
-    const { history } = useHistory();
+    const history = useHistory();
     const [product] = products.filter(product => product.id === Number(productId));
     console.log('product', product);   
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const [stars, setStars] = useState();
+    const [stars, setStars] = useState('');
 
-    const handleSubmit = async (event, productId) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         try {
         const review= await callApi({ 
@@ -22,9 +22,10 @@ const CreateReview = ( {token, products} ) => {
             token,
             method:'POST',
             data: {
+                userId: loggedIn.id,
                 title,
                 content,
-                stars, 
+                stars: Number(stars),
                 productId          
             }
         });
@@ -33,8 +34,7 @@ const CreateReview = ( {token, products} ) => {
         setContent('');
         setStars('');
 
-        history.push(`/products/${productId}`)
-        return review;
+        history.push('/products');
     
         } catch(error){
         throw error
@@ -51,18 +51,18 @@ const CreateReview = ( {token, products} ) => {
             
             <input className='input-field' type='text'
             placeholder='title' value={title}
-            onChange={e => setTitle(e.target.value, product.id)}>
+            onChange={e => setTitle(e.target.value)}>
             </input>
             <br />
 
             <input className='input-field' type='text'
             placeholder='content' value={content}
-            onChange={e => setContent(e.target.value, product.id)}>
+            onChange={e => setContent(e.target.value)}>
             </input>
           
-            <input className='input-field' type='text'
+            <input className='input-field' type='number' min='1' max ='5'
             placeholder='stars' value={stars}
-            onChange={e => setStars(e.target.value, product.id)}>
+            onChange={e => setStars(e.target.value)}>
             </input>
     
             <button className='button' type='submit'>Add Review</button>

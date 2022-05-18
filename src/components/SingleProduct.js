@@ -109,7 +109,7 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
         })} 
       </div>     
     </div>
-   <CreateReview token={token} products={products}/> 
+   <CreateReview token={token} loggedIn={loggedIn} products={products}/> 
     </>
   )
            
