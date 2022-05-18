@@ -116,7 +116,6 @@ const EditUser = ({ token, loggedIn, setLoggedIn }) => {
          <button type="submit" className="button" 
          onClick={e => handleBackToHome(e)}>Back to Home</button>
         
-       
         </div>
     
     );

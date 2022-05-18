@@ -10,15 +10,21 @@ const { requireUser } = require('./utils');
 
 reviewsRouter.post('/', requireUser, async (req, res, next) => {
     const {
+        userId,
         title,
-        content = ""
+        content = "",
+        stars,
+        productId
+
     } = req.body;
     let reviewInfo = {};
 
     try {
-        reviewInfo.authorId = req.user.id;
+        reviewInfo.userId = userId;
         reviewInfo.title = title;
         reviewInfo.content = content;
+        reviewInfo.stars = stars;
+        reviewInfo.productId = productId;
 
         const review = await createReview(reviewInfo);
 
