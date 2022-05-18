@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router';
 import "../style/SingleProduct.css";
-import { callApi } from '../axios-services'
+import { callApi } from '../axios-services';
+import CreateReview from './CreateReview'
 
 const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestCart }) => {
   const { productId } = useParams();
@@ -106,17 +107,9 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
             </div>
           )
         })} 
-      </div>
-     
-      {/* <button type="submit" className="button"
-      onClick={e => handleBackToProducts(e)}>
-      Back to Products</button>
-
-      <button type="submit" className="button"
-      onClick={e => handleBackToHome(e)}>
-      Back to Home</button> */}
-      
+      </div>     
     </div>
+   <CreateReview token={token} products={products}/> 
     </>
   )
            
@@ -124,3 +117,13 @@ const SingleProduct = ({ token, products, myCart, loggedIn, guestCart, setGuestC
 
 export default SingleProduct;
 
+ /* 
+ <button type="submit" className="button"
+      onClick={e => handleBackToProducts(e)}>
+      Back to Products</button>
+
+      <button type="submit" className="button"
+      onClick={e => handleBackToHome(e)}>
+      Back to Home</button> 
+ */
+      

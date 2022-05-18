@@ -113,7 +113,6 @@ const AllProducts = ({ token, products, setProducts, myCart, loggedIn, guestCart
         <button className='button' type='submit' onClick={viewAll}>Clear</button>
       </div>
       
-
       <div id='product-cards'>
         {sortedProducts.length? null : <h2>Sorry, No Products to View</h2>}
         {sortedProducts.map(product => {

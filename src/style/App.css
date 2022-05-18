@@ -62,7 +62,7 @@ nav {
   margin: 30px;
 }
 
-.create-product-form, .edit-product-form, .register-form, .edit-user-form {
+.create-product-form, .edit-product-form, .register-form, .edit-user-form, .create-review-form {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -73,12 +73,15 @@ nav {
 .edit-product-form #select,
 .register-form #firstname-input, .register-form #lastname-input, .register-form #email-input, 
 .register-form #username-input, .register-form #password-input,
-.edit-user-form .input-field
+.edit-user-form .input-field, .create-review-form .input-field
 {
   width: 90%;
   text-align: center;
 }
 
+.create-review-form .input-field {
+  margin: 10px;
+}
 /* The snackbar - position it at the bottom and in the middle of the screen */
 #snackbar {
   visibility: hidden; /* Hidden by default. Visible on click */
