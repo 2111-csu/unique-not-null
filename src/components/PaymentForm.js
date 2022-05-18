@@ -27,56 +27,68 @@ const CARD_OPTIONS = {
 	}
 }
 
-const PaymentForm = ({ setMessage, token, orderId }) => { 
+const PaymentForm = ({ setMessage, token, orderId, setGuestCart }) => { 
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement),
-    });
 
-    if (!error) {
-      try {
-        const { id } = paymentMethod;
-        const response = await axios.post("/payment", {
-          amount: 1000,
-          id
-        })
+    if (!orderId) {
+      localStorage.removeItem("guestCart");
+      localStorage.setItem('guestCart', JSON.stringify({products: []}));
+      setGuestCart({products: []})
+      setMessage('Thank You For Your Order');
+      Snackbar();
+      history.push('/')
 
-        if (response.data.success) {
-          console.log("successful payment");
-          setMessage("Payment Successful")
-          Snackbar();
-          
-        }
-      } catch (error) {
-        console.log("payment error", error);
-      }
-
-      try {
-        const completeOrder = await callApi({
-          url: `/api/orders/${orderId}`,
-          method: "PATCH",
-          token,
-          data: {
-            status: 'completed'
-          }
-        })
-        console.log('completeOrder', completeOrder);
-        localStorage.removeItem("guestCart");
-        localStorage.setItem('guestCart', JSON.stringify({products: []}));
-        setMessage('Thank You For Your Order');
-        Snackbar();
-        history.push('/')
-      } catch(error) {
-        throw error
-      }
     } else {
-      console.log(error.message);
+
+      event.preventDefault();
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement),
+      });
+
+      if (!error) {
+        try {
+          const { id } = paymentMethod;
+          const response = await axios.post("/payment", {
+            amount: 1000,
+            id
+          })
+
+          if (response.data.success) {
+            console.log("successful payment");
+            setMessage("Payment Successful")
+            Snackbar();
+            
+          }
+        } catch (error) {
+          console.log("payment error", error);
+        }
+
+        try {
+          const completeOrder = await callApi({
+            url: `/api/orders/${orderId}`,
+            method: "PATCH",
+            token,
+            data: {
+              status: 'completed'
+            }
+          })
+          console.log('completeOrder', completeOrder);
+          localStorage.removeItem("guestCart");
+          localStorage.setItem('guestCart', JSON.stringify({products: []}));
+          setMessage('Thank You For Your Order');
+          Snackbar();
+          history.push('/')
+        } catch(error) {
+          throw error
+        }
+      } else {
+        console.log(error.message);
+      }
     }
   };
 

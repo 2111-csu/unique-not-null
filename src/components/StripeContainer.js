@@ -8,7 +8,7 @@ const PUBLIC_KEY = "pk_test_51KyQNZDSB6EJnrLZAtEPFc48bxyIRUohyI7V4q8RYJcE6ESvgJH
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY)
 
-const StripeContainer = ({ token, setMessage, orderId, setMyCart }) => {
+const StripeContainer = ({ token, setMessage, orderId, setMyCart, setGuestCart }) => {
 
     return (
 
@@ -17,6 +17,7 @@ const StripeContainer = ({ token, setMessage, orderId, setMyCart }) => {
             setMessage={setMessage} 
             orderId={orderId} 
             setMyCart={setMyCart} 
+            setGuestCart={setGuestCart} 
             token={token}/>
         </Elements>
     )

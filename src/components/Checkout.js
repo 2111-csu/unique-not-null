@@ -5,7 +5,7 @@ import { Snackbar } from "./Snackbar";
 import '../style/Cart.css'
 import StripeContainer from './StripeContainer'
 
-const Checkout = ({ token, myCart, setMessage, setMyCart }) => {
+const Checkout = ({ token, myCart, setMessage, setMyCart, guestCart, setGuestCart }) => {
 
 const history = useHistory();
 
@@ -42,10 +42,8 @@ let total = 0;
 return (
   <>
     <h1>Checkout</h1>
-    <div className="checkout"> 
-      
       {myCart? 
-        <div id='cart-container'>
+        <div className="checkout">
             
         {myCart.products && myCart.products.map((product) => {
           const lineTotal = product.price * product.quantity;
@@ -64,10 +62,46 @@ return (
                   </div>
                 </div>
               ) })} 
-        </div> : <h1>No Products to show here</h1> }
+        
       <div className='checkout-container'>
         <p>Order Total: ${total}</p>
         <StripeContainer setMessage={setMessage} orderId={myCart.id} setMyCart={setMyCart} token={token}/>
+
+        <button type="submit" className="button"
+        onClick={e => handleCancelOrder(e, myCart.id)}>
+        Cancel Order</button>
+
+        <label htmlFor="back-edit">Need to change your order?</label>
+        <button type="submit" className="button"
+        onClick={handleBackToCart}>
+        Return to Order</button>
+      </div>
+      </div> : null }
+      
+      {guestCart && (!myCart || myCart === false) ?
+        <div className="checkout">
+            
+        {guestCart.products && guestCart.products.map((product) => {
+          const lineTotal = product.price * product.quantity;
+          total += lineTotal;
+              return (
+                <div key={product.id} className='cart-product'>
+                  <div className='cart-image'>
+                    <img src={product.imageurl} alt={`the ${product.name}`} className='small'/>
+                  </div>
+                  <div className='cart-info'>
+                    <h3>{product.name}</h3>
+                    <p>{product.description}</p>
+                    <p>${product.price} / per pound</p>
+                    <p>Quantity: {product.quantity}</p>
+                    <p>Total: ${lineTotal}</p>
+                  </div>
+                </div>
+              ) })} 
+       
+      <div className='checkout-container'>
+        <p>Order Total: ${total}</p>
+        <StripeContainer setMessage={setMessage} orderId={null} setGuestCart={setGuestCart} token={token}/>
        {/*  */}
 
         <button type="submit" className="button"
@@ -76,10 +110,10 @@ return (
 
         <label htmlFor="back-edit">Need to change your order?</label>
         <button type="submit" className="button"
-        onClick={e => handleBackToCart(e, myCart.id)}>
+        onClick={handleBackToCart}>
         Return to Order</button>
       </div>
-    </div>
+    </div> : null }
   </>
   )
 };
