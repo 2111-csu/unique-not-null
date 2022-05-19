@@ -25,6 +25,7 @@ const Cart = ({ myCart, setMyCart, token, loggedIn, guestCart, setGuestCart  }) 
             }
           });
           localStorage.setItem('guestCart', JSON.stringify({products: []}));
+          setGuestCart()
         } catch (error) {
           console.log(error);
           throw error;
