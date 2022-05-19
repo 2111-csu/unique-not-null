@@ -73,10 +73,20 @@ nav {
 .edit-product-form #select,
 .register-form #firstname-input, .register-form #lastname-input, .register-form #email-input, 
 .register-form #username-input, .register-form #password-input,
-.edit-user-form .input-field, .create-review-form .input-field
+.edit-user-form .input-field, .create-review-form .input-field, .edit-user-form label
 {
   width: 90%;
   text-align: center;
+}
+
+.edit-user-form {
+  width: 90%;
+  align-items: center;
+}
+
+.edit-user-form .buttons {
+  display: flex;
+  flex-direction: row;
 }
 
 .create-review-form .input-field {

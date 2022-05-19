@@ -71,50 +71,49 @@ const EditUser = ({ token, loggedIn, setLoggedIn }) => {
     return (
         <div id='container'>
         <div className='edit-user-form' id='edit-user'>
-        <form >
-            <h4>Edit A User</h4>
-            
-            <label htmlFor='firstname'>First Name: </label>
-            <input className='input-field' type='text'
-             placeholder={loggedIn.firstName} value={firstName}
-             onChange={e => setFirstName(e.target.value)}>
-            </input>
-            <br />
+          
+                <h4>Edit A User</h4>
+                
+                <label htmlFor='firstname'>First Name: </label>
+                <input className='input-field' type='text'
+                placeholder={loggedIn.firstName} value={firstName}
+                onChange={e => setFirstName(e.target.value)}>
+                </input>
+                <br />
 
-            <label htmlFor='lastname'>Last Name: </label>
-            <input className='input-field' type='text'
-              placeholder={loggedIn.lastName} value={lastName}
-              onChange={e => setLastName(e.target.value)}>
-            </input>
-            <br />
+                <label htmlFor='lastname'>Last Name: </label>
+                <input className='input-field' type='text'
+                  placeholder={loggedIn.lastName} value={lastName}
+                  onChange={e => setLastName(e.target.value)}>
+                </input>
+                <br />
 
-            <label htmlFor='email'>Email Address: </label>
-            <input className='input-field' type='text'
-             placeholder={loggedIn.email} value={email}
-             onChange={e => setEmail(e.target.value)}>
-            </input>
-            <br />
-    
-            <label htmlFor='username'>Username: </label>
-            <input className='input-field' type='text'
-            placeholder={loggedIn.username} value={username}
-            onChange={e => setUsername(e.target.value)}>
-            </input>
-            <br />
-        </form>
-    
+                <label htmlFor='email'>Email Address: </label>
+                <input className='input-field' type='text'
+                placeholder={loggedIn.email} value={email}
+                onChange={e => setEmail(e.target.value)}>
+                </input>
+                <br />
+        
+                <label htmlFor='username'>Username: </label>
+                <input className='input-field' type='text'
+                placeholder={loggedIn.username} value={username}
+                onChange={e => setUsername(e.target.value)}>
+                </input>
+                <br />
+        <div className='buttons'>
         <button type="submit"className="button"
          onClick={(e) => handleEdit(e)}>Edit User</button>
          
         <button type="submit"className="button"
          onClick={(e) => handleDelete(e, userToEdit.id)}>Delete User</button>
-         
-         </div>
+        </div>
+        </div>
          <button type="submit" className="button" 
-         onClick={e => handleBackToAccount(e)}>Back My Account</button>
+         onClick={e => handleBackToAccount(e)}>Account</button>
 
          <button type="submit" className="button" 
-         onClick={e => handleBackToHome(e)}>Back to Home</button>
+         onClick={e => handleBackToHome(e)}>Home</button>
         
         </div>
     
